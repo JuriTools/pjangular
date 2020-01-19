@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="41381d6da13882f002ef067747d9992ba84ac814" datatype="html">
+        <source>Inhoudsopgave</source>
+        <target>Table des matières</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0c5bede63c8ceda82deefc7ec07a9f794f7ca9f6" datatype="html">
+        <source>Aanhef</source>
+        <target>Préambule</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8d27c37e7e38f3b74d8590590f41cdc8d64d7428" datatype="html">
+        <source>Franstalige versie</source>
+        <target>Version française</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2dca6d12a83fc9ec6c57c5d78bd23b7792f54837" datatype="html">
+        <source>Datum van Publicatie: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.datePublished | date:&apos;mediumDate&apos;}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target>Date de publication: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.datePublished | date:&apos;mediumDate&apos;}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bdab2fb6b2d4d44d98e5e0049ed55b89102aa87d" datatype="html">
+        <source>Datum van Inwerkingtreding: <x id="INTERPOLATION" equiv-text="{{ law?.dateWorking | date:&apos;mediumDate&apos;}}"/></source>
+        <target>Date d'entrée en vigueur: <x id="INTERPOLATION" equiv-text="{{ law?.dateWorking | date:&apos;mediumDate&apos;}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="be87335d8f89b6458e91c557f88a1d56ab840d85" datatype="html">
+        <source>Bron: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.source | titlecase}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <target>Source: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.source | titlecase}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="34b4ffea4e0657879bf2ddbe1584751308192a8b" datatype="html">
+        <source>Pagina Staatsblad: <x id="INTERPOLATION" equiv-text="{{ law?.pageNumber}}"/></source>
+        <target>Page Journal officiel: <x id="INTERPOLATION" equiv-text="{{ law?.pageNumber}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8e7f65b3301bb4e59e42272c136930f8f2ecc206" datatype="html">
+        <source> Hoofdstuk <x id="INTERPOLATION" equiv-text="{{item.id}}"/></source>
+        <target> Chapitre <x id="INTERPOLATION" equiv-text="{{item.id}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

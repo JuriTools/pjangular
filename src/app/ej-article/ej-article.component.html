@@ -1,0 +1,6 @@
+<div class="article" id="{{article.artId}}">
+  <h3>Artikel {{article.artId}}</h3>
+  <div class="line {{ line.type }}" *ngFor="let line of article.lines">
+    <span class="lid" *ngIf="line.lidId"><u>Lid {{line.lidId}}</u></span> {{ line.text }}
+  </div>
+</div>
