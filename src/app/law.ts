@@ -225,26 +225,25 @@ export class Law {
         }
     }
 
-    getLawPublicationDate(text) {
-        const pubDate = (this.language === 'fr') ? 'Publication' : 'Publicatie';
-        const datePublished = new RegExp(pubDate + '.*?(\\d{2}-\\d{2}-\\d{4})', 'i').exec(text);
-        if (datePublished) {
-            const dateSplit = datePublished[1].split('-');
+    text2date(text) {
+        if (text) {
+            const dateSplit = text[1].split('-');
             return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[1], 10));
         } else {
             return new Date(0, 0, 0); // todo handle unknown date
         }
     }
 
+    getLawPublicationDate(text) {
+        const pubDate = (this.language === 'fr') ? 'Publication' : 'Publicatie';
+        const datePublished = new RegExp(pubDate + '.*?(\\d{2}-\\d{2}-\\d{4})', 'i').exec(text);
+        return this.text2date(datePublished);
+    }
+
     getLawWorkingDate(text) {
         const wDate = (this.language === 'fr') ? 'Entrée en vigueur ' : 'Inwerkingtreding';
         const dateWorking = new RegExp(wDate + '.*?(\\d{2}-\\d{2}-\\d{4})', 'i').exec(text);
-        if (dateWorking) {
-            const dateSplit = dateWorking[1].split('-');
-            return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[1], 10));
-        } else {
-            return new Date(0, 0, 0); // todo handle unknown date
-        }
+        return this.text2date(dateWorking)
     }
 
     getLawPageStart(text) {
