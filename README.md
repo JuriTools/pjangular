@@ -1,6 +1,16 @@
 # PjAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.7.
+## Todo
+- articles bis /2 etc are not correctly parsed
+- Fix service for ingress from ejustice website
+- Add service for ingress from preformatted database
+- Export as a plugin for Chrome & Firefox
+- Update layout and design
+- Versioning / diff between versions
+- Link to other laws / incorporate specific references as pop-up
+
+- Add support for adding law to wettenbundel
+
 
 ## Development server
 
@@ -25,3 +35,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+

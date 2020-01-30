@@ -12,7 +12,6 @@ export class EjLawComponent implements OnInit {
   urlDutch: string;
   urlFrench: string;
   doc;
-  frameURL;
   law: Law;
   showpreambule = false;
   showCoS = false;
@@ -26,6 +25,7 @@ export class EjLawComponent implements OnInit {
 
   parseUrl(url) {
     this.url = url;
+    // todo switches language based on url, should be more generic
     if (url.includes('language=fr&la=F')) {
       this.urlFrench = url;
       this.language = 'fr';
@@ -86,6 +86,5 @@ export class EjLawComponent implements OnInit {
       console.log('Preambule: ' + this.showCoS);
     }
   }
-
 
 }

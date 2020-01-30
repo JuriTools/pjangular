@@ -25,10 +25,20 @@ class Container {
         this.children.push(child);
     }
 
+    addNewChild(child) {
+        // Only add if child not already existing
+        for (const currentChild of this.children) {
+            if (child.id === currentChild.id) {
+                return;
+            }
+        }
+        this.addChild(child);
+    }
+
     removeChildrenByType(type) {
-        console.log('remove children of type: ' + type);
+        // console.log('remove children of type: ' + type);
         for (let i = 0; i < this.children.length; i++) {
-            console.log(this.children[i].type + '  ' + type);
+            // console.log(this.children[i].type + '  ' + type);
             if (this.children[i].type === type) {
                 this.children.splice(i, 1);
             } else if (this.children[i].children) {
@@ -76,7 +86,11 @@ export class Law {
         this.subSections = [];
         console.log(DOM);
         const dataText = DOM.getElementById('Wetstitel').innerText;
-        this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
+        if (DOM.getElementById('Wetstitel').querySelector('a')) {
+            this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
+        } else {
+            this.bsUrl = 'Todo: url not found for this type of law.';
+        }
         this.title = this.getLawTitle(dataText);
         this.date = this.getLawDate(dataText);
         this.language = language;
@@ -96,81 +110,51 @@ export class Law {
         // console.log(this);
     }
 
-    getItems(type: string, parent: Container) {
+    getItems(type: string, parent = this.law) {
         let items = [];
 
-        for (let i = 0; i < this.articles.length; i++) {
-            items.push(this.articles[i][type]);
+        for (const article of this.articles) {
+            if (article[parent.type] === parent.id || parent.type === 'law') {
+                items.push(article[type]);
+            }
         }
         const setItems = Array.from(new Set(items));
         items = [];
-        for (let i = 0; i < setItems.length; i++) {
-            const item = new Container(type, parent, setItems[i]);
+        for (const setItem of setItems) {
+            const item = new Container(type, parent, setItem);
             items.push(item);
-            if (parent) {
-                parent.addChild(item);
-            }
         }
         return items;
     }
 
+    getChildExists(parent: Container, type: string, id: number) {
+        for (const child of parent.children) {
+            if (child.type === type && child.id === id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     setStructure() {
-        let parent;
         this.law = new Container('law', undefined, 0);
-        this.books = this.getItems('book', this.law);
-        for (let i = 0; i < this.books.length; i++) {
-            if (this.books.length === 1) {
-                parent = this.law;
-                this.law.removeChildrenByType('book');
-            } else {
-                parent = this.books[i];
-            }
-            this.titles = this.getItems('title', parent);
-            for (let j = 0; j < this.titles.length; j++) {
-                if (this.titles.length === 1) {
-                    parent = this.law; // There are no books without title, I think.
-                    this.law.removeChildrenByType('title');
-                } else {
-                    parent = this.titles[i];
-                }
-                this.chapters = this.getItems('chapter', parent);
-                for (let k = 0; k < this.chapters.length; k++) {
-                    if (this.chapters.length === 1) {
-                        parent = this.law;
-                        this.law.removeChildrenByType('section');
-                    } else {
-                        parent = this.chapters[k];
+        const levels = ['book', 'title', 'chapter', 'section', 'subSection'];
+        // loop over articles, if != 0 add to parent, and create grandparents
+        for (let i = 0; i < this.articles.length; i++) {
+            let parent = this.law;
+            for (const level of levels) {
+                if (this.articles[i][level] !== 0) {
+                    // only create Container if not existing
+                    const levelId = this.articles[i][level];
+                    if (!this.getChildExists(this.law, level, this.articles[i][level])) {
+                        // Create container if not existing
+                        this[level + 's'][levelId] = new Container(level, parent, this.articles[i][level]);
                     }
-                    this.sections = this.getItems('section', parent);
-                    for (let l = 0; l < this.sections.length; l++) {
-                        if (this.sections.length === 1) {
-                            parent = this.chapters[k];
-                            this.law.removeChildrenByType('section');
-                        } else {
-                            parent = this.sections[l];
-                        }
-                        this.subSections = this.getItems('subsection', parent);
-                        for (let m = 0; m < this.subSections.length; m++) {
-                            if (this.subSections.length === 1) {
-                                parent = this.chapters[k];
-                                this.law.removeChildrenByType('subsection');
-                            } else {
-                                parent = this.subSections[m];
-                            }
-                            for (let n = 0; n < this.articles.length; n++) {
-                                if (this.books[i].id === this.articles[n].book &&
-                                    this.titles[j].id === this.articles[n].title &&
-                                    this.chapters[k].id === this.articles[n].chapter &&
-                                    this.sections[l].id === this.articles[n].section &&
-                                    this.subSections[m].id === this.articles[n].subSection) {
-                                    parent.addChild(this.articles[n]);
-                                }
-                            }
-                        }
-                    }
+                    parent.addNewChild(this[level + 's'][levelId]);
+                    parent = this[level + 's'][levelId];
                 }
             }
-            // Todo skip 0 nodes by relinking parent & child at end of for loop
+            parent.addChild(this.articles[i]);
         }
         console.log(this.law);
 
@@ -201,17 +185,25 @@ export class Law {
         };
         if (language === 'fr') {
             // todo check French
-            return this.title.replace(/relatif à|relative/, 'du ' + this.date.toLocaleDateString('fr-BE', options) + ' sur');
+            if (this.title.includes('relatif à') || this.title.includes('relative')) {
+                return this.title.replace(/relatif à|relative/, 'du ' + this.date.toLocaleDateString('fr-BE', options) + ' sur');
+            } else {
+                return this.title;
+            }
         }
         if (language === 'nl') {
-            return this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
+            if (this.title.includes('betreffende')) {
+                return this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
+            } else {
+                return this.title;
+            }
         }
     }
 
     getLawTitle(text) {
         const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
-        console.log(text);
-        console.log(title);
+        // console.log(text);
+        // console.log(title);
         return title[2];
     }
 
@@ -243,7 +235,7 @@ export class Law {
     getLawWorkingDate(text) {
         const wDate = (this.language === 'fr') ? 'Entrée en vigueur ' : 'Inwerkingtreding';
         const dateWorking = new RegExp(wDate + '.*?(\\d{2}-\\d{2}-\\d{4})', 'i').exec(text);
-        return this.text2date(dateWorking)
+        return this.text2date(dateWorking);
     }
 
     getLawPageStart(text) {
