@@ -21,13 +21,15 @@ import { AppComponent } from './app.component';
 import { EjLawComponent } from './ej-law/ej-law.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { EjArticleComponent } from './ej-article/ej-article.component';
+import { EjContainerComponent } from './ej-container/ej-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EjLawComponent,
     SafeHtmlPipe,
-    EjArticleComponent
+    EjArticleComponent,
+    EjContainerComponent
   ],
   imports: [
     BrowserModule,

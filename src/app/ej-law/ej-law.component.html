@@ -51,12 +51,6 @@
         <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
       </ol>
     </mat-card>
-    <div class="{{item.type}}" *ngFor="let item of law?.law.children">
-      <mat-card-title i18n> Hoofdstuk {{item.id}}</mat-card-title>
-      <mat-card class="article" *ngFor="let article of item.children">
-        <app-ej-article [article]="article"></app-ej-article>
-      </mat-card>
-    </div>
-
+    <app-ej-container [items]="law?.law.children"></app-ej-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
