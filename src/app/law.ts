@@ -140,21 +140,21 @@ export class Law {
         this.law = new Container('law', undefined, 0);
         const levels = ['book', 'title', 'chapter', 'section', 'subSection'];
         // loop over articles, if != 0 add to parent, and create grandparents
-        for (let i = 0; i < this.articles.length; i++) {
+        for (const article of this.articles) {
             let parent = this.law;
             for (const level of levels) {
-                if (this.articles[i][level] !== 0) {
+                if (article[level] !== 0) {
                     // only create Container if not existing
-                    const levelId = this.articles[i][level];
-                    if (!this.getChildExists(this.law, level, this.articles[i][level])) {
+                    const levelId = article[level];
+                    if (!this.getChildExists(this.law, level, article[level])) {
                         // Create container if not existing
-                        this[level + 's'][levelId] = new Container(level, parent, this.articles[i][level]);
+                        this[level + 's'][levelId] = new Container(level, parent, article[level]);
                     }
                     parent.addNewChild(this[level + 's'][levelId]);
                     parent = this[level + 's'][levelId];
                 }
             }
-            parent.addChild(this.articles[i]);
+            parent.addChild(article);
         }
         console.log(this.law);
 
