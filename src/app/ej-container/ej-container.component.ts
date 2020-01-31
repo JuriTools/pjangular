@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Container} from '@angular/compiler/src/i18n/i18n_ast';
+import {Article} from '../article';
 
 @Component({
     selector: 'app-ej-container',
@@ -14,10 +15,5 @@ export class EjContainerComponent implements OnInit {
 
     ngOnInit() {
     }
-
-    getItemType(item) {
-        return typeof item;
-    }
-
     // get if type of item is article, then print
 }

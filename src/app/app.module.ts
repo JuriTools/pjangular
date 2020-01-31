@@ -22,6 +22,7 @@ import { EjLawComponent } from './ej-law/ej-law.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { EjArticleComponent } from './ej-article/ej-article.component';
 import { EjContainerComponent } from './ej-container/ej-container.component';
+import { TocContainerComponent } from './toc-container/toc-container.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EjContainerComponent } from './ej-container/ej-container.component';
     EjLawComponent,
     SafeHtmlPipe,
     EjArticleComponent,
-    EjContainerComponent
+    EjContainerComponent,
+    TocContainerComponent
   ],
   imports: [
     BrowserModule,

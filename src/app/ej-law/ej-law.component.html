@@ -33,7 +33,7 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #drawer mode="side" closed>
     <mat-card-title i18n>Inhoudsopgave</mat-card-title>
-  TODO!
+  <app-toc-container [items]="law?.law.children"></app-toc-container>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-card>

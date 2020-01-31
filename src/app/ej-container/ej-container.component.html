@@ -1,5 +1,5 @@
 <div class="{{item.type}}" *ngFor="let item of items">
     <mat-card-title i18n> {{item.type}} {{item.id}}</mat-card-title>
     <app-ej-container [items]="item.children" *ngIf="item.children"></app-ej-container>
-    <app-ej-article [article]="item" *ngIf="getItemType(item)"></app-ej-article>
+    <app-ej-article [article]="item"></app-ej-article>
 </div>
