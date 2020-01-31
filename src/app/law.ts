@@ -34,23 +34,6 @@ class Container {
         }
         this.addChild(child);
     }
-
-    removeChildrenByType(type) {
-        // console.log('remove children of type: ' + type);
-        for (let i = 0; i < this.children.length; i++) {
-            // console.log(this.children[i].type + '  ' + type);
-            if (this.children[i].type === type) {
-                this.children.splice(i, 1);
-            } else if (this.children[i].children) {
-                for (let j = 0; j < this.children[i].children.length; j++) {
-                    if (this.children[i].children[j].type === type) {
-                        this.children[i].children.splice(j, 1);
-                    }
-                }
-            }
-
-        }
-    }
 }
 
 export class Law {
@@ -108,23 +91,6 @@ export class Law {
         this.articles = this.parseArticles(DOM);
         this.setStructure();
         // console.log(this);
-    }
-
-    getItems(type: string, parent = this.law) {
-        let items = [];
-
-        for (const article of this.articles) {
-            if (article[parent.type] === parent.id || parent.type === 'law') {
-                items.push(article[type]);
-            }
-        }
-        const setItems = Array.from(new Set(items));
-        items = [];
-        for (const setItem of setItems) {
-            const item = new Container(type, parent, setItem);
-            items.push(item);
-        }
-        return items;
     }
 
     getChildExists(parent: Container, type: string, id: number) {
