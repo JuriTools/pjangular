@@ -5,16 +5,18 @@ export function strip(str) {
 }
 
 class Container {
-    type;
-    parent;
+    type: string;
+    parent: Container;
     children;
-    id;
+    id: number;
+    title: string;
 
-    constructor(type, parent, id = 0) {
+    constructor(type, parent, id = 0, title) {
         this.type = type;
         this.parent = parent || undefined;
         this.id = id || 0;
         this.children = [];
+        this.title = title;
     }
 
     next() {
@@ -89,7 +91,7 @@ export class Law {
         this.implementingDocumentsUrl = this.getImplementingDocuments(DOM);
         this.archivesUrl = this.getArchives(DOM);
         this.articles = this.parseArticles(DOM);
-        this.setStructure();
+        this.setStructure(DOM);
         // console.log(this);
     }
 
@@ -102,8 +104,8 @@ export class Law {
         return false;
     }
 
-    setStructure() {
-        this.law = new Container('law', undefined, 0);
+    setStructure(DOM) {
+        this.law = new Container('law', undefined, 0, '');
         const levels = ['book', 'title', 'chapter', 'section', 'subSection'];
         // loop over articles, if != 0 add to parent, and create grandparents
         for (const article of this.articles) {
@@ -114,7 +116,10 @@ export class Law {
                     const levelId = article[level];
                     if (!this.getChildExists(this.law, level, article[level])) {
                         // Create container if not existing
-                        this[level + 's'][levelId] = new Container(level, parent, article[level]);
+                        // todo make next line more robust
+                        const childTitle = DOM.getElementsByTagName(level)[levelId - 1].title;
+                        this[level + 's'][levelId] = new Container(level, parent, article[level],
+                            childTitle);
                     }
                     parent.addNewChild(this[level + 's'][levelId]);
                     parent = this[level + 's'][levelId];

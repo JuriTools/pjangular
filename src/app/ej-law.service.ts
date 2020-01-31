@@ -104,19 +104,21 @@ export class EjLawService {
         const appendix = (this.language === 'fr') ? '' : 'BIJLAGEN';
         // todo LNKR number does not indicate correct chapter number
         // todo Add book support
-        const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(.{5,15})${title}.{3,12}?A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${title}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
-        const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(.{5,15})${chapter}.{3,12}?A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${chapter}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
-        const regexafd = new RegExp(`(<A NAME=.{5,25}LNKR(.{5,15})${section}.{3,12}?A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${section}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
-        const regexonderafd = new RegExp(`(<A NAME=.{5,25}LNKR(.{5,15})${subSection}.{3,12}?A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${subSection}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
+        const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${title}\\s(.{1,16}?)\.<\/A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${title}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
+        const regexbook = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${book}\\s(.{1,16}?)\.<\\/A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${book}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
+        const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${chapter}\\s(.{1,16}?)\.<\/A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${chapter}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
+        const regexafd = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${section}\\s(.{1,16}?)\.<\/A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${section}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
+        const regexonderafd = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${subSection}\\s(.{1,16}?)\.<\/A>.*?)(?=(<A NAME=.{5,25}LNKR.{5,15}${subSection}|<A NAME=.{5,25}LNKR.{5,15}${appendix}))`, 'gi');
         const regexart = new RegExp(`(<a name=.{1,5}${article}\\.(\\d{1,4}.*?)('|").*?<BR><BR>)`, 'gi');
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
         console.log(regexafd);
 
         // console.log(doc.body.innerHTML);
-        doc.body.innerHTML = doc.body.innerHTML.replace(regextitle, '<lawtitle id="$2">$1</lawtitle>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexchapter, '<chapter id="$2">$1</chapter>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexafd, '<section id="$2">$1</section>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexonderafd, '<subsection id="$2">$1</subsection>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regexafd, '<section id="$2" title="$3">$1</section>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
         doc.body.innerHTML = doc.body.innerHTML.replace(regexart, '<article id="$2">$1</article>');
         doc.body.innerHTML = doc.body.innerHTML.replace(reghyperlink, '');
         console.log(doc);
