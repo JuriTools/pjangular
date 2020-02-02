@@ -1,7 +1,8 @@
 # PjAngular
 
 ## Todo
-- articles bis /2 etc are not correctly parsed
+- Fix that only first book is correctly parsed
+    - Chapters and other containers are not correctly printed
 - Fix service for ingress from ejustice website
 - Add service for ingress from preformatted database
 - Export as a plugin for Chrome & Firefox

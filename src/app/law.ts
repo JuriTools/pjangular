@@ -89,7 +89,7 @@ export class Law {
 
     getHighestLevel(DOM, levels) {
         for (const level of levels) {
-            if (DOM.querySelectorAll(level)) {
+            if (DOM.querySelectorAll(level).length > 0) {
                 return level;
             }
         }
