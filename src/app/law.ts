@@ -6,6 +6,7 @@ export function strip(str) {
 
 class Container {
     type: string;
+    typeLabel: string;
     parent: Container;
     children;
     id: number;
@@ -14,13 +15,24 @@ class Container {
 
     constructor(type, parent, id = 0, title, DOM) {
         this.type = type;
+        this.typeLabel = this.getTypeLabel(type);
         this.parent = parent || undefined;
         this.id = id || 0;
         this.children = [];
         this.title = title;
         this.DOM = DOM;
     }
-
+    // todo: add french, move to translation files
+    getTypeLabel(type) {
+        const labels = {
+            book: 'Boek',
+            lawtitle: 'Titel',
+            chapter: 'Hoofdstuk',
+            section: 'Afdeling',
+            subsection: 'Onderafdeling'
+        };
+        return labels[type];
+    }
     next() {
         return this;
     }
