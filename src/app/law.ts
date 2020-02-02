@@ -10,13 +10,15 @@ class Container {
     children;
     id: number;
     title: string;
+    DOM;
 
-    constructor(type, parent, id = 0, title) {
+    constructor(type, parent, id = 0, title, DOM) {
         this.type = type;
         this.parent = parent || undefined;
         this.id = id || 0;
         this.children = [];
         this.title = title;
+        this.DOM = DOM;
     }
 
     next() {
@@ -25,16 +27,6 @@ class Container {
 
     addChild(child) {
         this.children.push(child);
-    }
-
-    addNewChild(child) {
-        // Only add if child not already existing
-        for (const currentChild of this.children) {
-            if (child.id === currentChild.id) {
-                return;
-            }
-        }
-        this.addChild(child);
     }
 }
 
@@ -50,8 +42,9 @@ export class Law {
     source: string;
     bsUrl;
     preambule: string;
+    containers: Container[];
     books: Container[];
-    titles: Container[];
+    lawtitles: Container[];
     chapters: Container[];
     sections: Container[];
     subSections: Container[];
@@ -63,9 +56,9 @@ export class Law {
     implementingDocumentsUrl: string;
 
     constructor(DOM, language) {
-
+        this.containers = [];
         this.books = [];
-        this.titles = [];
+        this.lawtitles = [];
         this.chapters = [];
         this.sections = [];
         this.subSections = [];
@@ -91,44 +84,41 @@ export class Law {
         this.implementingDocumentsUrl = this.getImplementingDocuments(DOM);
         this.archivesUrl = this.getArchives(DOM);
         this.articles = this.parseArticles(DOM);
-        this.setStructure(DOM);
-        // console.log(this);
+        this.createContainerStructure(DOM);
     }
 
-    getChildExists(parent: Container, type: string, id: number) {
-        for (const child of parent.children) {
-            if (child.type === type && child.id === id) {
-                return true;
+    getHighestLevel(DOM, levels) {
+        for (const level of levels) {
+            if (DOM.querySelectorAll(level)) {
+                return level;
             }
         }
-        return false;
     }
 
-    setStructure(DOM) {
-        this.law = new Container('law', undefined, 0, '');
-        const levels = ['book', 'title', 'chapter', 'section', 'subSection'];
-        // loop over articles, if != 0 add to parent, and create grandparents
-        for (const article of this.articles) {
-            let parent = this.law;
-            for (const level of levels) {
-                if (article[level] !== 0) {
-                    // only create Container if not existing
-                    const levelId = article[level];
-                    if (!this.getChildExists(this.law, level, article[level])) {
-                        // Create container if not existing
-                        // todo make next line more robust
-                        const childTitle = DOM.getElementsByTagName(level)[levelId - 1].title;
-                        this[level + 's'][levelId] = new Container(level, parent, article[level],
-                            childTitle);
-                    }
-                    parent.addNewChild(this[level + 's'][levelId]);
-                    parent = this[level + 's'][levelId];
-                }
+    addChildren(c: Container) {
+        const levels = ['book', 'lawtitle', 'chapter', 'section', 'subsection'];
+        let childContainer;
+        for (const child of c.DOM.children) {
+            const containerType = child.nodeName.toLowerCase();
+            if (levels.includes(containerType)) {
+                childContainer = new Container(containerType, c, child.id, child.title, child);
+                this.addChildren(childContainer);
+                c.addChild(childContainer);
             }
-            parent.addChild(article);
+            if (containerType === 'article') {
+                c.addChild(new Article(child));
+            }
         }
-        console.log(this.law);
+    }
 
+    createContainerStructure(DOM) {
+        this.law = new Container('law', undefined, 0, '', DOM);
+        const levels = ['book', 'lawtitle', 'chapter', 'section', 'subsection'];
+        for (const element of DOM.querySelectorAll(this.getHighestLevel(DOM, levels))) {
+            const c = new Container(element.nodeName.toLowerCase(), this.law, element.id, element.title, element);
+            this.addChildren(c);
+            this.law.addChild(c);
+        }
     }
 
     getPreambule(DOM) {
