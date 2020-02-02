@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Container} from '@angular/compiler/src/i18n/i18n_ast';
 import {Article} from '../article';
 
 @Component({
@@ -15,5 +14,9 @@ export class EjContainerComponent implements OnInit {
 
     ngOnInit() {
     }
+
     // get if type of item is article, then print
+    getIsArticle(item) {
+        return item.constructor.name === 'Article';
+    }
 }
