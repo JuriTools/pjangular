@@ -16,26 +16,6 @@ export class Article {
 
   constructor(DOM) {
     this.element = DOM;
-    let parentNode = DOM.parentNode;
-    while (parentNode.nodeName !== 'BODY') {
-      if (parentNode.nodeName === 'BOOK') {
-        this.book = parseInt(parentNode.id, 10);
-      }
-      if (parentNode.nodeName === 'LAWTITLE') {
-        this.title = parseInt(parentNode.id, 10);
-      }
-      if (parentNode.nodeName === 'CHAPTER') {
-        this.chapter = parseInt(parentNode.id, 10);
-      }
-      if (parentNode.nodeName === 'SECTION') {
-        this.section = parseInt(parentNode.id, 10);
-      }
-      if (parentNode.nodeName === 'SUBSECTION') {
-        this.subSection = parseInt(parentNode.id, 10);
-      }
-      // todo add other containers (think of converting roman numbers)
-      parentNode = parentNode.parentNode;
-    }
     this.artId = DOM.id;
     this.name = DOM.querySelector('a').text;
     this.text = DOM.innerText; // todo Create Lines of article
