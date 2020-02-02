@@ -4,7 +4,7 @@ export function strip(str) {
     return str.replace(/^\s+|\s+$/g, '');
 }
 
-class Container {
+export class Container {
     type: string;
     typeLabel: string;
     parent: Container;

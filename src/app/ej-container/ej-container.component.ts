@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Article} from '../article';
+import {Container} from '../law';
 
 @Component({
     selector: 'app-ej-container',
@@ -7,7 +8,7 @@ import {Article} from '../article';
     styleUrls: ['./ej-container.component.css']
 })
 export class EjContainerComponent implements OnInit {
-    @Input() items;
+    @Input() items: Container[] | Article[];
 
     constructor() {
     }
