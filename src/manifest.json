@@ -13,10 +13,6 @@
   "web_accessible_resources": [
     "index.html"
   ],
-  "background": {
-    "scripts": ["background-es2015.js"],
-    "persistent": false
-  },
   "content_scripts": [{
     "css": [],
 	"js": ["content-es2015.js", "runtime-es2015.js"],

@@ -18,9 +18,15 @@ export class EjLawComponent implements OnInit {
     language = 'nl';
 
     constructor(private ejLawService: EjLawService) {
+        this.url = '';
     }
 
     ngOnInit() {
+        // adding url as iframe name allows cross domain information passing
+        if (window.name !== '') {
+            this.url = window.name;
+            this.getLaw(this.url);
+        }
     }
 
     parseUrl(url) {
