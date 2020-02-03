@@ -1,15 +1,22 @@
+// create a body
+const body = document.createElement('body');
+body.style.overflow = 'hidden';
+
+// create iframe and do some styling
 const iframe = document.createElement('iframe');
 iframe.src = chrome.extension.getURL('index.html');
 iframe.name = window.location.href;
+iframe.style.overflow = 'hidden';
+iframe.style.display = 'block';
+iframe.style.position = 'absolute';
 iframe.style.height = '100%';
-iframe.style.width = '100%';
+iframe.style.width = '99%';
+iframe.style.borderWidth = '0';
 
-// const url = document.createElement('originalurl');
-// url.textContent = window.location.href;
+body.append(iframe);
+// Remove frameset containing shitty styled content
+const oldFrame = document.querySelector('frameset');
+oldFrame.parentNode.removeChild(oldFrame);
 
-console.log(iframe);
-const currentFrame = document.querySelector('frameset');
-
-currentFrame.parentNode.replaceChild(iframe, currentFrame);
-
-
+// Add body and appended frame to page
+document.head.insertAdjacentElement('afterend', body);
