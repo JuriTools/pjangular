@@ -1,17 +1,26 @@
 # PjAngular
 
 ## Todo
-- Fix that only first book is correctly parsed
-    - Chapters and other containers are not correctly printed
-- Fix service for ingress from ejustice website
+- Chapters and other containers are not correctly printed for French
+
+### Back end
+- Add service to search in preformatted database (ElasticSearch?)
 - Add service for ingress from preformatted database
+
+### Extension
 - Export as a plugin for Chrome & Firefox
+    - Create separate extension to refer ejustice links to own site, passing url as argument
+            - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Intercept_HTTP_requests
+        
+### Front end 
 - Update layout and design
+    - ng zorro
+    
+### Functionality
 - Versioning / diff between versions
-- Link to other laws / incorporate specific references as pop-up
-
 - Add support for adding law to wettenbundel
-
+    - Add to extension
+    - Add to hosted site
 
 ## Development server
 
