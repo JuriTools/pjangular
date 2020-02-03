@@ -10,6 +10,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatToolbarModule,
     MatTreeModule
@@ -23,7 +24,7 @@ import {SafeHtmlPipe} from './safe-html.pipe';
 import {EjArticleComponent} from './ej-article/ej-article.component';
 import {EjContainerComponent} from './ej-container/ej-container.component';
 import {TocContainerComponent} from './toc-container/toc-container.component';
-import {RouterModule} from '@angular/router';
+
 
 @NgModule({
     declarations: [
@@ -38,12 +39,19 @@ import {RouterModule} from '@angular/router';
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        MatButtonModule, MatCheckboxModule, MatCardModule,
-        MatSidenavModule, MatMenuModule, MatIconModule, MatToolbarModule, MatTreeModule, MatFormFieldModule, MatInputModule, MatButtonToggleModule, MatExpansionModule,
-        RouterModule.forRoot([
-            {path: '', component: AppComponent},
-            {path: 'law', component: EjLawComponent}
-        ]),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatMenuModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatTreeModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
+        MatProgressSpinnerModule
     ],
     providers: [],
     bootstrap: [AppComponent]
