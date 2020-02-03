@@ -13,12 +13,15 @@ export class EjLawComponent implements OnInit {
     urlFrench: string;
     doc;
     law: Law;
+    lawLoaded: boolean;
+    lawLoading: boolean;
     showpreambule = false;
     showCoS = false;
     language = 'nl';
 
     constructor(private ejLawService: EjLawService) {
         this.url = '';
+        this.lawLoaded = false;
     }
 
     ngOnInit() {
@@ -50,11 +53,15 @@ export class EjLawComponent implements OnInit {
     }
 
     getLaw(url) {
-        console.log(url);
         this.parseUrl(url);
+        this.lawLoaded = false;
+        this.lawLoading = true;
         this.doc = this.ejLawService.getDoc(url)
-            .subscribe((data) =>
-                this.law = this.ejLawService.createLaw(data)
+            .subscribe((data) => {
+                    this.law = this.ejLawService.createLaw(data);
+                    this.lawLoaded = true;
+                    this.lawLoading = false;
+                }
             );
     }
 

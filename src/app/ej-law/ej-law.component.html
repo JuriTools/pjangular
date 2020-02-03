@@ -1,56 +1,61 @@
-<mat-form-field class="url-form-field" #urlField>
-  <input #urlInput
-         matInput
-         placeholder="URL van wet"
-         value="">
-  <button (click)='getLaw(urlInput.value)'>Go!</button>
+<mat-form-field class="url-form-field" #urlField *ngIf="url === ''">
+    <input #urlInput
+           matInput
+           placeholder="URL van wet"
+           value="">
+    <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
-<mat-toolbar>
-  <button type="button" *ngIf="!drawer.opened" mat-raised-button (click)="drawer.toggle()">
-    <ng-container i18n>Inhoudsopgave</ng-container>
-  </button>
-  <button type="button" *ngIf="drawer.opened" mat-flat-button (click)="drawer.toggle()">
-    <ng-container i18n>Inhoudsopgave</ng-container>
-  </button>
-  <button type="button" *ngIf="!showpreambule" mat-raised-button (click)="showPreambule()">
-    <ng-container i18n>Aanhef</ng-container>
-  </button>
-  <button type="button" *ngIf="showpreambule" mat-flat-button (click)="showPreambule()">
-    <ng-container i18n>Aanhef</ng-container>
-  </button>
-  <button type="button" mat-button (click)="switchLawLanguage()">
-    <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
-    <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
-  </button>
-  <button mat-button [matMenuTriggerFor]="menu">Links</button>
-  <mat-menu #menu>
-    <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
-    <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a></button>
-    <button mat-menu-item><a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
-      Uitvoeringsbesluiten</a></button>
-  </mat-menu>
-</mat-toolbar>
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #drawer mode="side" closed>
-    <mat-card-title i18n>Inhoudsopgave</mat-card-title>
-  <app-toc-container [items]="law?.law.children"></app-toc-container>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-card>
-      <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
-    </mat-card>
-    <mat-card *ngIf="showpreambule">
-      <mat-card-title>Aanhef</mat-card-title>
-      {{law?.preambule}}
-    </mat-card>
-    <mat-card class="law-metadata">
-      <ol style="list-style-type:none;">
-        <li i18n>Datum van Publicatie: <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></li>
-        <li i18n>Datum van Inwerkingtreding: {{ law?.dateWorking | date:'mediumDate'}}</li>
-        <li i18n>Bron: <strong>{{ law?.source | titlecase}}</strong></li>
-        <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
-      </ol>
-    </mat-card>
-    <app-ej-container [items]="law?.law.children"></app-ej-container>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div *ngIf="lawLoaded">
+    <mat-toolbar>
+        <button type="button" *ngIf="!drawer.opened" mat-raised-button (click)="drawer.toggle()">
+            <ng-container i18n>Inhoudsopgave</ng-container>
+        </button>
+        <button type="button" *ngIf="drawer.opened" mat-flat-button (click)="drawer.toggle()">
+            <ng-container i18n>Inhoudsopgave</ng-container>
+        </button>
+        <button type="button" *ngIf="!showpreambule" mat-raised-button (click)="showPreambule()">
+            <ng-container i18n>Aanhef</ng-container>
+        </button>
+        <button type="button" *ngIf="showpreambule" mat-flat-button (click)="showPreambule()">
+            <ng-container i18n>Aanhef</ng-container>
+        </button>
+        <button type="button" mat-button (click)="switchLawLanguage()">
+            <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
+            <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
+        </button>
+        <button mat-button [matMenuTriggerFor]="menu">Links</button>
+        <mat-menu #menu>
+            <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
+            <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a>
+            </button>
+            <button mat-menu-item><a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl"
+                                     i18n>
+                Uitvoeringsbesluiten</a></button>
+        </mat-menu>
+    </mat-toolbar>
+    <mat-sidenav-container class="law-container">
+        <mat-sidenav #drawer mode="side" closed>
+            <mat-card-title i18n>Inhoudsopgave</mat-card-title>
+            <app-toc-container [items]="law?.law.children"></app-toc-container>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-card>
+                <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
+            </mat-card>
+            <mat-card *ngIf="showpreambule">
+                <mat-card-title>Aanhef</mat-card-title>
+                {{law?.preambule}}
+            </mat-card>
+            <mat-card class="law-metadata">
+                <ol style="list-style-type:none;">
+                    <li i18n>Datum van Publicatie: <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></li>
+                    <li i18n>Datum van Inwerkingtreding: {{ law?.dateWorking | date:'mediumDate'}}</li>
+                    <li i18n>Bron: <strong>{{ law?.source | titlecase}}</strong></li>
+                    <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
+                </ol>
+            </mat-card>
+            <app-ej-container [items]="law?.law.children"></app-ej-container>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+<mat-spinner *ngIf="lawLoading"></mat-spinner>
