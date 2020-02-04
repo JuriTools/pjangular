@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{EtE5:function(e,o){chrome.runtime.onMessage.addListener((e,o,n)=>{console.log(o.tab?"from a content script:"+o.tab.url:"from the extension"),console.log(e),e.ejusticeurl&&n({farewell:"goodbye"})})}},[["EtE5",0]]]);
