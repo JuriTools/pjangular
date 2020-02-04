@@ -26,7 +26,7 @@ export class EjLawComponent implements OnInit {
 
     ngOnInit() {
         // adding url as iframe name allows cross domain information passing
-        if (window.name !== '') {
+        if (window.name.includes('ejustice')) {
             this.url = window.name;
             this.getLaw(this.url);
         }
