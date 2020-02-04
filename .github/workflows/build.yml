@@ -34,7 +34,8 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
-    name: npm test and npm e2e
+    steps:
+      - name: npm test and npm e2e
         run: |
           npm run test
           npm run e2e
