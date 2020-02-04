@@ -1,4 +1,5 @@
 # PjAngular
+![Build](https://github.com/mvwestendorp/pjangular/workflows/Build/badge.svg?branch=master)
 
 ## Todo
 - Chapters and other containers are not correctly printed for French
