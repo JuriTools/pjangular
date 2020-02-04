@@ -1,5 +1,5 @@
-<div class="{{item.type}}" *ngFor="let item of items">
-    <div i18n *ngIf="!getIsArticle(item)"> {{item.type}} {{item.id}}
+<mat-card class="{{item.type}}" *ngFor="let item of items">
+    <mat-card i18n *ngIf="!getIsArticle(item)"> {{item.type}} {{item.id}}
         <app-toc-container [items]="item.children" *ngIf="item.children"></app-toc-container>
-    </div>
-</div>
+    </mat-card>
+</mat-card>

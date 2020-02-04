@@ -7,13 +7,16 @@
 </mat-form-field>
 <div *ngIf="lawLoaded">
     <mat-toolbar>
-        <button type="button" *ngIf="!drawer.opened" mat-raised-button (click)="drawer.toggle()">
+        <button type="button" *ngIf="!drawer.opened" mat-raised-button (click)="drawer.toggle()"
+                color="primary">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
-        <button type="button" *ngIf="drawer.opened" mat-flat-button (click)="drawer.toggle()">
+        <button type="button" *ngIf="drawer.opened" mat-flat-button (click)="drawer.toggle()"
+                color="warn">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
-        <button type="button" *ngIf="!showpreambule" mat-raised-button (click)="showPreambule()">
+        <button type="button" *ngIf="!showpreambule" mat-raised-button (click)="showPreambule()"
+                color="accent">>
             <ng-container i18n>Aanhef</ng-container>
         </button>
         <button type="button" *ngIf="showpreambule" mat-flat-button (click)="showPreambule()">
@@ -58,4 +61,6 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
-<mat-spinner *ngIf="lawLoading"></mat-spinner>
+<div class="spinner-container" *ngIf="lawLoading">
+    <mat-spinner [color]="'primary'"></mat-spinner>
+</div>

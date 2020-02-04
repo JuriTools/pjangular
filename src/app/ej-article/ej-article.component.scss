@@ -1,0 +1,32 @@
+@mixin article-theme($theme) {
+  .article {
+    background-color: mat-color($pj-primary);
+    margin: 1em;
+    border-style: groove;
+  }
+}
+
+@mixin article-typography($config) {
+  .article {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: mat-font-weight($config, body-1);
+    }
+  }
+}
+
+
+
+.dotlist {
+  padding-left: 1em;
+}
+
+.lid{
+  color: darkslategrey;
+  text-underline: aqua;
+}
+
+.line {
+  padding-bottom: 10px;
+}

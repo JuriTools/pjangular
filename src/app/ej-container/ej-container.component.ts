@@ -5,7 +5,7 @@ import {Container} from '../law';
 @Component({
     selector: 'app-ej-container',
     templateUrl: './ej-container.component.html',
-    styleUrls: ['./ej-container.component.css']
+    styleUrls: ['./ej-container.component.scss']
 })
 export class EjContainerComponent implements OnInit {
     @Input() items: Container[] | Article[];

@@ -4,7 +4,7 @@ import {Article} from '../article';
 @Component({
   selector: 'app-toc-container',
   templateUrl: './toc-container.component.html',
-  styleUrls: ['./toc-container.component.css']
+  styleUrls: ['./toc-container.component.scss']
 })
 export class TocContainerComponent implements OnInit {
   @Input() items;

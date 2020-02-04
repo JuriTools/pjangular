@@ -5,7 +5,7 @@ import {Law} from '../law';
 @Component({
     selector: 'app-ej-law',
     templateUrl: './ej-law.component.html',
-    styleUrls: ['./ej-law.component.css']
+    styleUrls: ['./ej-law.component.scss']
 })
 export class EjLawComponent implements OnInit {
     url: string;

@@ -1,6 +1,6 @@
-<div class="article" id="{{article.artId}}" *ngIf="article.artId !== undefined">
-  <h3>Artikel {{article.artId}}</h3>
+<mat-card class="article" id="{{article.artId}}" *ngIf="article.artId !== undefined">
+  <mat-card-title>Artikel {{article.artId}}</mat-card-title>
   <div class="line {{ line.type }}" *ngFor="let line of article.lines">
     <span class="lid" *ngIf="line.lidId"><u>Lid {{line.lidId}}</u></span> {{ line.text }}
   </div>
-</div>
+</mat-card>

@@ -1,0 +1,35 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import 'node_modules/@angular/material/theming';
+@import 'app/ej-article/ej-article.component';
+@import 'src/palette';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$pj-primary: mat-palette($md-mcgblue, A200, A100, A400);
+$pj-accent: mat-palette($mat-blue-gray);
+
+// The warn palette is optional (defaults to red).
+$pj-warn: mat-palette($mat-deep-orange);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$pj-theme: mat-light-theme($pj-primary, $pj-accent, $pj-warn);
+
+$pj-background: mat-palette($md-mcgblue, 100, 200, 400);
+
+@mixin pj-theme($theme) {
+        @include article-theme(theme);
+}
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($pj-theme);
+@include pj-theme($pj-theme);
