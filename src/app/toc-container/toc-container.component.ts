@@ -13,7 +13,7 @@ export class TocContainerComponent implements OnInit {
   ngOnInit() {
   }
 
-  getIsArticle(item) {
-    return typeof item === typeof Article;
-  }
+    getIsArticle(item) {
+        return item.constructor.name === 'Article';
+    }
 }
