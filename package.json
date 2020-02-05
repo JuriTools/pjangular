@@ -11,7 +11,8 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:ci": "npm run clean && npm run build:prod"
+    "build:ci": "npm run clean && npm run build:prod",
+    "pack:ext": "npm run build:prod && web-ext build -s 'dist/pj-angular/'"
   },
   "private": true,
   "dependencies": {
