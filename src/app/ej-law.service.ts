@@ -101,9 +101,12 @@ export class EjLawService {
         const section = (this.language === 'fr') ? 'Section' : 'afdeling';
         const subSection = (this.language === 'fr') ? 'Sous-section' : 'onderafdeling';
         const article = (this.language === 'fr') ? 'Art' : 'Art';
-        const appendix = (this.language === 'fr') ? '' : 'BIJLAGEN';
-        // todo LNKR number does not indicate correct chapter number
-        // todo Add book support
+        const appendix = (this.language === 'fr') ? '__' : 'BIJLAGEN';
+
+        // todo tag errata and modifications
+        const errata = (this.language === 'fr') ? 'Erratum' : 'Erratum';
+        const modifications = (this.language === 'fr') ? 'Modification(s)' : 'Wijziging(en)';
+
         const regexbook = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${book}\\s(.{1,16}?)\.<\\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${book}|${appendix})|signature))`, 'gi');
         const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${title}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${title}|${appendix})|signature)|</book>)`, 'gi');
         const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${chapter}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${chapter}|${appendix})|signature)|</book>|</lawtitle>)`, 'gi');
