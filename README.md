@@ -3,7 +3,7 @@
 ![Test](https://github.com/mvwestendorp/pjangular/workflows/Test/badge.svg?branch=master)
 
 ## Todo
-- Chapters and other containers are not correctly printed for French
+
 
 ### Back end
 - Add service to search in preformatted database (ElasticSearch?)
@@ -16,7 +16,8 @@
         
 ### Front end 
 - Update layout and design
-    - ToC: mat-tree  
+    - ToC: mat-tree
+        - convert law containers to JSON
     
 ### Functionality
 - Versioning / diff between versions
