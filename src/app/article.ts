@@ -30,7 +30,7 @@ export class Article {
       lines[i] = new Line(linesDom[i], this.artId);
 
     }
-    // console.log(lines);
+    console.log(lines);
 
     // todo remove empty lines
     return lines;
