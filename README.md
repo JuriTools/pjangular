@@ -2,10 +2,12 @@
 ![Build](https://github.com/mvwestendorp/pjangular/workflows/Build/badge.svg?branch=master)
 ![Test](https://github.com/mvwestendorp/pjangular/workflows/Test/badge.svg?branch=master)
 
-
-
 ## Todo
-
+- Add support for ELI: http://www.ejustice.just.fgov.be/eli/decreet/2018/05/11/2018202651/justel
+- Fix ToC by using mat-tree
+- Fix production optimization
+- Fix warning sanitizing url
+- Add tests
 
 ### Back end
 - Add service to search in preformatted database (ElasticSearch?)

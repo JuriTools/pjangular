@@ -13,7 +13,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run build:prod",
-    "pack:ext": "ng build --prod --sourceMap=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'"
+    "pack:prod": "ng build --prod --sourceMap=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'",
+    "pack:dev": "ng build && web-ext build -s 'dist/pj-angular/'"
   },
   "private": true,
   "dependencies": {
