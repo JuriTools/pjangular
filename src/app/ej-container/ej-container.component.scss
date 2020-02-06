@@ -1,17 +1,3 @@
-mat-card-title  {
-    color: red;
-}
+@mixin container-theme($theme) {
 
-.book {
-    background-color: azure;
-}
-
-.lawtitle {
-    color: aqua;
-    background-color: fuchsia;
-}
-
-.chapter {
-    color: blue;
-    background-color: aliceblue;
 }

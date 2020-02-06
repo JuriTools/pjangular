@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EjLawService} from '../ej-law.service';
 import {Law} from '../law';
 
+
 @Component({
     selector: 'app-ej-law',
     templateUrl: './ej-law.component.html',

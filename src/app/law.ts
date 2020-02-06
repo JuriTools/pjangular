@@ -22,6 +22,7 @@ export class Container {
         this.title = title;
         this.DOM = DOM;
     }
+
     // todo: add french, move to translation files
     getTypeLabel(type) {
         const labels = {
@@ -33,6 +34,7 @@ export class Container {
         };
         return labels[type];
     }
+
     next() {
         return this;
     }

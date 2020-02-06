@@ -1,39 +1,35 @@
-<mat-form-field class="url-form-field" #urlField *ngIf="url === ''">
-    <input #urlInput
-           matInput
-           placeholder="URL van wet"
-           value="">
+<mat-form-field class="url-form-field" *ngIf="url === ''">
+    <label>
+        <input #urlInput
+               matInput
+               placeholder="URL van wet"
+               value="">
+    </label>
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
 <div *ngIf="lawLoaded">
     <mat-toolbar>
-        <button type="button" *ngIf="!drawer.opened" mat-raised-button (click)="drawer.toggle()"
+        <button type="button" mat-flat-button (click)="drawer.toggle()"
                 color="primary">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
-        <button type="button" *ngIf="drawer.opened" mat-flat-button (click)="drawer.toggle()"
-                color="warn">
-            <ng-container i18n>Inhoudsopgave</ng-container>
-        </button>
-        <button type="button" *ngIf="!showpreambule" mat-raised-button (click)="showPreambule()"
-                color="accent">>
+        <button type="button" mat-flat-button (click)="showPreambule()"
+                color="accent">
             <ng-container i18n>Aanhef</ng-container>
         </button>
-        <button type="button" *ngIf="showpreambule" mat-flat-button (click)="showPreambule()">
-            <ng-container i18n>Aanhef</ng-container>
-        </button>
-        <button type="button" mat-button (click)="switchLawLanguage()">
+        <button type="button" mat-flat-button (click)="switchLawLanguage()" color="primary">
             <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
             <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
         </button>
-        <button mat-button [matMenuTriggerFor]="menu">Links</button>
+        <button type="button" mat-flat-button [matMenuTriggerFor]="menu" color="primary">Links</button>
         <mat-menu #menu>
             <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
             <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a>
             </button>
-            <button mat-menu-item><a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl"
-                                     i18n>
-                Uitvoeringsbesluiten</a></button>
+            <button mat-menu-item>
+                <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
+                    Uitvoeringsbesluiten
+                </a></button>
         </mat-menu>
     </mat-toolbar>
     <mat-sidenav-container class="law-container">

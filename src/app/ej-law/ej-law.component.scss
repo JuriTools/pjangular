@@ -1,9 +1,23 @@
-.article {
-  background: lavenderblush;
-}
-
-.chapter {
-  background: ivory;
+@mixin law-theme($theme) {
+  mat-card-title {
+    color: lightblue;
+    opacity: 80%;
+  }
+  .book {
+    background-color: inherit;
+  }
+  .lawtitle {
+    background-color: mat-color($pj-background, 50);
+  }
+  .chapter {
+    background-color: mat-color($pj-background, 100);
+  }
+  .article {
+    background-color: mat-color($pj-background, 200);
+  }
+  div {
+    background-color: lightblue;
+  }
 }
 
 .url-form-field {

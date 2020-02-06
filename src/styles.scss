@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "src/theme";
+@import url('https://fonts.googleapis.com/css?family=Abel|Raleway|Roboto&display=swap');
 
 html, body {
     height: 100%;
@@ -7,8 +8,5 @@ html, body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Abel, sans-serif;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

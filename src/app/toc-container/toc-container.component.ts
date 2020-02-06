@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Article} from '../article';
+import {Container} from '../law';
 
 @Component({
   selector: 'app-toc-container',
@@ -7,7 +8,7 @@ import {Article} from '../article';
   styleUrls: ['./toc-container.component.scss']
 })
 export class TocContainerComponent implements OnInit {
-  @Input() items;
+  @Input() items: Container[] | Article[];
   constructor() { }
 
   ngOnInit() {
