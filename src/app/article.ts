@@ -30,9 +30,8 @@ export class Article {
       lines[i] = new Line(linesDom[i], this.artId);
 
     }
-    console.log(lines);
-
     // todo remove empty lines
+    // todo tag lines indicating modfications
     return lines;
   }
 }

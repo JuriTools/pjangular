@@ -133,6 +133,12 @@ export class Law {
             this.addChildren(c);
             this.law.addChild(c);
         }
+        if (this.law.children.length === 0) {
+            // Some laws have only articles
+            for (const article of DOM.querySelectorAll('article')) {
+                this.law.addChild(new Article(article));
+            }
+        }
     }
 
     getPreambule(DOM) {
