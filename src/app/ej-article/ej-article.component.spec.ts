@@ -33,7 +33,7 @@ describe('EjArticleComponent', () => {
     it('should create', () => {
         // todo fix test
         // TestHostComponent.setArticle(new Article(testDOM));
-        //fixture.detectChanges();
+        // fixture.detectChanges();
         // expect(component).toBeTruthy();
     });
 
