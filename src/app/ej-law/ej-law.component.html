@@ -8,13 +8,13 @@
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
 <div *ngIf="lawLoaded">
-    <mat-toolbar>
+    <mat-toolbar id="main-toolbar">
         <button type="button" mat-flat-button (click)="drawer.toggle()"
                 color="primary">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
         <button type="button" mat-flat-button (click)="showPreambule()"
-                color="accent">
+                color="primary">
             <ng-container i18n>Aanhef</ng-container>
         </button>
         <button type="button" mat-flat-button (click)="switchLawLanguage()" color="primary">

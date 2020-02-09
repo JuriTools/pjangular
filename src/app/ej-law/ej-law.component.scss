@@ -1,22 +1,27 @@
 @mixin law-theme($theme) {
-  mat-card-title {
-    color: lightblue;
+  button {
+    color: black;
+  }
+  h2 {
+    background-color: lightblue;
     opacity: 80%;
   }
+
   .book {
     background-color: inherit;
   }
   .lawtitle {
-    background-color: mat-color($pj-background, 50);
+    // background-color: mat-color($pj-background, 50);
   }
   .chapter {
-    background-color: mat-color($pj-background, 100);
+    // background-color: mat-color($pj-background, 100);
   }
   .article {
-    background-color: mat-color($pj-background, 200);
+    background-color: mat-color($pj-background, 100);
   }
-  div {
-    background-color: lightblue;
+  #main-toolbar {
+    position: sticky;
+    top: 0;
   }
 }
 
@@ -29,13 +34,14 @@ mat-card {
 }
 
 mat-spinner {
-  position: center;
+  position: fixed;
   margin: 5%;
+  padding: 45px;
 }
 
 .spinner-container {
-  width: 100%;
-  height: 100%;
+  width: 1vw;
+  height: 1vh;
   padding-left: 40%;
   padding-top: 25%;
   overflow: hidden;

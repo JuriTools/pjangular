@@ -1,7 +1,7 @@
 <div class="{{item.type}}" *ngFor="let item of items">
-    <mat-card *ngIf="isContainer(item)">
-        <mat-card-title i18n *ngIf="item.type"> {{item.typeLabel}} {{item.title}}</mat-card-title>
+    <div *ngIf="isContainer(item)">
+        <h2 i18n *ngIf="item.type"> {{item.typeLabel}} {{item.title}}</h2>
         <app-ej-container class="{{item.type}}" [items]="item.children" *ngIf="item.children"></app-ej-container>
-    </mat-card>
+    </div>
     <app-ej-article [article]="item" *ngIf="isArticle(item)"></app-ej-article>
 </div>
