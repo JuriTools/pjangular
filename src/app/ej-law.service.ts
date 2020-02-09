@@ -50,6 +50,10 @@ export class EjLawService {
             if (m[1] === 'nl' || m[1] === 'fr') {
                 return m[1];
             }
+        } else if (url?.href.search(/eli\/[decret|loi]/)) {
+            return 'fr';
+        } else if (url?.href.search(/eli\/[decreet|wet]/)) {
+            return 'nl';
         } else {
             const langCell = DOM?.querySelector('body > table:nth-child(4) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(5)');
             if (langCell?.textContent.includes('Frans')) {
