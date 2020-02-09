@@ -5,6 +5,7 @@ export function strip(str) {
 }
 
 export class Container {
+    classId = 'Container';
     type: string;
     typeLabel: string;
     parent: Container;
@@ -45,6 +46,7 @@ export class Container {
 }
 
 export class Law {
+    classId = 'Law';
     title: string;
     displayTitle: string;
     dateWorking: Date;

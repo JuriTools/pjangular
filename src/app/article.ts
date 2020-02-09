@@ -2,6 +2,7 @@ import { Line } from './line';
 
 
 export class Article {
+  classId = 'Article';
   artId: number;
   book = 0;
   title = 0;

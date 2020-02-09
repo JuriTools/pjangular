@@ -5,7 +5,6 @@
 ## Todo
 - Add support for ELI: http://www.ejustice.just.fgov.be/eli/decreet/2018/05/11/2018202651/justel
 - Fix ToC by using mat-tree
-- Fix production optimization
 - Fix warning sanitizing url
 - Add tests
 
