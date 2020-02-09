@@ -80,7 +80,6 @@ export class Law {
         this.chapters = [];
         this.sections = [];
         this.subSections = [];
-        console.log(DOM);
         const dataText = DOM.getElementById('Wetstitel').innerText;
         if (DOM.getElementById('Wetstitel').querySelector('a')) {
             this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
@@ -148,16 +147,14 @@ export class Law {
     getPreambule(DOM) {
         if (this.language === 'nl') {
             if (DOM.getElementById('Aanhef')) {
-                console.log(DOM.getElementById('Aanhef').querySelectorAll('th'));
                 return DOM.getElementById('Aanhef').querySelectorAll('th')[4].innerText;
             }
         } else if (this.language === 'fr') {
             if (DOM.getElementById('Aanhef')) {
-                console.log(DOM.getElementById('Aanhef').querySelectorAll('th'));
                 return DOM.getElementById('Aanhef').innerText;
             }
         } else {
-            console.log('No preambule, investigate.');
+            console.warn('No preambule, investigate.');
             return '';
         }
     }
@@ -186,10 +183,9 @@ export class Law {
     }
 
     getLawTitle(text) {
-        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
-        // console.log(text);
-        // console.log(title);
-        return title[2];
+        // todo add support for notes in title
+        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*?)\s([\(|\[].*[\)|\]])/mi.exec(text);
+        return title[2].replace(/[\s\.]$/, '');
     }
 
     getLawDate(text) {
