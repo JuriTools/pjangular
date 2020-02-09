@@ -50,6 +50,7 @@ export class EjLawComponent implements OnInit {
     switchLawLanguage() {
         const urls = this.ejLawService.getURLs();
         this.language = this.language === 'nl' ? 'fr' : 'nl';
+        this.lawLoading = true;
         this.getLaw(urls[this.language], this.language);
     }
 
