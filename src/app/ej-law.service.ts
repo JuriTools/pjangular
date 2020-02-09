@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Law} from './law';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class EjLawService {
-    baseUrl = 'http://www.ejustice.just.fgov.be';
-    url: string;
+    urls: {nl, fr};
     language: string;
     doc;
     DOM;
@@ -17,66 +17,124 @@ export class EjLawService {
     constructor(private http: HttpClient) {
     }
 
-    getDocEli(url) {
-        this.language = 'nl';
-        this.doc = this.http.get(url, {responseType: 'text'});
+    getDoc(url: string): Observable<string> {
+        this.urls = this.parseUrl(url);
+        const lang = this.getLanguage(url);
+        this.doc = this.http.get(this.urls[lang], {responseType: 'text'});
         return this.doc;
     }
 
-    getDoc(url) {
-        if (url.includes('eli/wet')) {
-            return this.getDocEli(url);
+    parseUrl(url: string): { nl, fr } {
+        let urlDutch = url;
+        let urlFrench = url;
+        // do some check on url
+        if (!url.includes('ejustice')) {
+            throw new Error('Invalid URL');
         }
-        console.log('In ej-law.service:getDoc()');
-        console.log(url);
-        // todo change frame handling, get correct url from site itself, pass that http.get as a promise
-        this.language = this.setLanguage(url);
-        const requireFrame = /cgi_loi\/(.*?)\?/.exec(url);
-        console.log(requireFrame);
-        if (requireFrame[1] === 'change_lg.pl') {
-            console.log('Require Frame');
-            url = url.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
-            let lawTab = 'wet';
-            if (this.language === 'fr') {
-                lawTab = 'loi';
+        // todo add regex tests for valid urls
+
+        // todo parse both urls, create list, instead of long if/else statement
+        const urlPartList = [
+            {wet: {nl: 'wet', fr: 'loi'}},
+            {decreet: {nl: 'decreet', fr: 'decret'}}
+        ];
+        if (url.includes('eli')) {
+            if (url.includes('eli/wet')) {
+                urlDutch = url;
+                urlFrench = url.replace('eli/wet', 'eli/loi');
+            } else if (url.includes('eli/loi')) {
+                urlFrench = url;
+                urlDutch = url.replace('eli/loi', 'eli/wet');
+            } else if (url.includes('eli/decreet')) {
+                urlDutch = url;
+                urlFrench = url.replace('eli/decreet', 'eli/decret');
+            } else if (url.includes('eli/decret')) {
+                urlFrench = url;
+                urlDutch = url.replace('eli/decret', 'eli/decreet');
+            } else {
+                throw new Error('Unknown ELI url variant');
             }
-            url = url.replace('change_lg.pl', 'loi_a1.pl') + '&&caller=list&' + this.language[0].toUpperCase() + '&fromtab=' + lawTab + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
         }
-        this.url = url;
+        const requireFrame = /cgi_loi\/(.*?)\?/.exec(url);
+        if (requireFrame) {
+            url = url.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
+            urlDutch = url
+                .replace('language=fr', 'language=nl')
+                .replace('la=F', 'la=N');
+            urlFrench = url
+                .replace('language=nl', 'language=fr')
+                .replace('la=N', 'la=F');
+            if (!url.includes('caller=list')) {
+                urlDutch += '&&caller=list&' + 'N' + '&fromtab=' + 'wet' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
+                urlFrench += '&&caller=list&' + 'F' + '&fromtab=' + 'loi' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
+            } else {
+                urlDutch = urlDutch.replace('&F&', '&N&');
+                urlFrench = urlFrench.replace('&N&', '&F&');
+            }
+            if (requireFrame[1] === 'change_lg.pl') {
+                urlDutch = urlDutch.replace('change_lg.pl', 'loi_a1.pl');
+                urlFrench = urlFrench.replace('change_lg.pl', 'loi_a1.pl');
+            }
+        }
+        return {
+            nl: urlDutch.replace(/=loi/g, '=wet'),
+            fr: urlFrench.replace(/=wet/g, '=loi')
+        };
+    }
+
+    getUrl(language: string): string {
+        return this.urls[language];
+    }
+
+    getUrls(): { nl, fr } {
+        return this.urls;
+    }
+
+    getDocEli(url: string): Observable<string> {
         this.doc = this.http.get(url, {responseType: 'text'});
-        console.log('URL:' + this.url);
-        console.log(this.doc);
         return this.doc;
     }
 
-    setLanguage(url) {
-        // todo look at contents of site too
-        console.log(url);
+
+    setlanguage(lang: string) {
+        this.language = lang;
+    }
+
+    getLanguage(url?, DOM?): 'nl' | 'fr' {
         const m = /language=([a-z]{2})/i.exec(url);
-        console.log(m[1]);
+        // tslint:disable-next-line
         if (m) {
-            return m[1];
+            if (m[1] === 'nl' || m[1] === 'fr') {
+                return m[1];
+            }
+        } else {
+            const langCell = DOM?.querySelector('body > table:nth-child(4) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(5)');
+            if (langCell?.textContent.includes('Frans')) {
+                return 'nl';
+            } else if (langCell?.textContent.includes('néerlandaise')) {
+                return 'fr';
+            }
         }
     }
 
-    createLaw(data) {
+    createLaw(data): Law {
         const DOM = this.getDOM(data);
         this.law = new Law(DOM, this.language);
         return this.law;
         // this.law.articles = this.parseArticles(DOM);
     }
 
-    getLaw() {
+    getLaw(): Law {
         return this.law;
     }
 
-    getDOM(doc) {
+    getDOM(doc): Document {
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
         const frameDoc = DOM.querySelector('frame');
         if (frameDoc) {
             console.warn('Not providing correct url. No support yet for baseURL, require frame for now');
         }
-
+        this.language = this.getLanguage('', DOM);
         DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
         DOM = this.tagParagraphs(DOM);

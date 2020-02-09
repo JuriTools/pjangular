@@ -33,28 +33,7 @@ export class EjLawComponent implements OnInit {
         }
     }
 
-    parseUrl(url) {
-        this.url = url;
-        // todo switches language based on url, should be more generic
-        if (url.includes('language=fr&la=F')) {
-            this.urlFrench = url;
-            this.language = 'fr';
-            url = url.replace('language=fr&la=F', 'language=nl&la=N');
-            url = url.replace('&F&', '&N&');
-            url = url.replace('table_name=loi', 'table_name=wet');
-            this.urlDutch = url;
-        } else if (url.includes('language=nl&la=N')) {
-            this.urlDutch = url;
-            this.language = 'nl';
-            url = url.replace('language=nl&la=N', 'language=fr&la=F');
-            url = url.replace('&N&', '&F&');
-            url = url.replace('table_name=wet', 'table_name=loi');
-            this.urlFrench = url;
-        }
-    }
-
     getLaw(url) {
-        this.parseUrl(url);
         this.lawLoaded = false;
         this.lawLoading = true;
         this.doc = this.ejLawService.getDoc(url)
@@ -62,6 +41,9 @@ export class EjLawComponent implements OnInit {
                     this.law = this.ejLawService.createLaw(data);
                     this.lawLoaded = true;
                     this.lawLoading = false;
+                    const urls = this.ejLawService.getUrls();
+                    this.urlDutch = urls.nl;
+                    this.urlFrench = urls.fr;
                 }
             );
     }
@@ -69,9 +51,11 @@ export class EjLawComponent implements OnInit {
     switchLawLanguage() {
         if (this.language === 'nl') {
             this.language = 'fr';
+            this.ejLawService.setlanguage('fr');
             this.getLaw(this.urlFrench);
         } else if (this.language === 'fr') {
             this.language = 'nl';
+            this.ejLawService.setlanguage('nl');
             this.getLaw(this.urlDutch);
         }
     }

@@ -21,6 +21,7 @@
 - Update layout and design
     - ToC: mat-tree
         - convert law containers to JSON
+- Add error message on failed url
     
 ### Functionality
 - Versioning / diff between versions
