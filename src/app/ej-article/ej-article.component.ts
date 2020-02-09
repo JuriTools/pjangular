@@ -15,14 +15,6 @@ export class EjArticleComponent implements OnInit {
   lines: Line[];
   @Input()
   article: Article;
-  @Input()
-  title: number;
-  @Input()
-  chapter: number;
-  @Input()
-  section: number;
-  @Input()
-  subsection: number;
 
   constructor() {
   }
