@@ -1,5 +1,7 @@
 import {Article} from './article';
 
+export type Language = 'nl' | 'fr';
+
 export function strip(str) {
     return str.replace(/^\s+|\s+$/g, '');
 }
@@ -71,7 +73,7 @@ export class Law {
     archivesUrl: string;
     implementingDocumentsUrl: string;
 
-    constructor(DOM, language) {
+    constructor(DOM: Document, language) {
         this.containers = [];
         this.books = [];
         this.lawtitles = [];

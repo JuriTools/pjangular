@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EjLawService} from '../ej-law.service';
-import {Law} from '../law';
+import {Law, Language} from '../law';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -9,80 +10,54 @@ import {Law} from '../law';
     styleUrls: ['./ej-law.component.scss']
 })
 export class EjLawComponent implements OnInit {
-    url: string;
-    urlDutch: string;
-    urlFrench: string;
-    doc;
+    url: URL;
     law: Law;
+    law$: Observable<Law>;
     lawLoaded: boolean;
     lawLoading: boolean;
+    languageLoaded: boolean;
     showpreambule = false;
-    showCoS = false;
-    language = 'nl';
+    language: Language;
+
 
     constructor(private ejLawService: EjLawService) {
-        this.url = '';
+        this.language = 'nl';
         this.lawLoaded = false;
+        this.languageLoaded = false;
     }
 
     ngOnInit() {
         // adding url as iframe name allows cross domain information passing
         if (window.name.includes('ejustice')) {
-            this.url = window.name;
+            this.url = new URL(window.name);
             this.getLaw(this.url);
         }
     }
 
-    getLaw(url) {
+    getLaw(urlHref, language?: 'nl' | 'fr') {
         this.lawLoaded = false;
         this.lawLoading = true;
-        this.doc = this.ejLawService.getDoc(url)
-            .subscribe((data) => {
-                    this.law = this.ejLawService.createLaw(data);
-                    this.lawLoaded = true;
-                    this.lawLoading = false;
-                    const urls = this.ejLawService.getUrls();
-                    this.urlDutch = urls.nl;
-                    this.urlFrench = urls.fr;
-                }
-            );
+        this.url = new URL(urlHref);
+        this.ejLawService.getLaw(this.url, language).subscribe(data => {
+            this.law = data;
+            this.language = this.ejLawService.getLanguage(this.url);
+            this.lawLoaded = true;
+            this.lawLoading = false;
+            this.languageLoaded = true;
+        });
     }
 
     switchLawLanguage() {
-        if (this.language === 'nl') {
-            this.language = 'fr';
-            this.ejLawService.setlanguage('fr');
-            this.getLaw(this.urlFrench);
-        } else if (this.language === 'fr') {
-            this.language = 'nl';
-            this.ejLawService.setlanguage('nl');
-            this.getLaw(this.urlDutch);
-        }
+        const urls = this.ejLawService.getURLs();
+        this.language = this.language === 'nl' ? 'fr' : 'nl';
+        this.getLaw(urls[this.language], this.language);
     }
 
 
     showPreambule() {
-        console.log(this.law.preambule);
-        if (this.law.preambule) {
-            this.showpreambule = !this.showpreambule;
-            console.log('Preambule: ' + this.showpreambule);
-        }
+        this.law$.subscribe(law => {
+            this.law.preambule = law.preambule;
+            this.showpreambule = this.showpreambule ? !this.showpreambule : this.showpreambule;
+        });
     }
-
-    showImplementingDocuments() {
-
-    }
-
-    showArchivedVersions() {
-
-    }
-
-    showCouncilOfState() {
-        console.log(this.law.cosUrl);
-        if (this.law.cosUrl) {
-            this.showCoS = !this.showCoS;
-            console.log('Preambule: ' + this.showCoS);
-        }
-    }
-
 }

@@ -1,107 +1,50 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Law} from './law';
-import {Observable} from 'rxjs';
+import {Language, Law} from './law';
+import {Observable, of, throwError} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class EjLawService {
-    urls: {nl, fr};
-    language: string;
+    urls: { nl: URL, fr: URL };
+    language: Language;
     doc;
     DOM;
-    law: Law;
+    laws: { nl: Law, fr: Law };
 
     constructor(private http: HttpClient) {
+        this.laws = {nl: undefined, fr: undefined};
     }
 
-    getDoc(url: string): Observable<string> {
+    getLaw(url: URL, language?: Language): Observable<Law> {
         this.urls = this.parseUrl(url);
-        const lang = this.getLanguage(url);
-        this.doc = this.http.get(this.urls[lang], {responseType: 'text'});
+        language = language ? language : this.getLanguage(url);
+        if (this.laws[language]) {
+            return of(this.laws[language]);
+        } else {
+            this.doc = this.http.get(this.urls[language].href, {responseType: 'text'})
+                .pipe(map(res => {
+                    this.laws[language] = this.createLaw(res);
+                    return this.laws[language];
+                }));
+        }
         return this.doc;
     }
 
-    parseUrl(url: string): { nl, fr } {
-        let urlDutch = url;
-        let urlFrench = url;
-        // do some check on url
-        if (!url.includes('ejustice')) {
-            throw new Error('Invalid URL');
-        }
-        // todo add regex tests for valid urls
-
-        // todo parse both urls, create list, instead of long if/else statement
-        const urlPartList = [
-            {wet: {nl: 'wet', fr: 'loi'}},
-            {decreet: {nl: 'decreet', fr: 'decret'}}
-        ];
-        if (url.includes('eli')) {
-            if (url.includes('eli/wet')) {
-                urlDutch = url;
-                urlFrench = url.replace('eli/wet', 'eli/loi');
-            } else if (url.includes('eli/loi')) {
-                urlFrench = url;
-                urlDutch = url.replace('eli/loi', 'eli/wet');
-            } else if (url.includes('eli/decreet')) {
-                urlDutch = url;
-                urlFrench = url.replace('eli/decreet', 'eli/decret');
-            } else if (url.includes('eli/decret')) {
-                urlFrench = url;
-                urlDutch = url.replace('eli/decret', 'eli/decreet');
-            } else {
-                throw new Error('Unknown ELI url variant');
-            }
-        }
-        const requireFrame = /cgi_loi\/(.*?)\?/.exec(url);
-        if (requireFrame) {
-            url = url.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
-            urlDutch = url
-                .replace('language=fr', 'language=nl')
-                .replace('la=F', 'la=N');
-            urlFrench = url
-                .replace('language=nl', 'language=fr')
-                .replace('la=N', 'la=F');
-            if (!url.includes('caller=list')) {
-                urlDutch += '&&caller=list&' + 'N' + '&fromtab=' + 'wet' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
-                urlFrench += '&&caller=list&' + 'F' + '&fromtab=' + 'loi' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
-            } else {
-                urlDutch = urlDutch.replace('&F&', '&N&');
-                urlFrench = urlFrench.replace('&N&', '&F&');
-            }
-            if (requireFrame[1] === 'change_lg.pl') {
-                urlDutch = urlDutch.replace('change_lg.pl', 'loi_a1.pl');
-                urlFrench = urlFrench.replace('change_lg.pl', 'loi_a1.pl');
-            }
-        }
-        return {
-            nl: urlDutch.replace(/=loi/g, '=wet'),
-            fr: urlFrench.replace(/=wet/g, '=loi')
-        };
+    createLaw(data): Law {
+        const DOM = this.getDOM(data);
+        return new Law(DOM, this.language);
     }
 
-    getUrl(language: string): string {
-        return this.urls[language];
-    }
-
-    getUrls(): { nl, fr } {
+    getURLs() {
         return this.urls;
     }
 
-    getDocEli(url: string): Observable<string> {
-        this.doc = this.http.get(url, {responseType: 'text'});
-        return this.doc;
-    }
-
-
-    setlanguage(lang: string) {
-        this.language = lang;
-    }
-
-    getLanguage(url?, DOM?): 'nl' | 'fr' {
-        const m = /language=([a-z]{2})/i.exec(url);
+    getLanguage(url?: URL, DOM?): Language {
+        const m = /language=([a-z]{2})/i.exec(url?.href);
         // tslint:disable-next-line
         if (m) {
             if (m[1] === 'nl' || m[1] === 'fr') {
@@ -117,15 +60,58 @@ export class EjLawService {
         }
     }
 
-    createLaw(data): Law {
-        const DOM = this.getDOM(data);
-        this.law = new Law(DOM, this.language);
-        return this.law;
-        // this.law.articles = this.parseArticles(DOM);
-    }
+    parseUrl(url: URL): { nl: URL, fr: URL } {
+        // todo add regex tests for valid urls
+        let urlDutch = url.href;
+        let urlFrench = url.href;
 
-    getLaw(): Law {
-        return this.law;
+        // todo parse both urls, create list, instead of long if/else statement
+        const urlPartList = [
+            {wet: {nl: 'wet', fr: 'loi'}},
+            {decreet: {nl: 'decreet', fr: 'decret'}}
+        ];
+        if (url.href.includes('eli')) {
+            if (url.href.includes('eli/wet')) {
+                urlDutch = url.href;
+                urlFrench = url.href.replace('eli/wet', 'eli/loi');
+            } else if (url.href.includes('eli/loi')) {
+                urlFrench = url.href;
+                urlDutch = url.href.replace('eli/loi', 'eli/wet');
+            } else if (url.href.includes('eli/decreet')) {
+                urlDutch = url.href;
+                urlFrench = url.href.replace('eli/decreet', 'eli/decret');
+            } else if (url.href.includes('eli/decret')) {
+                urlFrench = url.href;
+                urlDutch = url.href.replace('eli/decret', 'eli/decreet');
+            } else {
+                throw new Error('Unknown ELI url variant');
+            }
+        }
+        const requireFrame = /cgi_loi\/(.*?)\?/.exec(url.href);
+        if (requireFrame) {
+            url.href = url.href.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
+            urlDutch = url.href
+                .replace('language=fr', 'language=nl')
+                .replace('la=F', 'la=N');
+            urlFrench = url.href
+                .replace('language=nl', 'language=fr')
+                .replace('la=N', 'la=F');
+            if (!url.href.includes('caller=list')) {
+                urlDutch += '&&caller=list&' + 'N' + '&fromtab=' + 'wet' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
+                urlFrench += '&&caller=list&' + 'F' + '&fromtab=' + 'loi' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
+            } else {
+                urlDutch = urlDutch.replace('&F&', '&N&');
+                urlFrench = urlFrench.replace('&N&', '&F&');
+            }
+            if (requireFrame[1] === 'change_lg.pl') {
+                urlDutch = urlDutch.replace('change_lg.pl', 'loi_a1.pl');
+                urlFrench = urlFrench.replace('change_lg.pl', 'loi_a1.pl');
+            }
+        }
+        return {
+            nl: new URL(urlDutch.replace(/=loi/g, '=wet')),
+            fr: new URL(urlFrench.replace(/=wet/g, '=loi'))
+        };
     }
 
     getDOM(doc): Document {
@@ -134,7 +120,7 @@ export class EjLawService {
         if (frameDoc) {
             console.warn('Not providing correct url. No support yet for baseURL, require frame for now');
         }
-        this.language = this.getLanguage('', DOM);
+        this.language = this.getLanguage(undefined, DOM);
         DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
         DOM = this.tagParagraphs(DOM);

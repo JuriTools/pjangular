@@ -1,4 +1,4 @@
-<mat-form-field class="url-form-field" *ngIf="url === ''">
+<mat-form-field class="url-form-field" *ngIf="!url">
     <label>
         <input #urlInput
                matInput
@@ -7,7 +7,7 @@
     </label>
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
-<div *ngIf="lawLoaded">
+<div *ngIf="lawLoaded || languageLoaded">
     <mat-toolbar id="main-toolbar">
         <button type="button" mat-flat-button (click)="drawer.toggle()"
                 color="primary">
@@ -49,7 +49,7 @@
                 <ol style="list-style-type:none;">
                     <li i18n>Datum van Publicatie: <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></li>
                     <li i18n>Datum van Inwerkingtreding: {{ law?.dateWorking | date:'mediumDate'}}</li>
-                    <li i18n>Bron: <strong>{{ law?.source | titlecase}}</strong></li>
+                    <li i18n *ngIf="law?.source">Bron: <strong>{{ law?.source | titlecase}}</strong></li>
                     <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
                 </ol>
             </mat-card>
