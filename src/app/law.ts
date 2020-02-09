@@ -184,8 +184,8 @@ export class Law {
 
     getLawTitle(text) {
         // todo add support for notes in title
-        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*?)\s([\(|\[].*[\)|\]])/mi.exec(text);
-        return title[2].replace(/[\s\.]$/, '');
+        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*?)([\(|\[].*[\)|\]])/mi.exec(text);
+        return title[2].replace(/\s*?[\s\.?]$/, '');
     }
 
     getLawDate(text) {
