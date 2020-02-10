@@ -3,10 +3,14 @@
 ![Test](https://github.com/mvwestendorp/pjangular/workflows/Test/badge.svg?branch=master)
 
 ## Todo
-- Add support for ELI: http://www.ejustice.just.fgov.be/eli/decreet/2018/05/11/2018202651/justel
 - Fix ToC by using mat-tree
 - Fix warning sanitizing url
 - Add tests
+- Add link to laws in modifications of articles
+- Add button to display original article text
+- Add citation button
+- Add container titles to article on hover
+- Fix small parsing errors 
 
 ### Back end
 - Add service to search in preformatted database (ElasticSearch?)
@@ -22,6 +26,7 @@
     - ToC: mat-tree
         - convert law containers to JSON
 - Add error message on failed url
+- Add animation on switching language
     
 ### Functionality
 - Versioning / diff between versions

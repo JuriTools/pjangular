@@ -69,9 +69,9 @@ export class Law {
     articles: Article[];
     language: string;
     law: Container;
-    cosUrl: string;
-    archivesUrl: string;
-    implementingDocumentsUrl: string;
+    cosUrl: URL;
+    archivesUrl: URL;
+    implementingDocumentsUrl: URL;
 
     constructor(DOM: Document, language) {
         this.containers = [];
@@ -257,7 +257,7 @@ export class Law {
     }
 
     // search for highest first, add if exists, then go depth first
-    parseArticles(DOM) {
+    parseArticles(DOM: Document) {
         const articles: Article[] = [];
         const articlesDom = DOM.querySelectorAll('article');
         // console.log(articlesDom);
@@ -268,29 +268,28 @@ export class Law {
         return articles;
     }
 
-    getCouncilOfState(DOM) {
+    getCouncilOfState(DOM): URL {
         const cosId = (this.language === 'fr') ? 'Conseild\'Etat' : 'RaadvanState';
         const div = DOM.getElementById(cosId);
         if (div) {
-            return div.children[0].href;
+            return new URL(div.children[0].href);
         }
     }
 
-    getArchives(DOM) {
+    getArchives(DOM): URL {
         const archiveId = (this.language === 'fr') ? 'versionsarchivées' : 'gearchiveerdeversies';
         const div = DOM.getElementById(archiveId);
         if (div) {
-            return div.children[0].href;
+            return new URL(div.children[0].href);
         }
     }
 
 
-    getImplementingDocuments(DOM) {
+    getImplementingDocuments(DOM): URL {
         const implementingDocId = (this.language === 'fr') ? 'arrêtésd\'exécution' : 'uitvoeringbesluiten';
         const div = DOM.getElementById(implementingDocId);
         if (div) {
-            return div.children[0].href;
-
+            return new URL(div.children[0].href);
         }
     }
 }

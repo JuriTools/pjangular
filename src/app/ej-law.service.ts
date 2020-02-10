@@ -4,6 +4,15 @@ import {Language, Law} from './law';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+function isURL(str) {
+    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return pattern.test(str);
+}
 
 @Injectable({
     providedIn: 'root'
@@ -66,6 +75,9 @@ export class EjLawService {
 
     parseUrl(url: URL): { nl: URL, fr: URL } {
         // todo add regex tests for valid urls
+        if (!isURL(url.href) || !url.href.includes('ejustice')) {
+            throw new Error('Invalid URL');
+        }
         let urlDutch = url.href;
         let urlFrench = url.href;
 
@@ -132,7 +144,6 @@ export class EjLawService {
         DOM = this.tagDates(DOM);
         DOM = this.tagDefinitions(DOM);
         DOM = this.tagWebLinks(DOM);
-
         DOM = this.tagArtRef(DOM);
         this.DOM = DOM;
         return DOM;
@@ -297,19 +308,6 @@ export class EjLawService {
                         line = line.substring(1);
                     }
                 }
-                if (line.startsWith('(')) {// change inserted in article with ( )
-                    /* Never yet seen ( with <sup>
-                            let regexp = /(<sup>.*?<\/sup>)(.*)$/;
-                            let res = regexp.exec(line); //get sup
-                            try {
-                                sup = '(' + res[1];
-                                line = res[2].trim();
-                            }
-                            catch (err) { // Catch cases where no sup for some reason */
-                    sup = '(';
-                    line = line.substring(1);
-                    // }
-                }
 
                 if (line.startsWith('§')) { // start of paragraph
                     counter = 1; // reset counter
@@ -348,6 +346,8 @@ export class EjLawService {
                     counter++;
                     lineclass = 'artlid';
                     lid = `<lid id="${counter}"></lid> `;
+                } else if (line.match(/^\(.*&gt;.{0,10}$/gmi)) {
+                    lineclass = 'artworkingdate';
                 } else {
                     if (!line.startsWith('<font')) {
                         // console.log('No font for: ' + line);
@@ -374,11 +374,11 @@ export class EjLawService {
             const navdiv = document.createElement('div');
             navdiv.setAttribute('id', 'navdiv');
             nav.appendChild(navdiv);
-            for (const i in navelems) {
+            for (const cell of navelems) {
                 // console.log(navelems[i].innerText, navelems[i].target);
-                if (navelems[i].target === '_blank' || navelems[i].target === '_parent') {
+                if (cell.target === '_blank' || cell.target === '_parent') {
                     // store element
-                    const child = navelems[i].cloneNode(true);
+                    const child = cell.cloneNode(true);
                     const parent = navdiv;
                     const wrapper = doc.createElement('div');
                     wrapper.setAttribute('id', child.innerText.replace(/(\s|\d)*\S*?\s*/g, ''));

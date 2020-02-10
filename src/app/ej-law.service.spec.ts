@@ -19,23 +19,23 @@ describe('EjLawService', () => {
 
     it('should have getData function', () => {
         const service: EjLawService = TestBed.inject(EjLawService);
-        expect(service.getDoc).toBeTruthy();
+        expect(service.getLaw).toBeTruthy();
     });
 
     it('should parse valid French ELI url', () => {
         const url = new URL('http://www.ejustice.just.fgov.be/eli/decret/2018/05/11/2018202651/justel');
         const service: EjLawService = TestBed.inject(EjLawService);
         expect(service.parseUrl(url)).toEqual({
-            nl: 'http://www.ejustice.just.fgov.be/eli/decreet/2018/05/11/2018202651/justel',
-            fr: 'http://www.ejustice.just.fgov.be/eli/decret/2018/05/11/2018202651/justel'
+            nl: new URL('http://www.ejustice.just.fgov.be/eli/decreet/2018/05/11/2018202651/justel'),
+            fr: new URL('http://www.ejustice.just.fgov.be/eli/decret/2018/05/11/2018202651/justel')
         });
     });
     it('should parse valid Dutch ELI url', () => {
         const url = new URL('https://www.ejustice.just.fgov.be/eli/wet/1867/06/08/1867060850/justel');
         const service: EjLawService = TestBed.inject(EjLawService);
         expect(service.parseUrl(url)).toEqual({
-            nl: 'https://www.ejustice.just.fgov.be/eli/wet/1867/06/08/1867060850/justel',
-            fr: 'https://www.ejustice.just.fgov.be/eli/loi/1867/06/08/1867060850/justel',
+            nl: new URL('https://www.ejustice.just.fgov.be/eli/wet/1867/06/08/1867060850/justel'),
+            fr: new URL('https://www.ejustice.just.fgov.be/eli/loi/1867/06/08/1867060850/justel'),
         });
     });
     it('should parse valid French frame url', () => {
