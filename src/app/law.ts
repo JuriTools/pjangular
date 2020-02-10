@@ -1,6 +1,7 @@
 import {Article} from './article';
 
 export type Language = 'nl' | 'fr';
+const levels = ['book', 'part', 'lawtitle', 'chapter', 'section', 'subsection'];
 
 export function strip(str) {
     return str.replace(/^\s+|\s+$/g, '');
@@ -16,9 +17,9 @@ export class Container {
     title: string;
     DOM;
 
-    constructor(type, parent, id = 0, title, DOM) {
+    constructor(type, parent, id = 0, title, DOM, language: Language) {
         this.type = type;
-        this.typeLabel = this.getTypeLabel(type);
+        this.typeLabel = this.getTypeLabel(type, language);
         this.parent = parent || undefined;
         this.id = id || 0;
         this.children = [];
@@ -27,13 +28,14 @@ export class Container {
     }
 
     // todo: add french, move to translation files
-    getTypeLabel(type) {
+    getTypeLabel(type , language: Language) {
         const labels = {
-            book: 'Boek',
-            lawtitle: 'Titel',
-            chapter: 'Hoofdstuk',
-            section: 'Afdeling',
-            subsection: 'Onderafdeling'
+            book: language === 'nl' ? 'Boek' : 'Livre',
+            part: language === 'nl' ? 'Deel' : 'Partie',
+            lawtitle: language === 'nl' ? 'Titel' : 'Title',
+            chapter: language === 'nl' ? 'Hoofdstuk' : 'Chapitre',
+            section: language === 'nl' ? 'Afdeling' : 'Section',
+            subsection: language === 'nl' ? 'Onderafdeling' : 'Sous-section'
         };
         return labels[type];
     }
@@ -67,7 +69,7 @@ export class Law {
     sections: Container[];
     subSections: Container[];
     articles: Article[];
-    language: string;
+    language: Language;
     law: Container;
     cosUrl: URL;
     archivesUrl: URL;
@@ -104,7 +106,7 @@ export class Law {
         this.createContainerStructure(DOM);
     }
 
-    getHighestLevel(DOM, levels) {
+    getHighestLevel(DOM) {
         for (const level of levels) {
             if (DOM.querySelectorAll(level).length > 0) {
                 return level;
@@ -113,12 +115,11 @@ export class Law {
     }
 
     addChildren(c: Container) {
-        const levels = ['book', 'lawtitle', 'chapter', 'section', 'subsection'];
         let childContainer;
         for (const child of c.DOM.children) {
             const containerType = child.nodeName.toLowerCase();
             if (levels.includes(containerType)) {
-                childContainer = new Container(containerType, c, child.id, child.title, child);
+                childContainer = new Container(containerType, c, child.id, child.title, child, this.language);
                 this.addChildren(childContainer);
                 c.addChild(childContainer);
             }
@@ -129,10 +130,9 @@ export class Law {
     }
 
     createContainerStructure(DOM) {
-        this.law = new Container('law', undefined, 0, '', DOM);
-        const levels = ['book', 'lawtitle', 'chapter', 'section', 'subsection'];
-        for (const element of DOM.querySelectorAll(this.getHighestLevel(DOM, levels))) {
-            const c = new Container(element.nodeName.toLowerCase(), this.law, element.id, element.title, element);
+        this.law = new Container('law', undefined, 0, '', DOM, this.language);
+        for (const element of DOM.querySelectorAll(this.getHighestLevel(DOM))) {
+            const c = new Container(element.nodeName.toLowerCase(), this.law, element.id, element.title, element, this.language);
             this.addChildren(c);
             this.law.addChild(c);
         }

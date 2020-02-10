@@ -4,16 +4,6 @@ import {Language, Law} from './law';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-function isURL(str) {
-    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return pattern.test(str);
-}
-
 @Injectable({
     providedIn: 'root'
 })
@@ -75,7 +65,7 @@ export class EjLawService {
 
     parseUrl(url: URL): { nl: URL, fr: URL } {
         // todo add regex tests for valid urls
-        if (!isURL(url.href) || !url.href.includes('ejustice')) {
+        if (!url.href.includes('ejustice')) {
             throw new Error('Invalid URL');
         }
         let urlDutch = url.href;
@@ -155,6 +145,7 @@ export class EjLawService {
          * Description. Tags title, chapter, section and articles of the law or Decree.
          */
         const book = (this.language === 'fr') ? 'LIVRE' : 'BOEK';
+        const part = (this.language === 'fr') ? 'PARTIE' : 'Deel';
         const title = (this.language === 'fr') ? 'Titre' : 'TITEL';
         const chapter = (this.language === 'fr') ? 'CHAPITRE' : 'HOOFDSTUK';
         const section = (this.language === 'fr') ? 'Section' : 'afdeling';
@@ -167,6 +158,7 @@ export class EjLawService {
         const modifications = (this.language === 'fr') ? 'Modification(s)' : 'Wijziging(en)';
 
         const regexbook = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${book}\\s(.{1,16}?)\.<\\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${book}|${appendix})|signature))`, 'gi');
+        const regexpart = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${part}\\s(.{1,16}?)\.<\\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${part}|${appendix})|signature))`, 'gi');
         const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${title}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${title}|${appendix})|signature)|</book>)`, 'gi');
         const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${chapter}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${chapter}|${appendix})|signature)|</book>|</lawtitle>)`, 'gi');
         const regexafd = new RegExp(`(<A NAME=.{17}LNKR(\\d*).{1,5}>${section}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{5,25}(LNKR.{5}>(${section}|${appendix})|signature)|</book>|</lawtitle>|</chapter>)`, 'gi');
@@ -175,6 +167,7 @@ export class EjLawService {
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
 
         doc.body.innerHTML = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
+        doc.body.innerHTML = doc.body.innerHTML.replace(regexpart, '<part id="$2" title="$3">$1</part>');
         doc.body.innerHTML = doc.body.innerHTML.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
         doc.body.innerHTML = doc.body.innerHTML.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
         doc.body.innerHTML = doc.body.innerHTML.replace(regexafd, '<section id="$2" title="$3">$1</section>');
