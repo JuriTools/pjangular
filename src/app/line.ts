@@ -9,9 +9,9 @@ export class Line {
   lidId: number;
 
   constructor(DOM, article) {
-    this.article = article; // todo check if correct
+    this.article = article;
     this.type = DOM.className;
-    this.text = DOM.innerText.replace(/^Art.\d{1,4}(er)?/i, '');
+    this.text = DOM.innerHTML;
     this.dom = DOM;
     if (DOM.querySelector('lid')) {
       this.lidId = DOM.querySelector('lid').id;

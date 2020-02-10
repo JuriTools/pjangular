@@ -124,7 +124,7 @@ export class Law {
                 c.addChild(childContainer);
             }
             if (containerType === 'article') {
-                c.addChild(new Article(child));
+                c.addChild(new Article(child, this.language));
             }
         }
     }
@@ -139,7 +139,7 @@ export class Law {
         if (this.law.children.length === 0) {
             // Some laws have only articles
             for (const article of DOM.querySelectorAll('article')) {
-                this.law.addChild(new Article(article));
+                this.law.addChild(new Article(article, this.language));
             }
         }
     }
@@ -263,7 +263,7 @@ export class Law {
         const articlesDom = DOM.querySelectorAll('article');
         // console.log(articlesDom);
         for (let articleIndex = 0; articleIndex < articlesDom.length; articleIndex++) {
-            articles[articleIndex] = new Article(articlesDom[articleIndex]);
+            articles[articleIndex] = new Article(articlesDom[articleIndex], this.language);
         }
         // console.log(articles);
         return articles;

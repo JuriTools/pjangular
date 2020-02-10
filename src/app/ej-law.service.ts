@@ -4,6 +4,18 @@ import {Language, Law} from './law';
 import {Observable, of, throwError} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+function replaceInnerHTML(element, name: string, html: string): HTMLElement {
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(html, 'text/html');
+    const tags = parsed.getElementsByTagName(name);
+    element.parentNode.removeChild(element);
+    // @ts-ignore
+    for (const tag of tags) {
+        element.appendChild(tag);
+    }
+    return element;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -122,10 +134,6 @@ export class EjLawService {
 
     getDOM(doc): Document {
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
-        const frameDoc = DOM.querySelector('frame');
-        if (frameDoc) {
-            console.warn('Not providing correct url. No support yet for baseURL, require frame for now');
-        }
         this.language = this.getLanguage(undefined, DOM);
         DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
@@ -134,7 +142,6 @@ export class EjLawService {
         DOM = this.tagDates(DOM);
         DOM = this.tagDefinitions(DOM);
         DOM = this.tagWebLinks(DOM);
-        DOM = this.tagArtRef(DOM);
         this.DOM = DOM;
         return DOM;
     }
@@ -166,14 +173,16 @@ export class EjLawService {
         const regexart = new RegExp(`(<a name=.{1,5}${article}.(\\d{1,4}.*?)('|")[\\s\\S]*?(<BR><BR>|signature))`, 'gi');
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
 
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexpart, '<part id="$2" title="$3">$1</part>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexafd, '<section id="$2" title="$3">$1</section>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(regexart, '<article id="$2">$1</article>');
-        doc.body.innerHTML = doc.body.innerHTML.replace(reghyperlink, '');
+        let tempBodyHTML = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
+        tempBodyHTML = tempBodyHTML.replace(regexpart, '<part id="$2" title="$3">$1</part>');
+        tempBodyHTML = tempBodyHTML.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
+        tempBodyHTML = tempBodyHTML.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
+        tempBodyHTML = tempBodyHTML.replace(regexafd, '<section id="$2" title="$3">$1</section>');
+        tempBodyHTML = tempBodyHTML.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
+        tempBodyHTML = tempBodyHTML.replace(regexart, '<article id="$2">$1</article>');
+        tempBodyHTML = tempBodyHTML.replace(reghyperlink, '');
+
+        doc.body = replaceInnerHTML(doc.body, 'body', tempBodyHTML);
         return doc;
     }
 
@@ -327,6 +336,7 @@ export class EjLawService {
                             console.log(match, err);
                         }
                     }
+                    line = line.replace(/^<a.*?<\/a>/i, ''); // remove useless link prepending articles
                 } else if (line.match(/^.{0,5}\d{1,3}/i)) { // e.g. 13°
                     counter = 1;
                     lineclass = 'dotlist';
@@ -383,26 +393,6 @@ export class EjLawService {
             nav.appendChild(navdiv);
         } catch (err) {
             console.log(err);
-        }
-        return doc;
-    }
-
-    tagArtRef(doc) {
-        /**
-         * Summary. Tag article references
-         * Description. Tag article references in all the 'line' tags to tag all the articles in this law
-         */
-        if (!doc) {
-            return doc;
-        }
-        const lines = doc.getElementsByTagName('line');
-        if (!lines) {
-            return doc;
-        }
-        for (const line of lines) {
-            if (line) {
-                line.innerHTML = line.innerHTML.replace(/(Art(\.|ikel)\s\d{1,3}[a-z]*)/gi, '<artref>$1</artref>');
-            }
         }
         return doc;
     }

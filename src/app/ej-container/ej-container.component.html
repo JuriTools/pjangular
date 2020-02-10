@@ -5,7 +5,7 @@
                 [ {{item.children[0].typeLabel}} <span [innerHTML]="item.children[0].title"></span> - <span [innerHTML]="item.children[item.children.length - 1].title"></span> ]
             </span>
             <span class="article-range" *ngIf="isArticle(item?.children[0])">
-                [ {{item.children[0].name}} - {{item.children[item.children.length - 1].name}} ]
+                [ {{item.children[0].label}} {{item.children[0].artId}} - {{item.children[item.children.length - 1].artId}} ]
             </span>
         </h2>
         <app-ej-container class="{{item.type}}" [items]="item.children" *ngIf="item.children"></app-ej-container>

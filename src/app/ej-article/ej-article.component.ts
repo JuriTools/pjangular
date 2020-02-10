@@ -4,25 +4,22 @@ import {Line} from '../line';
 
 
 @Component({
-  selector: 'app-ej-article',
-  templateUrl: './ej-article.component.html',
-  styleUrls: ['./ej-article.component.scss']
+    selector: 'app-ej-article',
+    templateUrl: './ej-article.component.html',
+    styleUrls: ['./ej-article.component.scss']
 })
 export class EjArticleComponent implements OnInit {
+    text: string;
+    lines: Line[];
+    @Input()
+    article: Article;
 
-  name: string;
-  text: string;
-  lines: Line[];
-  @Input()
-  article: Article;
+    constructor() {
+    }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-    this.name = this.article.name;
-    this.text = this.article.text;
-    this.lines = this.article.lines;
-  }
+    ngOnInit() {
+        this.text = this.article.text;
+        this.lines = this.article.lines;
+    }
 
 }
