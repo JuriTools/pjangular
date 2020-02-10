@@ -8,7 +8,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,11 +34,7 @@ jobs:
         run: |
           npm ci
           npm run build:ci
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: npm test and npm e2e
-        run: |
-          npm run test
-          npm run e2e
+          run: |
+            npm run test
+            npm run e2e
