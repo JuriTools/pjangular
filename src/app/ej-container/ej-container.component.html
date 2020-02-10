@@ -1,8 +1,8 @@
 <div class="{{item.type}}" *ngFor="let item of items">
     <div *ngIf="isContainer(item)">
-        <h2 i18n *ngIf="item.type"> {{item.typeLabel}} {{item.title}}
+        <h2 i18n *ngIf="item.type"> {{item.typeLabel}} <span [innerHTML]="item.title"></span>
             <span *ngIf="isContainer(item?.children[0])">
-                [ {{item.children[0].typeLabel}} {{item.children[0].title}} - {{item.children[item.children.length - 1].title}} ]
+                [ {{item.children[0].typeLabel}} <span [innerHTML]="item.children[0].title"></span> - <span [innerHTML]="item.children[item.children.length - 1].title"></span> ]
             </span>
             <span *ngIf="isArticle(item?.children[0])">
                 [ {{item.children[0].name}} - {{item.children[item.children.length - 1].name}} ]
