@@ -1,2 +1,14 @@
 @mixin container-theme($theme) {
+  .book-title{
+    color: mat-color($pallete-triadic, 900);
+  }
+  .chapter-title{
+    color: mat-color($pallete-triadic, 800);
+  }
+  .section-title{
+    color: mat-color($pallete-triadic, 700);
+  }
+  .subsection-title{
+    color: mat-color($pallete-triadic, 600);
+  }
 }

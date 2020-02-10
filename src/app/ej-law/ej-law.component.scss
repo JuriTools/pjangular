@@ -1,10 +1,14 @@
 @mixin law-theme($theme) {
+  html * {
+    font-family: Ubuntu, sans-serif !important;
+  }
   button {
     color: black;
   }
   h2 {
     background-color: lightblue;
     opacity: 80%;
+    font-size-adjust: 24;
   }
 
   .book {
@@ -22,6 +26,10 @@
   #main-toolbar {
     position: sticky;
     top: 0;
+  }
+
+  mat-drawer-container {
+    background-color: mat-color($pj-background, 200);
   }
 }
 

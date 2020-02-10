@@ -16,7 +16,7 @@ export class EjLawComponent implements OnInit {
     lawLoaded: boolean;
     lawLoading: boolean;
     languageLoaded: boolean;
-    showpreambule = false;
+    showCoS: boolean;
     language: Language;
 
 
@@ -55,10 +55,19 @@ export class EjLawComponent implements OnInit {
     }
 
 
-    showPreambule() {
-        this.law$.subscribe(law => {
-            this.law.preambule = law.preambule;
-            this.showpreambule = this.showpreambule ? !this.showpreambule : this.showpreambule;
-        });
+    showImplementingDocuments() {
+
     }
+
+    showArchivedVersions() {
+
+    }
+
+    showCouncilOfState() {
+        if (this.law.cosUrl) {
+            this.showCoS = !this.showCoS;
+            console.log('Preambule: ' + this.showCoS);
+        }
+    }
+
 }

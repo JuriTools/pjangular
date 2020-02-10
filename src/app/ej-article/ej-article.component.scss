@@ -10,5 +10,11 @@
   .line {
     padding-bottom: 10px;
   }
-
+  .artworkingdate {
+    color: mat-color($pallete-triadic, 400);
+  }
+  .artworkingdate:hover {
+    color: black;
+    font-size-adjust: 14;
+  }
 }

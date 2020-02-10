@@ -13,10 +13,6 @@
                 color="primary">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
-        <button type="button" mat-flat-button (click)="showPreambule()"
-                color="primary">
-            <ng-container i18n>Aanhef</ng-container>
-        </button>
         <button type="button" mat-flat-button (click)="switchLawLanguage()" color="primary">
             <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
             <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
@@ -40,10 +36,6 @@
         <mat-sidenav-content>
             <mat-card>
                 <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
-            </mat-card>
-            <mat-card *ngIf="showpreambule">
-                <mat-card-title>Aanhef</mat-card-title>
-                {{law?.preambule}}
             </mat-card>
             <mat-card class="law-metadata">
                 <ol style="list-style-type:none;">
