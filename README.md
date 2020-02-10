@@ -3,10 +3,7 @@
 ![Test](https://github.com/mvwestendorp/pjangular/workflows/Test/badge.svg?branch=master)
 
 ## Todo
-- Fix Deel: http://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&cn=2017122255&table_name=wet
-- Fix URL parser for: http://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=fr&la=F&cn=2017122255&table_name=loi
 - Fix ToC by using mat-tree
-- Fix warning sanitizing url
 - Add tests
 - Add link to laws in modifications of articles
 - Add button to display original article text
