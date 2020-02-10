@@ -18,10 +18,10 @@ export class EjContainerComponent implements OnInit {
 
     // get if type of item is article, then print
     isArticle(item) {
-        return item.classId === 'Article';
+        return item?.classId === 'Article';
     }
 
     isContainer(item) {
-        return item.classId === 'Container';
+        return item?.classId === 'Container';
     }
 }
