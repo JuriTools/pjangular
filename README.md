@@ -7,6 +7,7 @@
 ### Requirements
 
 - Node.js 10.13 or later
+- `npm install` / `npm update` to install or update dependencies (see `package.json`)
 
 ### Build unpacked
 
