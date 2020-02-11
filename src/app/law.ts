@@ -27,7 +27,6 @@ export class Container {
         this.DOM = DOM;
     }
 
-    // todo: add french, move to translation files
     getTypeLabel(type , language: Language) {
         const labels = {
             book: language === 'nl' ? 'Boek' : 'Livre',
