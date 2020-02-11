@@ -1,19 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Language, Law} from './law';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-function replaceInnerHTML(element, name: string, html: string): HTMLElement {
+function replaceInnerHTML(oldElement, html: string): HTMLElement {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(html, 'text/html');
-    const tags = parsed.getElementsByTagName(name);
-    element.parentNode.removeChild(element);
+    const tags = parsed.getElementsByTagName('body')[0].children;
+    const parent = oldElement.parentNode;
+    const newElement = document.createElement(oldElement.nodeName);
+    newElement.setAttribute('id', oldElement.id);
     // @ts-ignore
     for (const tag of tags) {
-        element.appendChild(tag);
+        newElement.appendChild(tag);
     }
-    return element;
+    // function has external effects
+    parent.replaceChild(newElement, oldElement);
+    return newElement;
 }
 
 @Injectable({
@@ -146,7 +150,7 @@ export class EjLawService {
         return DOM;
     }
 
-    restructureDOM(doc) {
+    restructureDOM(doc): Document {
         /**
          * Summary. Tags main law elements
          * Description. Tags title, chapter, section and articles of the law or Decree.
@@ -182,7 +186,7 @@ export class EjLawService {
         tempBodyHTML = tempBodyHTML.replace(regexart, '<article id="$2">$1</article>');
         tempBodyHTML = tempBodyHTML.replace(reghyperlink, '');
 
-        doc.body = replaceInnerHTML(doc.body, 'body', tempBodyHTML);
+        replaceInnerHTML(doc.body, tempBodyHTML);
         return doc;
     }
 
@@ -190,7 +194,7 @@ export class EjLawService {
     // tagTOC () {}
 
 
-    restructureAsDiv(doc) {
+    restructureAsDiv(doc): Document {
         /**
          * Summary. Create DOM structure using divs
          * Description. Create a new DOM structure using Div's and removing tables. Adds collapsible for each div
@@ -267,7 +271,7 @@ export class EjLawService {
     }
 
 
-    tagWebLinks(doc) {
+    tagWebLinks(doc): Document {
         /**
          * Summary. Tag all weblinks in law text
          * Description. Tag weblinks in law text readding them as functioning hyperlink
@@ -276,22 +280,23 @@ export class EjLawService {
             return doc;
         }
         const lines = doc.getElementsByTagName('line');
-        for (const line of lines) {
+        for (let line of lines) {
             if (line.innerHTML.match(/(http.*?)(\s|$)/)) {
-                line.innerHTML = line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `);
+                // line.innerHTML = line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `);
+                line = replaceInnerHTML(line, line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `));
             }
         }
         return doc;
     }
 
-    tagParagraphs(doc) {
+    tagParagraphs(doc): Document {
         /**
          * Summary. Tag paragraphs in articles
          * Description. Tag paragraphs in each article adding 'lid' tag for each
          */
             // todo store articles in array/database including placement in document (title, chapter, etc.)
         const articles = doc.getElementsByTagName('article');
-        for (const article of articles) {
+        for (let article of articles) {
             let counter = 1;
             const lines = article.innerHTML.split('<br>&nbsp;&nbsp;');
             lines.forEach((line, index) => {
@@ -328,9 +333,9 @@ export class EjLawService {
                     if (match) {
                         try {
                             if (match[3].startsWith('§')) {
-                                line = line.replace(reglink, `<a class=article name="$1">$1</a></line><line class=paragraph>$3</line>`);
+                                line = line.replace(reglink, `<a class=article name="$1">$1</a></line><line class=paragraph>$3`);
                             } else {
-                                line = line.replace(reglink, `<a class=article name="$1">$1</a>$3</line>`);
+                                line = line.replace(reglink, `<a class=article name="$1">$1</a>$3`);
                             }
                         } catch (err) {
                             console.log(match, err);
@@ -358,13 +363,14 @@ export class EjLawService {
                 }
                 lines[index] = `<line class=${lineclass}>${lid}${sup}${line}</line>`;
             });
-            article.innerHTML = lines.join('<br>');
+            // article.innerHTML = lines.join('<br>');
+            article = replaceInnerHTML(article, lines.join('<br>'));
         }
         return doc;
     }
 
 
-    restructureNav(doc) {
+    restructureNav(doc): Document {
         /**
          * Summary. Get useful elements from navigation panel, recreate nav panel afterwards
          */
@@ -397,7 +403,7 @@ export class EjLawService {
         return doc;
     }
 
-    tagDates(doc) {
+    tagDates(doc): Document {
         /**
          * Summary. Tag dates
          * Description. Tag all dates in changes section of the document
@@ -410,8 +416,9 @@ export class EjLawService {
             try {
                 const changes = doc.getElementById('Wijzigingen').getElementsByTagName('li');
                 for (let i = 0; i < changes.length; i++) {
-                    changes[i].innerHTML = changes[i].innerHTML.replace(/van\s(\d{2}-\d{2}-\d{4})/gi, `<changedate id=${i}>$1</changedate>`);
-                    changes[i].innerHTML = changes[i].innerHTML.replace(/op\s(\d{2}-\d{2}-\d{4})/gi, `<changedatepub  id=${i}>$1</changedatepub>`);
+                    let tempChangesHTML = changes[i].innerHTML.replace(/van\s(\d{2}-\d{2}-\d{4})/gi, `<changedate id=${i}>$1</changedate>`);
+                    tempChangesHTML = tempChangesHTML.replace(/op\s(\d{2}-\d{2}-\d{4})/gi, `<changedatepub  id=${i}>$1</changedatepub>`);
+                    changes[i] = replaceInnerHTML(changes[i], tempChangesHTML);
                 }
             } catch (err) {
                 console.log(err);
@@ -421,15 +428,16 @@ export class EjLawService {
     }
 
 
-    tagDefinitions(doc) {
+    tagDefinitions(doc): Document {
         if (doc === undefined) {
             return;
         }
-        const wt = doc.getElementById('Wettekst');
+        let wt = doc.getElementById('Wettekst');
         if (!wt) {
             return doc;
         }
-        wt.innerHTML = wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)(")/gi, `<definition>$1<defname>$2</defname>$3</definition>`);
+        // @ts-ignore ~ DOM replacement is actually done
+        wt = replaceInnerHTML(wt, wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)(")/gi, `<definition>$1<defname>$2</defname>$3</definition>`));
         return doc;
     }
 }
