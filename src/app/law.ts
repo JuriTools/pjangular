@@ -184,7 +184,7 @@ export class Law {
     getLawTitle(text) {
         // todo add support for notes in title
         // todo fix ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&table_name=wet&cn=2017071306
-        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*?)([\(|\[].*[\)|\]])/mi.exec(text);
+        const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
         return title[2].replace(/\s*?[\s\.?]$/, '');
     }
 
