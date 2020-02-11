@@ -115,7 +115,7 @@ export class EjLawService {
             } else if (url.href.includes('eli/besluit')) {
                 urlDutch = url.href;
                 urlFrench = url.href.replace('eli/besluit', 'eli/arrete');
-            } else if (url.href.includes('eli/decret')) {
+            } else if (url.href.includes('eli/arrete')) {
                 urlFrench = url.href;
                 urlDutch = url.href.replace('eli/arrete', 'eli/besluit');
             } else {
