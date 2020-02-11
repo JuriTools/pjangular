@@ -16,7 +16,12 @@ iframe.style.borderWidth = '0';
 body.append(iframe);
 // Remove frameset containing shitty styled content
 const oldFrame = document.querySelector('frameset');
-oldFrame.parentNode.removeChild(oldFrame);
+const oldBody = document.querySelector('body');
+if (oldFrame) {
+    oldFrame.parentNode.removeChild(oldFrame);
+} else if (oldBody) {
+    oldBody.parentNode.removeChild(oldBody);
+}
 
 // Add body and appended frame to page
 document.head.insertAdjacentElement('afterend', body);
