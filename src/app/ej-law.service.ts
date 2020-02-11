@@ -68,7 +68,7 @@ export class EjLawService {
             }
         } else if (url?.href.search(/eli\/[decret|loi]/)) {
             return 'fr';
-        } else if (url?.href.search(/eli\/[decreet|wet]/)) {
+        } else if (url?.href.search(/eli\/[decreet|(grond)?wet]/)) {
             return 'nl';
         } else {
             const langCell = DOM?.querySelector('body > table:nth-child(4) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(5)');
@@ -100,12 +100,24 @@ export class EjLawService {
             } else if (url.href.includes('eli/loi')) {
                 urlFrench = url.href;
                 urlDutch = url.href.replace('eli/loi', 'eli/wet');
+            } else if (url.href.includes('eli/grondwet')) {
+                urlDutch = url.href;
+                urlFrench = url.href.replace('eli/grondwet', 'eli/constitution');
+            } else if (url.href.includes('eli/constitution')) {
+                urlFrench = url.href;
+                urlDutch = url.href.replace('eli/constitution', 'eli/grondwet');
             } else if (url.href.includes('eli/decreet')) {
                 urlDutch = url.href;
                 urlFrench = url.href.replace('eli/decreet', 'eli/decret');
             } else if (url.href.includes('eli/decret')) {
                 urlFrench = url.href;
                 urlDutch = url.href.replace('eli/decret', 'eli/decreet');
+            } else if (url.href.includes('eli/besluit')) {
+                urlDutch = url.href;
+                urlFrench = url.href.replace('eli/besluit', 'eli/arrete');
+            } else if (url.href.includes('eli/decret')) {
+                urlFrench = url.href;
+                urlDutch = url.href.replace('eli/arrete', 'eli/besluit');
             } else {
                 throw new Error('Unknown ELI url variant');
             }
