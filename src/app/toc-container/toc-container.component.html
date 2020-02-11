@@ -1,11 +1,11 @@
 <div class="{{item.type}}" *ngFor="let item of items">
-    <div i18n *ngIf="isContainer(item)"> {{item.typeLabel}} {{item.title}}
-        <span *ngIf="item.children">
+    <div i18n *ngIf="isContainer(item)"> <span class="toc-title">{{item.typeLabel}} {{item.title}}</span>
+        <span class="toc-range" *ngIf="item.children">
             <span *ngIf="isArticle(item?.children[0])">
-                [ {{item.children[0].name}} - {{item.children[item.children.length - 1].name}} ]
+                [ {{item.children[0].label}}: {{item.children[0].artId}} - {{item.children[item.children.length - 1].artId}} ]
             </span>
             <span *ngIf="isContainer(item?.children[0])">
-            [ {{item.children[0].title}} - {{item.children[item.children.length - 1].title}} ]
+            [ {{item.children[0].typeLabel}}: {{item.children[0].title}} - {{item.children[item.children.length - 1].title}} ]
             </span>
             <app-toc-container [items]="item.children" *ngIf="isContainer(item?.children[0])"></app-toc-container>
         </span>
