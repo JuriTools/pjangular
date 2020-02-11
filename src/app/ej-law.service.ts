@@ -13,9 +13,8 @@ function replaceInnerHTML(oldElement, html: string): HTMLElement {
     if (oldElement.id) {
         newElement.setAttribute('id', oldElement.id);
     }
-    // @ts-ignore
-    for (const tag of tags) {
-        newElement.appendChild(tag);
+    while (tags.length > 0) {
+        newElement.appendChild(tags[0]);
     }
     // function has external effects
     parent.replaceChild(newElement, oldElement);
