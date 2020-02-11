@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.4.6",
+  "version": "0.4.7",
   "name": "PrettyJustice",
   "description": "Past de layout aan voor wetten, koninklijke besluiten, etc. op ejustice.fgov.be",
   "icons": {
@@ -21,18 +21,17 @@
         "runtime-es2018.js"
       ],
       "matches": [
-        "*://*.ejustice.just.fgov.be/*"
+        "*://*.ejustice.just.fgov.be/*/*pl?language*",
+        "*://*.ejustice.just.fgov.be/*/*pl?cn*",
+        "*://*.ejustice.just.fgov.be/*/*pl?la*",
+        "*://*.ejustice.just.fgov.be/*/*pl?table_name=wet*",
+        "*://*.ejustice.just.fgov.be/*/*pl?table_name=loi*",
+        "*://*.ejustice.just.fgov.be/*staatsblad",
+        "*://*.ejustice.just.fgov.be/*justel"
       ],
-      "include_globs": [
-        "*fgov.be/*/*pl?language*",
-        "*fgov.be/*/*pl?cn*",
-        "*fgov.be/*/*pl?la*",
-        "*fgov.be/*/*pl?table_name=wet*",
-        "*fgov.be/*/*pl?table_name=loi*",
-        "*fgov.be/*staatsblad",
-        "*fgov.be/*justel"
+      "exclude_matches": [
+        "*://*.ejustice.just.fgov.be/*/summary.pl"
       ],
-      "all_frames": true,
       "run_at": "document_end"
     }
   ]
