@@ -4,9 +4,16 @@
 
 ## Build
 
+### Requirements
+
+- Node.js 10.13 or later
+
+### Build unpacked
+
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Build extension package
+
 Run `ng build --prod --sourceMap=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'` to build the packed extension for production in the `web-ext-artifacts` directory. 
 
 ## Running unit tests
