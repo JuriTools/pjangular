@@ -66,9 +66,9 @@ export class EjLawService {
             if (m[1] === 'nl' || m[1] === 'fr') {
                 return m[1];
             }
-        } else if (url?.href.search(/eli\/[decret|loi]/)) {
+        } else if (url?.href.search(/eli\/[decret|loi|constitution|arrete]/)) {
             return 'fr';
-        } else if (url?.href.search(/eli\/[decreet|(grond)?wet]/)) {
+        } else if (url?.href.search(/eli\/[decreet|wet|grondwet|besluit]/)) {
             return 'nl';
         } else {
             const langCell = DOM?.querySelector('body > table:nth-child(4) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(5)');
@@ -150,9 +150,9 @@ export class EjLawService {
     }
 
     getDOM(doc): Document {
-        doc = this.restructureDOM(doc);
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
         this.language = this.getLanguage(undefined, DOM);
+        DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
         DOM = this.tagParagraphs(DOM);
         DOM = this.restructureNav(DOM);
@@ -163,7 +163,7 @@ export class EjLawService {
         return DOM;
     }
 
-    restructureDOM(doc): string {
+    restructureDOM(doc) {
         /**
          * Summary. Tags main law elements
          * Description. Tags title, chapter, section and articles of the law or Decree.
@@ -190,14 +190,15 @@ export class EjLawService {
         const regexart = new RegExp(`(<a name=.{1,5}${article}.(\\d{1,4}.*?)('|")[\\s\\S]*?(<BR><BR>|signature))`, 'gi');
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
 
-        doc = doc.replace(regexbook, '<book id="$2" title="$3">$1</book>');
-        doc = doc.replace(regexpart, '<part id="$2" title="$3">$1</part>');
-        doc = doc.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
-        doc = doc.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
-        doc = doc.replace(regexafd, '<section id="$2" title="$3">$1</section>');
-        doc = doc.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
-        doc = doc.replace(regexart, '<article id="$2">$1</article>');
-        doc = doc.replace(reghyperlink, '');
+        let tempBody = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
+        tempBody = tempBody.replace(regexpart, '<part id="$2" title="$3">$1</part>');
+        tempBody = tempBody.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
+        tempBody = tempBody.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
+        tempBody = tempBody.replace(regexafd, '<section id="$2" title="$3">$1</section>');
+        tempBody = tempBody.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
+        tempBody = tempBody.replace(regexart, '<article id="$2">$1</article>');
+        tempBody = tempBody.replace(reghyperlink, '');
+        replaceInnerHTML(doc.body, tempBody);
         return doc;
     }
 

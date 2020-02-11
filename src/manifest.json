@@ -7,6 +7,7 @@
     "128": "assets/img/icon128.png"
   },
   "permissions": [
+    "http://*.ejustice.just.fgov.be/",
     "https://*.ejustice.just.fgov.be/"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'",
