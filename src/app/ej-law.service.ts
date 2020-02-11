@@ -10,7 +10,9 @@ function replaceInnerHTML(oldElement, html: string): HTMLElement {
     const tags = parsed.getElementsByTagName('body')[0].children;
     const parent = oldElement.parentNode;
     const newElement = document.createElement(oldElement.nodeName);
-    newElement.setAttribute('id', oldElement.id);
+    if (oldElement.id) {
+        newElement.setAttribute('id', oldElement.id);
+    }
     // @ts-ignore
     for (const tag of tags) {
         newElement.appendChild(tag);
@@ -137,9 +139,9 @@ export class EjLawService {
     }
 
     getDOM(doc): Document {
+        doc = this.restructureDOM(doc);
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
         this.language = this.getLanguage(undefined, DOM);
-        DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
         DOM = this.tagParagraphs(DOM);
         DOM = this.restructureNav(DOM);
@@ -150,7 +152,7 @@ export class EjLawService {
         return DOM;
     }
 
-    restructureDOM(doc): Document {
+    restructureDOM(doc): string {
         /**
          * Summary. Tags main law elements
          * Description. Tags title, chapter, section and articles of the law or Decree.
@@ -177,16 +179,14 @@ export class EjLawService {
         const regexart = new RegExp(`(<a name=.{1,5}${article}.(\\d{1,4}.*?)('|")[\\s\\S]*?(<BR><BR>|signature))`, 'gi');
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
 
-        let tempBodyHTML = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
-        tempBodyHTML = tempBodyHTML.replace(regexpart, '<part id="$2" title="$3">$1</part>');
-        tempBodyHTML = tempBodyHTML.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
-        tempBodyHTML = tempBodyHTML.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
-        tempBodyHTML = tempBodyHTML.replace(regexafd, '<section id="$2" title="$3">$1</section>');
-        tempBodyHTML = tempBodyHTML.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
-        tempBodyHTML = tempBodyHTML.replace(regexart, '<article id="$2">$1</article>');
-        tempBodyHTML = tempBodyHTML.replace(reghyperlink, '');
-
-        replaceInnerHTML(doc.body, tempBodyHTML);
+        doc = doc.replace(regexbook, '<book id="$2" title="$3">$1</book>');
+        doc = doc.replace(regexpart, '<part id="$2" title="$3">$1</part>');
+        doc = doc.replace(regextitle, '<lawtitle id="$2" title="$3">$1</lawtitle>');
+        doc = doc.replace(regexchapter, '<chapter id="$2" title="$3">$1</chapter>');
+        doc = doc.replace(regexafd, '<section id="$2" title="$3">$1</section>');
+        doc = doc.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
+        doc = doc.replace(regexart, '<article id="$2">$1</article>');
+        doc = doc.replace(reghyperlink, '');
         return doc;
     }
 
@@ -280,10 +280,10 @@ export class EjLawService {
             return doc;
         }
         const lines = doc.getElementsByTagName('line');
-        for (let line of lines) {
+        for (const line of lines) {
             if (line.innerHTML.match(/(http.*?)(\s|$)/)) {
                 // line.innerHTML = line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `);
-                line = replaceInnerHTML(line, line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `));
+                replaceInnerHTML(line, line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `));
             }
         }
         return doc;
@@ -296,7 +296,7 @@ export class EjLawService {
          */
             // todo store articles in array/database including placement in document (title, chapter, etc.)
         const articles = doc.getElementsByTagName('article');
-        for (let article of articles) {
+        for (const article of articles) {
             let counter = 1;
             const lines = article.innerHTML.split('<br>&nbsp;&nbsp;');
             lines.forEach((line, index) => {
@@ -364,7 +364,7 @@ export class EjLawService {
                 lines[index] = `<line class=${lineclass}>${lid}${sup}${line}</line>`;
             });
             // article.innerHTML = lines.join('<br>');
-            article = replaceInnerHTML(article, lines.join('<br>'));
+            replaceInnerHTML(article, lines.join('<br>'));
         }
         return doc;
     }
@@ -418,7 +418,7 @@ export class EjLawService {
                 for (let i = 0; i < changes.length; i++) {
                     let tempChangesHTML = changes[i].innerHTML.replace(/van\s(\d{2}-\d{2}-\d{4})/gi, `<changedate id=${i}>$1</changedate>`);
                     tempChangesHTML = tempChangesHTML.replace(/op\s(\d{2}-\d{2}-\d{4})/gi, `<changedatepub  id=${i}>$1</changedatepub>`);
-                    changes[i] = replaceInnerHTML(changes[i], tempChangesHTML);
+                    replaceInnerHTML(changes[i], tempChangesHTML);
                 }
             } catch (err) {
                 console.log(err);
@@ -432,12 +432,11 @@ export class EjLawService {
         if (doc === undefined) {
             return;
         }
-        let wt = doc.getElementById('Wettekst');
+        const wt = doc.getElementById('Wettekst');
         if (!wt) {
             return doc;
         }
-        // @ts-ignore ~ DOM replacement is actually done
-        wt = replaceInnerHTML(wt, wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)(")/gi, `<definition>$1<defname>$2</defname>$3</definition>`));
+        replaceInnerHTML(wt, wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)(")/gi, `<definition>$1<defname>$2</defname>$3</definition>`));
         return doc;
     }
 }
