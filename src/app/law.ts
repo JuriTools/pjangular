@@ -280,7 +280,10 @@ export class Law {
         const archiveId = (this.language === 'fr') ? 'versionsarchivées' : 'gearchiveerdeversies';
         const div = DOM.getElementById(archiveId);
         if (div) {
-            return new URL(div.children[0].href);
+            const urlHref = div.children[0].href.replace(
+                /(https?|moz):\/\/.*?:.*?\//,
+                'https://www.ejustice.just.fgov.be/');
+            return new URL(urlHref);
         }
     }
 
@@ -289,7 +292,10 @@ export class Law {
         const implementingDocId = (this.language === 'fr') ? 'arrêtésd\'exécution' : 'uitvoeringbesluiten';
         const div = DOM.getElementById(implementingDocId);
         if (div) {
-            return new URL(div.children[0].href);
+            const urlHref = div.children[0].href.replace(
+                /(https?|moz):\/\/.*?:.*?\//,
+                'https://www.ejustice.just.fgov.be/');
+            return new URL(urlHref);
         }
     }
 }
