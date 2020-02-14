@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="41381d6da13882f002ef067747d9992ba84ac814" datatype="html">
+        <source>Inhoudsopgave</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8d27c37e7e38f3b74d8590590f41cdc8d64d7428" datatype="html">
+        <source>Franstalige versie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8dcdb45f1500eabfc7b9eb479cc23fce59b5c1f5" datatype="html">
+        <source>Nederlandstalige versie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9020f32907eeff33609ada9d586b524a02e82b1e" datatype="html">
+        <source> Raad van State</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ca9d61942f365970ce108fef3b1bcdc99a3201c5" datatype="html">
+        <source> Archiefversies</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="30a4e5ce6f213fc7b0fdd0d28a1b20f241d8a328" datatype="html">
+        <source>
+                    Uitvoeringsbesluiten
+                </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2dca6d12a83fc9ec6c57c5d78bd23b7792f54837" datatype="html">
+        <source>Datum van Publicatie: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.datePublished | date:&apos;mediumDate&apos;}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bdab2fb6b2d4d44d98e5e0049ed55b89102aa87d" datatype="html">
+        <source>Datum van Inwerkingtreding: <x id="INTERPOLATION" equiv-text="{{ law?.dateWorking | date:&apos;mediumDate&apos;}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="be87335d8f89b6458e91c557f88a1d56ab840d85" datatype="html">
+        <source>Bron: <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ law?.source | titlecase}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="34b4ffea4e0657879bf2ddbe1584751308192a8b" datatype="html">
+        <source>Pagina Staatsblad: <x id="INTERPOLATION" equiv-text="{{ law?.pageNumber}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-law/ej-law.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="97d325713e430bc37d6d9e64ef31476becc7afc0" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{article.label}}"/> <x id="INTERPOLATION_1" equiv-text="{{article.artId}}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-article/ej-article.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4f856c2548fb75335c79957b3fd6b7b08c07683" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{item.typeLabel}}"/> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+            <x id="START_TAG_SPAN_3" ctype="x-span" equiv-text="&lt;span&gt;"/>
+                [ <x id="INTERPOLATION_1" equiv-text="{{item.children[0].typeLabel}}"/> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> - <x id="START_TAG_SPAN_2" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> ]
+            <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+            <x id="START_TAG_SPAN_4" ctype="x-span" equiv-text="&lt;span&gt;"/>
+                [ <x id="INTERPOLATION_2" equiv-text="{{item.children[0].label}}"/> <x id="INTERPOLATION_3" equiv-text="{{item.children[0].artId}}"/> - <x id="INTERPOLATION_4" equiv-text="{{item.children[item.children.length - 1].artId}}"/> ]
+            <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/ej-container/ej-container.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b8c45bb58af0dfb25e5447c86154b3744ca28cde" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{item.typeLabel}}"/> <x id="INTERPOLATION_1" equiv-text="{{item.title}}"/>
+        <x id="START_TAG_SPAN_2" ctype="x-span" equiv-text="&lt;span&gt;"/>
+            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>
+                [ <x id="INTERPOLATION_2" equiv-text="{{item.children[0].name}}"/> - <x id="INTERPOLATION_3" equiv-text="{{item.children[item.children.length - 1].name}}"/> ]
+            <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+            <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>
+            [ <x id="INTERPOLATION_4" equiv-text="{{item.children[0].title}}"/> - <x id="INTERPOLATION_5" equiv-text="{{item.children[item.children.length - 1].title}}"/> ]
+            <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+            <x id="START_TAG_APP-TOC-CONTAINER" ctype="x-app-toc-container" equiv-text="&lt;app-toc-container&gt;"/><x id="CLOSE_TAG_APP-TOC-CONTAINER" ctype="x-app-toc-container" equiv-text="&lt;/app-toc-container&gt;"/>
+        <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/toc-container/toc-container.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

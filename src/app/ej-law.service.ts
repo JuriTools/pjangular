@@ -4,6 +4,8 @@ import {Language, Law} from './law';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+const hostname = 'https://www.ejustice.just.fgov.be';
+
 function replaceInnerHTML(oldElement, html: string): HTMLElement {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(html, 'text/html');
@@ -286,16 +288,16 @@ export class EjLawService {
     tagWebLinks(doc): Document {
         /**
          * Summary. Tag all weblinks in law text
-         * Description. Tag weblinks in law text readding them as functioning hyperlink
+         * Description. Tag weblinks in law text reading them as functioning hyperlink
          */
         if (doc === undefined) {
             return doc;
         }
         const lines = doc.getElementsByTagName('line');
         for (const line of lines) {
-            if (line.innerHTML.match(/(http.*?)(\s|$)/)) {
+            if (line.innerHTML.match(/([^href="]http.*?)(\s|$)/)) {
                 // line.innerHTML = line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `);
-                replaceInnerHTML(line, line.innerHTML.replace(/(http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `));
+                replaceInnerHTML(line, line.innerHTML.replace(/[^href="](http\s|http)(.*?)(\s|$)/, `<a href="http$2">http$2</a> `));
             }
         }
         return doc;
@@ -373,8 +375,10 @@ export class EjLawService {
                         // console.log('No font for: ' + line);
                     }
                 }
+                line = line.replace(/a href="(.*?)"/gi, `a href=\"${hostname}$1\"`); // create full urls
                 lines[index] = `<line class=${lineclass}>${lid}${sup}${line}</line>`;
             });
+
             // article.innerHTML = lines.join('<br>');
             replaceInnerHTML(article, lines.join('<br>'));
         }
