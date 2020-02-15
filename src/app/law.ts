@@ -7,6 +7,13 @@ export function strip(str) {
     return str.replace(/^\s+|\s+$/g, '');
 }
 
+function createTitleLable(title: string): string {
+    const splitFirstLetter = title.match(/(^[^[a-zA-Z]*)(.*)/);
+    title = splitFirstLetter[1] + splitFirstLetter[2].charAt(0) + splitFirstLetter[2].slice(1).toLowerCase();
+    title = title.replace(/belgi(.)/, `Belgi$1`);
+    return title;
+}
+
 export class Container {
     classId = 'Container';
     type: string;
@@ -15,6 +22,7 @@ export class Container {
     children;
     id: number;
     title: string;
+    titleLabel: string;
     DOM;
 
     constructor(type, parent, id = 0, title, DOM, language: Language) {
@@ -24,10 +32,25 @@ export class Container {
         this.id = id || 0;
         this.children = [];
         this.title = title;
+        this.titleLabel = this.getTitleLabel(DOM);
         this.DOM = DOM;
     }
 
-    getTypeLabel(type , language: Language) {
+    getTitleLabel(DOM) {
+        let titleMatch;
+        if (DOM.body) {
+            titleMatch = DOM.body.innerHTML.match(/a>\s-\s(.*?).(<br>|&lt;)/);
+        } else {
+            titleMatch = DOM.innerHTML.match(/a>\s-\s(.*?).(<br>|&lt;)/);
+        }
+        if (titleMatch) {
+            return createTitleLable(titleMatch[1]);
+        } else {
+            return '';
+        }
+    }
+
+    getTypeLabel(type, language: Language) {
         const labels = {
             book: language === 'nl' ? 'Boek' : 'Livre',
             part: language === 'nl' ? 'Deel' : 'Partie',
