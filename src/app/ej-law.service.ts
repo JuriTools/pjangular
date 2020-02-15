@@ -90,11 +90,8 @@ export class EjLawService {
         let urlDutch = url.href;
         let urlFrench = url.href;
 
-        // todo parse both urls, create list, instead of long if/else statement
-        const urlPartList = [
-            {wet: {nl: 'wet', fr: 'loi'}},
-            {decreet: {nl: 'decreet', fr: 'decret'}}
-        ];
+        url.href = url.href.replace(/staatsblad$/, 'justel');
+
         if (url.href.includes('eli')) {
             if (url.href.includes('eli/wet')) {
                 urlDutch = url.href;
