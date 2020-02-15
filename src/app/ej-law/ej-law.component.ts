@@ -21,7 +21,7 @@ export class EjLawComponent implements OnInit {
 
 
     constructor(private ejLawService: EjLawService) {
-        this.language = 'nl';
+        // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;
     }
@@ -34,7 +34,7 @@ export class EjLawComponent implements OnInit {
         }
     }
 
-    getLaw(urlHref, language?: 'nl' | 'fr') {
+    getLaw(urlHref, language?: Language) {
         this.lawLoaded = false;
         this.lawLoading = true;
         this.url = new URL(urlHref);
@@ -47,10 +47,9 @@ export class EjLawComponent implements OnInit {
         });
     }
 
-    switchLawLanguage() {
+    switchLawLanguage(language: Language) {
         const urls = this.ejLawService.getURLs();
-        this.language = this.language === 'nl' ? 'fr' : 'nl';
-        this.lawLoading = true;
+        this.language = language === 'nl' ? 'fr' : 'nl';
         this.getLaw(urls[this.language], this.language);
     }
 

@@ -13,7 +13,7 @@
                 color="primary">
             <ng-container i18n>Inhoudsopgave</ng-container>
         </button>
-        <button type="button" mat-flat-button (click)="switchLawLanguage()" color="primary">
+        <button type="button" mat-flat-button (click)="switchLawLanguage(language)" color="primary">
             <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
             <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
         </button>
