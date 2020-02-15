@@ -68,9 +68,9 @@ export class EjLawService {
             if (m[1] === 'nl' || m[1] === 'fr') {
                 return m[1];
             }
-        } else if (url?.href.search(/eli\/[decret|loi|constitution|arrete]/)) {
+        } else if (url?.href.match(/eli\/[decret|loi|constitution|arrete]/)) {
             return 'fr';
-        } else if (url?.href.search(/eli\/[decreet|wet|grondwet|besluit]/)) {
+        } else if (url?.href.match(/eli\/[decreet|wet|grondwet|besluit]/)) {
             return 'nl';
         } else {
             const langCell = DOM?.querySelector('body > table:nth-child(4) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(5)');
