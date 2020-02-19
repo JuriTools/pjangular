@@ -1,11 +1,17 @@
 <div class="{{item.type}}" *ngFor="let item of items">
-    <div i18n *ngIf="isContainer(item)"> <span class="toc-title">{{item.typeLabel}} {{item.title}}</span>
+    <div i18n *ngIf="isContainer(item)"> <a href="#{{item.type + item.id}}" class="toc-title-label" [innerHTML]="item.typeLabel + ' '+ item.title"></a>
         <span class="toc-range" *ngIf="item.children">
             <span *ngIf="isArticle(item?.children[0])">
-                [ {{item.children[0].label}}: {{item.children[0].artId}} - {{item.children[item.children.length - 1].artId}} ]
+                [ {{item.children[0].label}}:
+                <a href="#{{item.children[0].artId}}" [innerHTML]="item.children[0].artId"></a>
+                -
+                <a href="#{{item.children[item.children.length - 1].artId}}" [innerHTML]="item.children[item.children.length - 1].artId"></a> ]
             </span>
             <span *ngIf="isContainer(item?.children[0])">
-            [ {{item.children[0].typeLabel}}: {{item.children[0].title}} - {{item.children[item.children.length - 1].title}} ]
+            [ {{item.children[0].typeLabel}}:
+                <a href="#{{item.children[0].type + item.children[0].id}}" [innerHTML]="item.children[0].title"></a>
+                -
+                <a href="#{{item.children[item.children.length - 1].type + item.children[item.children.length - 1].id}}" [innerHTML]="item.children[item.children.length - 1].title"></a> ]
             </span>
             <app-toc-container [items]="item.children" *ngIf="isContainer(item?.children[0])"></app-toc-container>
         </span>

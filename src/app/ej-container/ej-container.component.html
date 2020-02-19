@@ -1,4 +1,4 @@
-<div class="{{item.type}}" *ngFor="let item of items">
+<div class="{{item.type}}" id="{{item.type + item.id}}" *ngFor="let item of items">
     <div *ngIf="isContainer(item)">
         <h2 i18n *ngIf="item.type"> {{item.typeLabel}} <span class="title" [innerHTML]="item.title"></span> - <span class="title-label"> {{item.titleLabel}} </span>
             <span class="container-range" *ngIf="isContainer(item?.children[0])">
