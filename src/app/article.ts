@@ -1,5 +1,5 @@
 import {Line} from './line';
-import {Language} from './law';
+import {Language} from './container';
 
 
 export class Article {

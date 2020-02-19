@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Language, Law} from './law';
+import {Law} from './law';
+import {Language} from './container';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
+
 
 const hostname = 'https://www.ejustice.just.fgov.be';
 
@@ -81,6 +83,7 @@ export class EjLawService {
             }
         }
     }
+
 
     parseUrl(url: URL): { nl: URL, fr: URL } {
         // todo add regex tests for valid urls

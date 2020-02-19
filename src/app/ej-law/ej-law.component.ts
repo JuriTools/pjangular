@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EjLawService} from '../ej-law.service';
-import {Law, Language} from '../law';
+import {Law} from '../law';
+import {Language} from '../container';
 import {Observable} from 'rxjs';
 
 

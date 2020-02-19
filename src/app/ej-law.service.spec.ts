@@ -10,6 +10,7 @@ describe('EjLawService', () => {
             imports: [HttpClientTestingModule],
             providers: [EjLawService]
         });
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
     });
 
     it('should be created', () => {
@@ -67,5 +68,16 @@ describe('EjLawService', () => {
         expect(() =>
             service.parseUrl(url)
         ).toThrowError('Unknown ELI url variant');
+    });
+
+    it('should have Council of State url', (done: DoneFn) => {
+        const service: EjLawService = TestBed.inject(EjLawService);
+        const law$ = service.getLaw(
+            new URL('https://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&cn=1867060801&table_name=wet'),
+            'nl');
+        law$.subscribe(law => {
+            expect(law.cosUrl).toEqual(new URL('http://reflex.raadvst-consetat.be/reflex/?page=chrono&c=detail_get&d=detail&docid=48299&tab=chrono'));
+            done();
+        });
     });
 });

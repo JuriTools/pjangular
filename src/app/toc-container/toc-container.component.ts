@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Article} from '../article';
-import {Container} from '../law';
+import {Container} from '../container';
 
 @Component({
     selector: 'app-toc-container',
