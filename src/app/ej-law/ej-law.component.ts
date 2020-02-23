@@ -18,6 +18,7 @@ export class EjLawComponent implements OnInit {
     lawLoading: boolean;
     languageLoaded: boolean;
     showCoS: boolean;
+    switchingLanguage: boolean;
     language: Language;
 
 
@@ -25,6 +26,7 @@ export class EjLawComponent implements OnInit {
         // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;
+        this.switchingLanguage = false;
     }
 
     ngOnInit() {
@@ -45,12 +47,15 @@ export class EjLawComponent implements OnInit {
             this.lawLoaded = true;
             this.lawLoading = false;
             this.languageLoaded = true;
+            this.switchingLanguage = false;
         });
     }
 
     switchLawLanguage(language: Language) {
         const urls = this.ejLawService.getURLs();
         this.language = language === 'nl' ? 'fr' : 'nl';
+        // todo change setting language here
+        this.switchingLanguage = true;
         this.getLaw(urls[this.language], this.language);
     }
 

@@ -11,11 +11,14 @@
     <mat-toolbar id="main-toolbar">
         <button type="button" mat-flat-button (click)="drawer.toggle()"
                 color="primary">
-            <ng-container i18n>Inhoudsopgave</ng-container>
+            <ng-container i18n *ngIf="language==='nl'">Inhoudsopgave</ng-container>
+            <ng-container i18n *ngIf="language==='fr'">Table des matières</ng-container>
         </button>
-        <button type="button" mat-flat-button (click)="switchLawLanguage(language)" color="primary">
-            <ng-container i18n *ngIf="language==='nl'">Franstalige versie</ng-container>
-            <ng-container i18n *ngIf="language==='fr'">Nederlandstalige versie</ng-container>
+
+        <button type="button" mat-flat-button (click)="switchLawLanguage(language)" color="{{switchingLanguage ? 'accent': 'primary'}}">
+            <ng-container i18n *ngIf="language==='nl'&& !switchingLanguage">Franstalige versie</ng-container>
+            <ng-container i18n *ngIf="language==='fr' && !switchingLanguage">Version néerlandaise</ng-container>
+            <ng-container *ngIf="switchingLanguage" i18n>Switching</ng-container>
         </button>
         <button type="button" mat-flat-button [matMenuTriggerFor]="menu" color="primary">Links</button>
         <mat-menu #menu>
