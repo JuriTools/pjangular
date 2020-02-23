@@ -31,7 +31,8 @@
         "*://*.ejustice.just.fgov.be/*justel"
       ],
       "exclude_matches": [
-        "*://*.ejustice.just.fgov.be/*/summary.pl"
+        "*://*.ejustice.just.fgov.be/*/summary.pl",
+        "*://*.ejustice.just.fgov.be/*/arch_a.pl"
       ],
       "run_at": "document_end"
     }
