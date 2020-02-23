@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Law} from './law';
 import {Language} from './container';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {timeout, switchMap} from 'rxjs/operators';
 
 
 const hostname = 'https://www.ejustice.just.fgov.be';
@@ -31,7 +31,7 @@ function replaceInnerHTML(oldElement, html: string): HTMLElement {
 export class EjLawService {
     urls: { nl: URL, fr: URL };
     language: Language;
-    doc;
+    lawObs$;
     DOM;
     laws: { nl: Law, fr: Law };
 
@@ -42,21 +42,29 @@ export class EjLawService {
     getLaw(url: URL, language?: Language): Observable<Law> {
         this.urls = this.parseUrl(url);
         language = language ? language : this.getLanguage(url);
+        this.language = language;
         if (this.laws[language]) {
             return of(this.laws[language]);
         } else {
-            this.doc = this.http.get(this.urls[language].href, {responseType: 'text'})
-                .pipe(map(res => {
-                    this.laws[language] = this.createLaw(res);
-                    return this.laws[language];
-                }));
+            this.lawObs$ = this.http.get(this.urls[language].href, {responseType: 'text'})
+                .pipe(
+                    switchMap(res => {
+                        return this.createLaw(res);
+                    })
+                );
         }
-        return this.doc;
+        return this.lawObs$;
     }
 
-    createLaw(data): Law {
-        const DOM = this.getDOM(data);
-        return new Law(DOM, this.language);
+    getOriginalLaw(url, language?: Language): Observable<string> {
+        if (!language) {
+            language = this.language;
+        }
+        return this.http.get(this.urls[language].href, {responseType: 'text'});
+    }
+
+    createLaw(data): Observable<Law> {
+        return of(new Law(this.getDOM(data), this.language));
     }
 
     getURLs() {
@@ -129,11 +137,13 @@ export class EjLawService {
             url.href = url.href.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
             urlDutch = url.href
                 .replace('language=fr', 'language=nl')
-                .replace('la=F', 'la=N');
+                .replace('la=F', 'la=N')
+                .replace('&F&', '&N&');
             urlFrench = url.href
                 .replace('language=nl', 'language=fr')
-                .replace('la=N', 'la=F');
-            if (!url.href.includes('caller=list')) {
+                .replace('la=N', 'la=F')
+                .replace('&N&', '&F&');
+            if (!url.href.includes('caller')) {
                 urlDutch += '&&caller=list&' + 'N' + '&fromtab=' + 'wet' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
                 urlFrench += '&&caller=list&' + 'F' + '&fromtab=' + 'loi' + '&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))';
             } else {
@@ -144,6 +154,10 @@ export class EjLawService {
                 urlDutch = urlDutch.replace('change_lg.pl', 'loi_a1.pl');
                 urlFrench = urlFrench.replace('change_lg.pl', 'loi_a1.pl');
             }
+            if (requireFrame[1] === 'arch_a.pl') {
+                urlDutch = urlDutch.replace('arch_a.pl', 'arch_a1.pl');
+                urlFrench = urlFrench.replace('arch_a.pl', 'arch_a1.pl');
+            }
         }
         return {
             nl: new URL(urlDutch.replace(/=loi/g, '=wet')),
@@ -151,7 +165,9 @@ export class EjLawService {
         };
     }
 
-    getDOM(doc): Document {
+    getDOM(doc): Observable<Document> {
+        // const decoder = new TextDecoder('windows-1252');
+        // const decoded = decoder.decode(doc);
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
         this.language = this.getLanguage(undefined, DOM);
         DOM = this.restructureDOM(DOM);
@@ -162,7 +178,10 @@ export class EjLawService {
         DOM = this.tagDefinitions(DOM);
         DOM = this.tagWebLinks(DOM);
         this.DOM = DOM;
-        return DOM;
+        return of(DOM)
+            .pipe(
+                timeout(50)
+            );
     }
 
     restructureDOM(doc) {

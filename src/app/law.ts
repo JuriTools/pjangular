@@ -1,12 +1,12 @@
 import {Article} from './article';
 import {Container, Language} from './container';
+import {Observable} from 'rxjs';
 
 const levels = ['book', 'part', 'lawtitle', 'chapter', 'section', 'subsection'];
 
 export function strip(str) {
     return str.replace(/^\s+|\s+$/g, '');
 }
-
 
 
 export class Law {
@@ -35,35 +35,47 @@ export class Law {
     archivesUrl: URL;
     implementingDocumentsUrl: URL;
 
-    constructor(DOM: Document, language) {
+    constructor(DOM$: Observable<Document>, language) {
         this.containers = [];
         this.books = [];
         this.lawtitles = [];
         this.chapters = [];
         this.sections = [];
         this.subSections = [];
-        const dataText = DOM.getElementById('Wetstitel').innerText;
-        if (DOM.getElementById('Wetstitel').querySelector('a')) {
-            this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
-        } else {
-            this.bsUrl = 'Todo: url not found for this type of law.';
-        }
-        this.title = this.getLawTitle(dataText);
-        this.date = this.getLawDate(dataText);
-        this.language = language;
-        this.displayTitle = this.getDisplayTitle(this.language);
-        this.datePublished = this.getLawPublicationDate(dataText);
-        this.dateWorking = this.getLawWorkingDate(dataText);
-        this.pageNumber = this.getLawPageStart(dataText);
-        this.dossierNumber = this.getDossierNumber(dataText);
-        this.numberId = this.getNumberId(dataText);
-        this.source = this.getSource(dataText);
-        this.preambule = this.getPreambule(DOM);
-        this.cosUrl = this.getCouncilOfState(DOM);
-        this.implementingDocumentsUrl = this.getImplementingDocuments(DOM);
-        this.archivesUrl = this.getArchives(DOM);
-        this.articles = this.parseArticles(DOM);
-        this.createContainerStructure(DOM);
+        DOM$.subscribe(DOM => {
+            let dataText = '';
+            try {
+                dataText = DOM.getElementById('Wetstitel').innerText;
+                if (DOM.getElementById('Wetstitel').querySelector('a')) {
+                    this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
+                } else {
+                    this.bsUrl = 'Todo: url not found for this type of law.';
+                }
+            } catch (e) {
+                if (e instanceof TypeError) {
+                    console.warn('Should change using Element because not robust');
+                    console.warn(DOM);
+                } else {
+                    throw e;
+                }
+            }
+            this.title = this.getLawTitle(dataText);
+            this.date = this.getLawDate(dataText);
+            this.language = language;
+            this.displayTitle = this.getDisplayTitle(this.language);
+            this.datePublished = this.getLawPublicationDate(dataText);
+            this.dateWorking = this.getLawWorkingDate(dataText);
+            this.pageNumber = this.getLawPageStart(dataText);
+            this.dossierNumber = this.getDossierNumber(dataText);
+            this.numberId = this.getNumberId(dataText);
+            this.source = this.getSource(dataText);
+            this.preambule = this.getPreambule(DOM);
+            this.cosUrl = this.getCouncilOfState(DOM);
+            this.implementingDocumentsUrl = this.getImplementingDocuments(DOM);
+            this.archivesUrl = this.getArchives(DOM);
+            this.articles = this.parseArticles(DOM);
+            this.createContainerStructure(DOM);
+        });
     }
 
     getHighestLevel(DOM) {
@@ -146,7 +158,12 @@ export class Law {
         // todo add support for notes in title
         // todo fix ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&table_name=wet&cn=2017071306
         const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
-        return title[2].replace(/\s*?[\s\.?]$/, '');
+        if (title?.length >= 2) {
+            return title[2].replace(/\s*?[\s\.?]$/, '');
+        } else {
+            console.warn('Failure to get law title');
+            return '';
+        }
     }
 
     getLawDate(text) {

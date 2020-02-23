@@ -1,6 +1,6 @@
 {
   "name": "pj-angular",
-  "version": "0.4.6",
+  "version": "0.4.8",
   "scripts": {
     "ng": "ng",
     "clean": "rimraf ./dist",
