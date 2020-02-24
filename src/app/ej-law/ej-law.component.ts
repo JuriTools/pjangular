@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {EjLawService} from '../ej-law.service';
 import {Law} from '../law';
 import {Language} from '../container';
-import {Observable} from 'rxjs';
 
 
 @Component({
@@ -13,7 +12,6 @@ import {Observable} from 'rxjs';
 export class EjLawComponent implements OnInit {
     url: URL;
     law: Law;
-    law$: Observable<Law>;
     lawLoaded: boolean;
     lawLoading: boolean;
     languageLoaded: boolean;
@@ -43,22 +41,24 @@ export class EjLawComponent implements OnInit {
         this.url = new URL(urlHref);
         this.ejLawService.getLaw(this.url, language)
             .subscribe(
-            data => {
-                this.language = this.ejLawService.getLanguage(this.url);
-                this.law = data;
-                this.lawLoaded = true;
-                this.lawLoading = false;
-                this.languageLoaded = true;
-                this.switchingLanguage = false;
-            },
-            error => {
-                console.error(`Error in getting law: ${error}`);
-                this.lawLoading = false;
-                this.ejLawService.getOriginalLaw(this.url, language).subscribe(data =>
-                    document.write(data)
-                );
-            });
+                data => {
+                    this.language = this.ejLawService.getLanguage(this.url);
+                    this.law = data;
+                    this.lawLoaded = true;
+                    this.lawLoading = false;
+                    this.languageLoaded = true;
+                    this.switchingLanguage = false;
+                },
+                error => {
+                    console.error(`Error in getting law: ${error}`);
+                    this.lawLoading = false;
+                    this.ejLawService.getOriginalLaw(this.url, language).subscribe(data =>
+                        document.write(data)
+                    );
+                });
     }
+
+
 
     switchLawLanguage(language: Language) {
         const urls = this.ejLawService.getURLs();

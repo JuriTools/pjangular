@@ -8,35 +8,27 @@
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
 <div *ngIf="lawLoaded || languageLoaded">
-    <mat-toolbar id="main-toolbar">
-        <button type="button" mat-flat-button (click)="drawer.toggle()"
-                color="primary">
-            <ng-container i18n *ngIf="language==='nl'">Inhoudsopgave</ng-container>
-            <ng-container i18n *ngIf="language==='fr'">Table des matières</ng-container>
-        </button>
-
-        <button type="button" mat-flat-button (click)="switchLawLanguage(language)" color="{{switchingLanguage ? 'accent': 'primary'}}">
-            <ng-container i18n *ngIf="language==='nl'&& !switchingLanguage">Franstalige versie</ng-container>
-            <ng-container i18n *ngIf="language==='fr' && !switchingLanguage">Version néerlandaise</ng-container>
-            <ng-container *ngIf="switchingLanguage" i18n>Switching</ng-container>
-        </button>
-        <button type="button" mat-flat-button [matMenuTriggerFor]="menu" color="primary">Links</button>
-        <mat-menu #menu>
-            <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
-            <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a>
+    <div class="law-container">
+        <mat-toolbar id="main-toolbar">
+            <button type="button" mat-flat-button (click)="switchLawLanguage(language)"
+                    color="primary" [disabled]="switchingLanguage">
+                <ng-container i18n *ngIf="language==='nl'&& !switchingLanguage">Franstalige versie</ng-container>
+                <ng-container i18n *ngIf="language==='fr' && !switchingLanguage">Version néerlandaise</ng-container>
+                <ng-container *ngIf="switchingLanguage" i18n>Switching</ng-container>
             </button>
-            <button mat-menu-item>
-                <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
-                    Uitvoeringsbesluiten
-                </a></button>
-        </mat-menu>
-    </mat-toolbar>
-    <mat-sidenav-container class="law-container">
-        <mat-sidenav #drawer mode="side" closed>
-            <mat-card-title i18n>Inhoudsopgave</mat-card-title>
-            <app-toc-container [items]="law?.law.children"></app-toc-container>
-        </mat-sidenav>
-        <mat-sidenav-content>
+            <button type="button" mat-flat-button [matMenuTriggerFor]="menu" color="primary">Links</button>
+            <mat-menu #menu>
+                <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
+                <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a>
+                </button>
+                <button mat-menu-item>
+                    <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
+                        Uitvoeringsbesluiten
+                    </a></button>
+            </mat-menu>
+        </mat-toolbar>
+
+        <mat-card id="law-content">
             <mat-card>
                 <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
             </mat-card>
@@ -48,9 +40,17 @@
                     <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
                 </ol>
             </mat-card>
+            <mat-card>
+                <app-toc [children]="law.law.children"></app-toc>
+            </mat-card>
             <app-ej-container [items]="law?.law.children"></app-ej-container>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+        </mat-card>
+        <mat-card id="law-toc">
+            <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
+            <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
+            <app-toc [children]="law.law.children" [language]="language"></app-toc>
+        </mat-card>
+    </div>
 </div>
 <div class="spinner-container" *ngIf="lawLoading">
     <mat-spinner [color]="'primary'"></mat-spinner>

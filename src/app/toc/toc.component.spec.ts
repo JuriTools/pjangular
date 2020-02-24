@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TocContainerComponent } from './toc-container.component';
+import { TocComponent } from './toc.component';
 
-describe('TocContainerComponent', () => {
-  let component: TocContainerComponent;
-  let fixture: ComponentFixture<TocContainerComponent>;
+describe('TocComponent', () => {
+  let component: TocComponent;
+  let fixture: ComponentFixture<TocComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TocContainerComponent ]
+      declarations: [ TocComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TocContainerComponent);
+    fixture = TestBed.createComponent(TocComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

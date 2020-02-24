@@ -31,6 +31,10 @@
   }
 }
 
+body {
+  overflow: hidden;
+}
+
 .url-form-field {
   width: 100%;
 }
@@ -46,9 +50,38 @@ mat-spinner {
 }
 
 .spinner-container {
+  grid-area: spinner;
   width: 1vw;
   height: 1vh;
   padding-left: 40%;
   padding-top: 25%;
   overflow: hidden;
+}
+
+#law-content {
+  grid-area: content;
+  height: 100vh;
+  overflow-y: scroll;
+}
+#law-toc {
+  grid-area: toc;
+  top: 0;
+  height: 100vh;
+  position: sticky;
+  overflow-y: scroll;
+}
+#main-toolbar{
+  grid-area: header;
+  position: relative;
+  top: 0;
+}
+
+.law-container {
+  display: grid;
+  grid-template-columns: 25vw 25vw 25vw 25vw;
+  grid-template-rows: auto;
+  grid-template-areas:
+          "content content content header"
+          "content content content toc"
+          "content content content toc";
 }

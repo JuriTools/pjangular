@@ -18,10 +18,9 @@ export class Container {
     titleLabel: string;
     DOM;
 
-    constructor(type, parent, id = 0, title, DOM, language: Language) {
+    constructor(type, id = 0, title, DOM, language: Language) {
         this.type = type;
         this.typeLabel = this.getTypeLabel(type, language);
-        this.parent = parent || undefined;
         this.id = id || 0;
         this.children = [];
         this.title = title;

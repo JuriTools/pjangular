@@ -86,12 +86,13 @@ export class Law {
         }
     }
 
+
     addChildren(c: Container) {
         let childContainer;
         for (const child of c.DOM.children) {
             const containerType = child.nodeName.toLowerCase();
             if (levels.includes(containerType)) {
-                childContainer = new Container(containerType, c, child.id, child.title, child, this.language);
+                childContainer = new Container(containerType, child.id, child.title, child, this.language);
                 this.addChildren(childContainer);
                 c.addChild(childContainer);
             }
@@ -102,9 +103,9 @@ export class Law {
     }
 
     createContainerStructure(DOM) {
-        this.law = new Container('law', undefined, 0, '', DOM, this.language);
+        this.law = new Container('law',  0, '', DOM, this.language);
         for (const element of DOM.querySelectorAll(this.getHighestLevel(DOM))) {
-            const c = new Container(element.nodeName.toLowerCase(), this.law, element.id, element.title, element, this.language);
+            const c = new Container(element.nodeName.toLowerCase(), element.id, element.title, element, this.language);
             this.addChildren(c);
             this.law.addChild(c);
         }
