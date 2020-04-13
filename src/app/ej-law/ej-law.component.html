@@ -28,6 +28,12 @@
             </mat-menu>
         </mat-toolbar>
 
+        <mat-card id="law-toc">
+            <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
+            <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
+            <app-toc [children]="law.law.children" [language]="language"></app-toc>
+        </mat-card>
+
         <mat-card id="law-content">
             <mat-card>
                 <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
@@ -44,11 +50,6 @@
                 <app-toc [children]="law.law.children"></app-toc>
             </mat-card>
             <app-ej-container [items]="law?.law.children"></app-ej-container>
-        </mat-card>
-        <mat-card id="law-toc">
-            <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
-            <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
-            <app-toc [children]="law.law.children" [language]="language"></app-toc>
         </mat-card>
     </div>
 </div>

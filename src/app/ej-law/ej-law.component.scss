@@ -81,7 +81,7 @@ mat-spinner {
   grid-template-columns: 25vw 25vw 25vw 25vw;
   grid-template-rows: auto;
   grid-template-areas:
-          "content content content header"
-          "content content content toc"
-          "content content content toc";
+          "header header header header"
+          "toc content content content"
+          "toc content content content";
 }
