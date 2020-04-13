@@ -1,6 +1,6 @@
 <div class="{{item.type}}" id="{{item.type + item.id}}" *ngFor="let item of items">
     <div *ngIf="isContainer(item)">
-        <h2 i18n *ngIf="item.type"> {{item.typeLabel}} <span class="title" [innerHTML]="item.title"></span> - <span class="title-label"> {{item.titleLabel}} </span>
+        <h2 i18n *ngIf="item.type"> {{item.typeLabel}} <span class="title" [innerHTML]="item.title"></span> - <span class="title-label" [innerHTML]="item.titleLabel"></span>
             <span class="container-range" *ngIf="isContainer(item?.children[0])">
                 [ {{item.children[0].typeLabel}} <span [innerHTML]="item.children[0].title"></span> - <span [innerHTML]="item.children[item.children.length - 1].title"></span> ]
             </span>
