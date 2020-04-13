@@ -24,3 +24,11 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+
+## Release
+
+1. Build Extension package
+2. Upload to Chrome webstore
+3. Upload to Firefox webstore
+
