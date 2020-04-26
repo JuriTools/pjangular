@@ -32,7 +32,8 @@
       ],
       "exclude_matches": [
         "*://*.ejustice.just.fgov.be/*/summary.pl",
-        "*://*.ejustice.just.fgov.be/*/arch_a.pl"
+        "*://*.ejustice.just.fgov.be/*/arch_a.pl",
+        "*://*.ejustice.just.fgov.be/*/arch_a1.pl"
       ],
       "run_at": "document_end"
     }
