@@ -31,4 +31,8 @@ export class TocComponent implements OnInit, OnChanges {
     hasArticleChild = (_: number, node: Container) => !!node.children && node.children.length > 0 && node.children[0].classId === 'Article';
     hasChild = (_: number, node: Container) => !!node.children && node.children.length > 0;
 
+    scrollToElement(id) {
+        document.getElementById(id).scrollIntoView();
+    }
+
 }
