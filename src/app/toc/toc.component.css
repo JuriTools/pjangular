@@ -9,3 +9,12 @@
     list-style-type: none;
 }
 
+h3 {
+    text-underline: #28b1f1;
+    text-decoration: underline;
+}
+
+h3:hover {
+    cursor: pointer;
+    color: #02a3ee;
+}
