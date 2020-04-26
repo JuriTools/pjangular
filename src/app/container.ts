@@ -31,9 +31,9 @@ export class Container {
     getTitleLabel(DOM) {
         let titleMatch;
         if (DOM.body) {
-            titleMatch = DOM.body.innerHTML.match(/a>\s-\s(.*?).(<br>|&lt;)/);
+            titleMatch = DOM.body.innerHTML.match(/a>\s-\s(.*?)(<br>|&lt;)/);
         } else {
-            titleMatch = DOM.innerHTML.match(/a>\s-\s(.*?).(<br>|&lt;)/);
+            titleMatch = DOM.innerHTML.match(/a>\s-\s(.*?)(<br>|&lt;)/);
         }
         if (titleMatch) {
             return createTitleLable(titleMatch[1]);
