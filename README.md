@@ -13,6 +13,7 @@
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+In firefox load using page `about:debugging`
 ## Build extension package
 
 Run `ng build --prod --sourceMap=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'` to build the packed extension for production in the `web-ext-artifacts` directory. 
@@ -26,9 +27,14 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 
+
 ## Release
 
-1. Build Extension package
-2. Upload to Chrome webstore
-3. Upload to Firefox webstore
+
+1. Update version number in `package.json`
+2. Run tests
+3. Commit to release tag
+4. Package extension `npm pack:prod`
+5. Upload to Chrome webstore
+6. Upload to Firefox webstore
 
