@@ -13,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && npm run build:prod",
-    "pack:prod": "ng build --prod --sourceMap=false && web-ext build -s 'dist/pj-angular/'",
+    "pack:prod": "npm run clean && ng build --prod --sourceMap=false && web-ext build -s 'dist/pj-angular/'",
     "pack:dev": "ng build && web-ext build -s 'dist/pj-angular/'"
   },
   "private": true,
@@ -54,9 +54,9 @@
     "karma-jasmine": "~3.1.1",
     "karma-jasmine-html-reporter": "^1.5.3",
     "protractor": "^5.4.4",
-    "puppeteer": "^3.0.1",
+    "puppeteer": "^3.0.2",
     "ts-node": "~8.9.1",
-    "tslint": "~6.1.1",
+    "tslint": "^6.1.2",
     "typescript": "~3.8.3",
     "web-ext": "^4.2.0"
   }
