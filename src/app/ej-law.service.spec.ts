@@ -55,6 +55,15 @@ describe('EjLawService', () => {
             fr: new URL('https://www.ejustice.just.fgov.be/cgi_loi/loi_a1.pl?language=fr&la=F&cn=1867060801&table_name=loi&&caller=list&F&fromtab=loi&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))'),
         });
     });
+    // todo check why test does not fail
+    it('should parse Archived url', () => {
+        const url = new URL('https://www.ejustice.just.fgov.be/cgi_loi/arch_a.pl?sql=(text+contains+(%27%27))&rech=1&language=fr&tri=dd+AS+RANK&numero=1&table_name=loi&cn=1867060801&caller=archive&fromtab=loi&la=F&ver_arch=140');
+        const service: EjLawService = TestBed.inject(EjLawService);
+        expect(service.parseUrl(url)).toEqual({
+            nl: new URL('https://www.ejustice.just.fgov.be/cgi_loi/loi_a1.pl?language=nl&la=N&cn=1867060801&table_name=wet&&caller=archive&N&fromtab=wet&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))'),
+            fr: new URL('https://www.ejustice.just.fgov.be/cgi_loi/loi_a1.pl?language=fr&la=F&cn=1867060801&table_name=loi&&caller=list&F&fromtab=loi&tri=dd+AS+RANK&rech=1&numero=1&sql=(text+contains+(%27%27))'),
+        });
+    });
     it('should fail on invalid url', () => {
         const url = new URL('https://www.ejuste.just.fgov.be/cgi_loi/change_lg.pl?language=fr&la=F&cn=1867');
         const service: EjLawService = TestBed.inject(EjLawService);
@@ -77,6 +86,25 @@ describe('EjLawService', () => {
             'nl');
         law$.subscribe(law => {
             expect(law.cosUrl).toEqual(new URL('http://reflex.raadvst-consetat.be/reflex/?page=chrono&c=detail_get&d=detail&docid=48299&tab=chrono'));
+            done();
+        });
+    });
+    it('should get Archived version', (done: DoneFn) => {
+        const service: EjLawService = TestBed.inject(EjLawService);
+        const law$ = service.getLaw(
+            new URL('https://www.ejustice.just.fgov.be/cgi_loi/arch_a.pl?sql=(text+contains+(%27%27))&rech=1&language=fr&tri=dd+AS+RANK&numero=1&table_name=loi&cn=1867060801&caller=archive&fromtab=loi&la=F&ver_arch=140'),
+            'nl');
+        law$.subscribe(law => {
+            expect(law.cosUrl).toEqual(new URL('http://reflex.raadvst-consetat.be/reflex/?page=chrono&c=detail_get&d=detail&docid=48299&tab=chrono'));
+            done();
+        });
+    });
+    it('should get correct Title', (done: DoneFn) => {
+        const service: EjLawService = TestBed.inject(EjLawService);
+        const law$ = service.getLaw(
+            new URL('https://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&table_name=wet&cn=2016020511'), 'nl');
+        law$.subscribe(law => {
+            expect(law.title).toEqual('Wet tot wijziging van het strafrecht en de strafvordering en houdende diverse bepalingen inzake justitie(NOTA : Raadpleging van vroegere versies vanaf 19-02-2016 en tekstbijwerking tot 30-05-2018)');
             done();
         });
     });

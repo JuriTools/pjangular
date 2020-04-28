@@ -272,7 +272,7 @@ export class Law {
         const div = DOM.getElementById(implementingDocId);
         if (div) {
             const urlHref = div.children[0].href.replace(
-                /(https?|moz):\/\/.*?:.*?\//,
+                /(https?|moz|unsafe:moz-extension):\/\/.*?\//,
                 'https://www.ejustice.just.fgov.be/');
             return new URL(urlHref);
         }

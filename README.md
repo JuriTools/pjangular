@@ -30,11 +30,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Release
 
-
 1. Update version number in `package.json` and `manifest.json`
 2. Run tests
-3. Commit to release tag
-4. Package extension `npm pack:prod`
-5. Upload to Chrome webstore
-6. Upload to Firefox webstore
+3. Run `npm install`
+4. Commit to release tag
+5. Package extension `npm pack:prod`
+6. Upload to Chrome webstore
+7. Upload to Firefox webstore
 
