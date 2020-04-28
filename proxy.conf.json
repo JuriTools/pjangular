@@ -1,5 +1,5 @@
 {
-  "/ejustice": {
+  "/": {
     "target": "http://www.ejustice.just.fgov.be",
     "secure": false,
     "changeOrigin": true

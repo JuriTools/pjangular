@@ -34,3 +34,11 @@ jobs:
         run: |
           npm ci
           npm run build:ci
+      - name: Create extension zip
+        run: |
+          npm run pack:prod
+      - name: Archive extension
+          uses: actions/upload-artifact@v1
+          with:
+            name: Zip extension
+            path: web-ext-artifacts
