@@ -19,7 +19,8 @@
     // background-color: mat-color($pj-background, 100);
   }
   .article {
-    background-color: mat-color($pj-background, 100);
+ //   background-color: mat-color($pj-background, 100);
+    margin-bottom: 1em;
   }
   #main-toolbar {
     position: sticky;
@@ -27,7 +28,7 @@
   }
 
   mat-drawer-container {
-    background-color: mat-color($pj-background, 200);
+ //   background-color: mat-color($pj-background, 200);
   }
 }
 
@@ -39,9 +40,7 @@ body {
   width: 100%;
 }
 
-mat-card {
-  margin: 1em;
-}
+
 
 mat-spinner {
   position: fixed;

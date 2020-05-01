@@ -15,7 +15,6 @@ export class EjLawComponent implements OnInit {
     lawLoaded: boolean;
     lawLoading: boolean;
     languageLoaded: boolean;
-    showCoS: boolean;
     switchingLanguage: boolean;
     language: Language;
 
@@ -31,14 +30,15 @@ export class EjLawComponent implements OnInit {
         // adding url as iframe name allows cross domain information passing
         if (window.name.includes('ejustice')) {
             this.url = new URL(window.name);
-            this.getLaw(this.url);
+            this.getLaw(this.url.href);
         }
     }
 
-    getLaw(urlHref, language?: Language) {
+    getLaw(url: string, language?: Language) {
         this.lawLoaded = false;
         this.lawLoading = true;
-        this.url = new URL(urlHref);
+        this.url = new URL(url);
+        // url.href = url?.href.replace(/.*?4200/, 'http://www.ejustice.just.fgov.be');
         this.ejLawService.getLaw(this.url, language)
             .subscribe(
                 data => {
@@ -59,29 +59,11 @@ export class EjLawComponent implements OnInit {
     }
 
 
-
     switchLawLanguage(language: Language) {
         const urls = this.ejLawService.getURLs();
         this.language = language === 'nl' ? 'fr' : 'nl';
         // todo change setting language here
         this.switchingLanguage = true;
-        this.getLaw(urls[this.language], this.language);
+        this.getLaw(urls[this.language].href, this.language);
     }
-
-
-    showImplementingDocuments() {
-
-    }
-
-    showArchivedVersions() {
-
-    }
-
-    showCouncilOfState() {
-        if (this.law.cosUrl) {
-            this.showCoS = !this.showCoS;
-            console.log('Preambule: ' + this.showCoS);
-        }
-    }
-
 }

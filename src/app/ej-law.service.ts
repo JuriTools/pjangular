@@ -8,6 +8,7 @@ import {timeout, switchMap} from 'rxjs/operators';
 
 const hostname = 'https://www.ejustice.just.fgov.be';
 
+
 function replaceInnerHTML(oldElement, html: string): HTMLElement {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(html, 'text/html');

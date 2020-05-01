@@ -1,9 +1,9 @@
 @mixin app-theme($theme) {
     mat-card {
         margin: 1em;
-        background-color: mat-color($pallete-triadic, 200);
+        //background-color: mat-color($pallete-triadic, 200);
     }
     body {
-        background-color: whitesmoke;
+        //background-color: whitesmoke;
     }
 }
