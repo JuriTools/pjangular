@@ -7,7 +7,7 @@
             <h3 (click)="scrollToElement(node.type + node.id)">
                 <span class="toc-leaf-link"
                    [innerHTML]="node.typeLabel + ' ' + node.title"></span>
-                -
+                <span *ngIf="node.titleLabel"> - </span>
                 <span [innerHTML]=" node.titleLabel"></span>
             </h3>
         </li>

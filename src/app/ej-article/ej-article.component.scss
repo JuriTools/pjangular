@@ -1,19 +1,32 @@
-@mixin article-theme($theme) {
-  .dotlist {
-    padding-left: 1em;
-  }
 
-  .lid{
-  //    background: mat-color($pj-background, 100);
-  }
-
-  .line {
-    padding-bottom: 10px;
-  }
-  .artworkingdate {
-   // color: mat-color($pallete-triadic, 400);
-  }
-  .artworkingdate:hover {
-    color: black;
-  }
+.dotlist {
+  text-indent: -1em;
+  padding-left: 1em;
 }
+
+.artlid {
+  text-indent: -1em;
+  padding-left: 1em;
+}
+
+.paragraph {
+  text-indent: -1em;
+  padding-left: 1em;
+}
+
+
+.lid{
+//    background: mat-color($pj-background, 100);
+  max-width: 200px;
+}
+
+.line {
+  padding-bottom: 0.5%;
+}
+.artworkingdate {
+ // color: mat-color($pallete-triadic, 400);
+}
+.artworkingdate:hover {
+  color: black;
+}
+

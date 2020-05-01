@@ -5,9 +5,12 @@ import {Language} from './container';
 export class Article {
     classId = 'Article';
     label: 'Article' | 'Artikel';
+    typeLabel: 'Article' | 'Artikel';
+    title: string;
     artId: string;
+    id: string;
     book = 0;
-    title = 0;
+    //title = 0;
     chapter = 0;
     section = 0;
     subSection = 0;
@@ -20,7 +23,10 @@ export class Article {
     constructor(DOM, language: Language) {
         this.element = DOM;
         this.artId = DOM.id;
+        this.id = DOM.id;
+        this.title = DOM.id;
         this.label = language === 'fr' ? 'Article' : 'Artikel';
+        this.typeLabel = language === 'fr' ? 'Article' : 'Artikel';
         this.text = DOM.innerText; // todo Create Lines of article
         this.lines = this.parseLines(DOM);
         this.group = this.book.toString() + this.title.toString() + this.chapter.toString() + this.section.toString() + this.subSection.toString();
