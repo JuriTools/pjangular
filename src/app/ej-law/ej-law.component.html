@@ -7,19 +7,18 @@
     </label>
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
-<div *ngIf="lawLoaded || languageLoaded">
-    <div class="law-container">
-        <mat-toolbar id="main-toolbar">
-            <button type="button" mat-flat-button (click)="switchLawLanguage(language)"
-                    color="primary" [disabled]="switchingLanguage">
-                <ng-container i18n *ngIf="language==='nl'&& !switchingLanguage">Franstalige versie</ng-container>
-                <ng-container i18n *ngIf="language==='fr' && !switchingLanguage">Version néerlandaise</ng-container>
-                <ng-container *ngIf="switchingLanguage" i18n>Switching</ng-container>
+<div id="main-container">
+    <div *ngIf="lawLoaded || languageLoaded">
+        <mat-card id="main-toolbar">
+            <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
+            <button menubutton mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
             </button>
-            <button type="button" mat-flat-button [matMenuTriggerFor]="menu" color="primary">Links</button>
-            <mat-menu #menu>
-                <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a></button>
-                <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archiefversies</a>
+            <mat-menu id="menu" #menu>
+                <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
+                </button>
+                <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n>
+                    Archiefversies</a>
                 </button>
                 <button mat-menu-item>
                     <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
