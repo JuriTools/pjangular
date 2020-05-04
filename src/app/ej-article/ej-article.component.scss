@@ -1,4 +1,7 @@
-
+.article{
+  min-height: 0;
+  flex-grow: 1;
+}
 .dotlist {
   text-indent: -1em;
   padding-left: 1em;

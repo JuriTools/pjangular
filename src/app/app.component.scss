@@ -1,14 +1,11 @@
-@mixin app-theme($theme) {
-    mat-card {
-        margin: 1em;
-        //background-color: mat-color($pallete-triadic, 200);
-    }
-
-    #article {
-        margin-bottom: 1em;
-    }
-
-    body {
-        //background-color: whitesmoke;
-    }
+mat-card {
+  margin: 1em;
+  //background-color: mat-color($pallete-triadic, 200);
 }
+
+
+body {
+  //background-color: whitesmoke;
+  height: 100%;
+}
+

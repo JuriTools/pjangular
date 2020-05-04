@@ -32,7 +32,7 @@ export class TocComponent implements OnInit, OnChanges {
     hasChild = (_: number, node: Container) => !!node.children && node.children.length > 0;
 
     scrollToElement(id) {
-        document.getElementById(id).scrollIntoView();
+        document.getElementById(id).scrollIntoView({block: 'nearest'});
     }
 
 }

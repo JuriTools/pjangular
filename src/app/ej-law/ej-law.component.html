@@ -25,31 +25,30 @@
                         Uitvoeringsbesluiten
                     </a></button>
             </mat-menu>
-        </mat-toolbar>
-
-        <mat-card id="law-toc">
-            <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
-            <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
-            <app-toc [children]="law.law.children" [language]="language"></app-toc>
         </mat-card>
-
-        <mat-card id="law-content">
-            <mat-card>
-                <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
+        <div class="law-container">
+            <mat-card id="law-side">
+                <div id="'law-toc">
+                    <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
+                    <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
+                    <app-toc [children]="law.law.children" [language]="language"></app-toc>
+                </div>
             </mat-card>
-            <mat-card class="law-metadata">
-                <ol style="list-style-type:none;">
-                    <li i18n>Datum van Publicatie: <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></li>
-                    <li i18n>Datum van Inwerkingtreding: {{ law?.dateWorking | date:'mediumDate'}}</li>
-                    <li i18n *ngIf="law?.source">Bron: <strong>{{ law?.source | titlecase}}</strong></li>
-                    <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
-                </ol>
-            </mat-card>
-            <mat-card>
-                <app-toc [children]="law.law.children"></app-toc>
-            </mat-card>
-            <app-ej-container [items]="law?.law.children"></app-ej-container>
-        </mat-card>
+            <div id="law-content">
+                <mat-card id="law-metadata">
+                    <ol style="list-style-type:none;">
+                        <li i18n>Datum van Publicatie: <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></li>
+                        <li i18n>Datum van Inwerkingtreding: {{ law?.dateWorking | date:'mediumDate'}}</li>
+                        <li i18n *ngIf="law?.source">Bron: <strong>{{ law?.source | titlecase}}</strong></li>
+                        <li i18n>Pagina Staatsblad: {{ law?.pageNumber}}</li>
+                    </ol>
+                </mat-card>
+                <mat-card>
+                    <app-toc [children]="law.law.children"></app-toc>
+                </mat-card>
+                <app-ej-container [items]="law?.law.children"></app-ej-container>
+            </div>
+        </div>
     </div>
 </div>
 <div class="spinner-container" *ngIf="lawLoading">

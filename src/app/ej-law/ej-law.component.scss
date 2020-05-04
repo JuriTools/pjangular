@@ -1,46 +1,11 @@
-@mixin law-theme($theme) {
-  html * {
-    font-family: Ubuntu, sans-serif !important;
-  }
-  button {
-    color: black;
-  }
-  h2 {
-    background-color: lightblue;
-  }
-
-  .book {
-    background-color: inherit;
-  }
-  .lawtitle {
-    // background-color: mat-color($pj-background, 50);
-  }
-  .chapter {
-    // background-color: mat-color($pj-background, 100);
-  }
-  .article {
- //   background-color: mat-color($pj-background, 100);
-    margin-bottom: 1em;
-  }
-  #main-toolbar {
-    position: sticky;
-    top: 0;
-  }
-
-  mat-drawer-container {
- //   background-color: mat-color($pj-background, 200);
-  }
-}
-
-body {
-  overflow: hidden;
+.article {
+  //   background-color: mat-color($pj-background, 100);
+  margin-bottom: 1em;
 }
 
 .url-form-field {
   width: 100%;
 }
-
-
 
 mat-spinner {
   position: fixed;
@@ -58,29 +23,47 @@ mat-spinner {
 }
 
 #law-content {
-  grid-area: content;
-  height: 100vh;
+  margin-left: 1%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   overflow-y: scroll;
 }
+
+#law-side {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 #law-toc {
-  grid-area: toc;
-  top: 0;
-  height: 100vh;
-  position: sticky;
-  overflow-y: scroll;
+  flex-grow: 1;
 }
-#main-toolbar{
-  grid-area: header;
-  position: relative;
-  top: 0;
+
+#law-metadata {
+}
+
+#main-toolbar {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1%;
+}
+
+#law-title {
+}
+
+#menu {
+  align-self: flex-end;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
 
 .law-container {
-  display: grid;
-  grid-template-columns: 25vw 25vw 25vw 25vw;
-  grid-template-rows: auto;
-  grid-template-areas:
-          "header header header header"
-          "toc content content content"
-          "toc content content content";
+  display: flex;
+  height: 90%;
 }
