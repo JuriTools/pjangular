@@ -23,6 +23,7 @@ import {EjArticleComponent} from './ej-article/ej-article.component';
 import {EjContainerComponent} from './ej-container/ej-container.component';
 import {TocComponent} from './toc/toc.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatButtonToggleModule,
         MatExpansionModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatListModule
     ],
     providers: [],
     bootstrap: [AppComponent]
