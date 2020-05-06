@@ -29,7 +29,7 @@ export class Article {
         this.label = language === 'fr' ? 'Article' : 'Artikel';
         this.typeLabel = language === 'fr' ? 'Article' : 'Artikel';
         this.type = language === 'fr' ? 'Article' : 'Artikel';
-        this.text = DOM.innerText; // todo Create Lines of article
+        this.text = DOM.innerText;
         this.lines = this.parseLines(DOM);
         this.group = this.book.toString() + this.title.toString() + this.chapter.toString() + this.section.toString() + this.subSection.toString();
     }

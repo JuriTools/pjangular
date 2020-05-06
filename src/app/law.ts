@@ -239,11 +239,9 @@ export class Law {
     parseArticles(DOM: Document) {
         const articles: Article[] = [];
         const articlesDom = DOM.querySelectorAll('article');
-        // console.log(articlesDom);
         for (let articleIndex = 0; articleIndex < articlesDom.length; articleIndex++) {
             articles[articleIndex] = new Article(articlesDom[articleIndex], this.language);
         }
-        // console.log(articles);
         return articles;
     }
 
