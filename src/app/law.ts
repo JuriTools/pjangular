@@ -11,6 +11,8 @@ export function strip(str) {
 
 export class Law {
     classId = 'Law';
+    DOM: Document;
+    originalDOM: Document;
     title: string;
     displayTitle: string;
     dateWorking: Date;
@@ -35,7 +37,7 @@ export class Law {
     archivesUrl: URL;
     implementingDocumentsUrl: URL;
 
-    constructor(DOM$: Observable<Document>, language) {
+    constructor(DOM$: Observable<Document[]>, language) {
         this.containers = [];
         this.books = [];
         this.lawtitles = [];
@@ -43,11 +45,13 @@ export class Law {
         this.sections = [];
         this.subSections = [];
         DOM$.subscribe(DOM => {
+            this.DOM = DOM[0];
+            this.originalDOM = DOM[1];
             let dataText = '';
             try {
-                dataText = DOM.getElementById('Wetstitel').innerText;
-                if (DOM.getElementById('Wetstitel').querySelector('a')) {
-                    this.bsUrl = DOM.getElementById('Wetstitel').querySelector('a').href;
+                dataText = this.DOM.getElementById('Wetstitel').innerText;
+                if (this.DOM.getElementById('Wetstitel').querySelector('a')) {
+                    this.bsUrl = this.DOM.getElementById('Wetstitel').querySelector('a').href;
                 } else {
                     this.bsUrl = 'Todo: url not found for this type of law.';
                 }
@@ -69,12 +73,12 @@ export class Law {
             this.dossierNumber = this.getDossierNumber(dataText);
             this.numberId = this.getNumberId(dataText);
             this.source = this.getSource(dataText);
-            this.preambule = this.getPreambule(DOM);
-            this.cosUrl = this.getCouncilOfState(DOM);
-            this.implementingDocumentsUrl = this.getImplementingDocuments(DOM);
-            this.archivesUrl = this.getArchives(DOM);
-            this.articles = this.parseArticles(DOM);
-            this.createContainerStructure(DOM);
+            this.preambule = this.getPreambule(this.DOM);
+            this.cosUrl = this.getCouncilOfState(this.DOM);
+            this.implementingDocumentsUrl = this.getImplementingDocuments(this.DOM);
+            this.archivesUrl = this.getArchives(this.DOM);
+            this.articles = this.parseArticles(this.DOM);
+            this.createContainerStructure(this.DOM);
         });
     }
 
@@ -274,5 +278,9 @@ export class Law {
                 'https://www.ejustice.just.fgov.be/');
             return new URL(urlHref);
         }
+    }
+
+    get originalText () {
+        return this.originalDOM.querySelector('body').innerHTML;
     }
 }

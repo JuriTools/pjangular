@@ -17,13 +17,14 @@ export class EjLawComponent implements OnInit {
     languageLoaded: boolean;
     switchingLanguage: boolean;
     language: Language;
-
+    originalLaw: boolean;
 
     constructor(private ejLawService: EjLawService) {
         // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;
         this.switchingLanguage = false;
+        this.originalLaw = false;
     }
 
     ngOnInit() {
@@ -59,11 +60,15 @@ export class EjLawComponent implements OnInit {
     }
 
 
-    switchLawLanguage(language: Language) {
+    switchLawLanguage() {
         const urls = this.ejLawService.getURLs();
-        this.language = language === 'nl' ? 'fr' : 'nl';
+        this.language = this.language === 'nl' ? 'fr' : 'nl';
         // todo change setting language here
         this.switchingLanguage = true;
         this.getLaw(urls[this.language].href, this.language);
+    }
+
+    showOriginalLaw() {
+        this.originalLaw = !this.originalLaw;
     }
 }

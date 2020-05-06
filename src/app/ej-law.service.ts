@@ -166,10 +166,11 @@ export class EjLawService {
         };
     }
 
-    getDOM(doc): Observable<Document> {
+    getDOM(doc): Observable<Document[]> {
         // const decoder = new TextDecoder('windows-1252');
         // const decoded = decoder.decode(doc);
         let DOM = new DOMParser().parseFromString(doc, 'text/html');
+        const originalDOM = new DOMParser().parseFromString(doc, 'text/html');
         this.language = this.getLanguage(undefined, DOM);
         DOM = this.restructureDOM(DOM);
         DOM = this.restructureAsDiv(DOM);
@@ -179,10 +180,9 @@ export class EjLawService {
         DOM = this.tagDefinitions(DOM);
         DOM = this.tagWebLinks(DOM);
         this.DOM = DOM;
-        return of(DOM)
-            .pipe(
-                timeout(50)
-            );
+        return of([DOM, originalDOM]).pipe(
+            timeout(50)
+        );
     }
 
     restructureDOM(doc) {

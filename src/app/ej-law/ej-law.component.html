@@ -14,6 +14,8 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu id="menu" #menu>
+            <button mat-menu-item i18n (click)="showOriginalLaw()"> Originele Versie</button>
+            <button mat-menu-item i18n (click)="switchLawLanguage()"> Verander Taal</button>
             <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
             </button>
             <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n>
@@ -25,8 +27,8 @@
                 </a></button>
         </mat-menu>
     </mat-card>
-    <div class="law-container">
-        <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden. Is de wet opgeheven?</h3>
+    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden. Is de wet opgeheven?</h3>
+    <div class="law-container" *ngIf="!originalLaw">
         <div id="law-content">
             <mat-card id="law-metadata">
                 <mat-list>
@@ -51,6 +53,9 @@
                 <app-toc [children]="law.law.children" [language]="language"></app-toc>
             </div>
         </mat-card>
+    </div>
+    <div class='original-law-container'*ngIf="originalLaw">
+        <mat-card [innerHTML]="law.originalText | safeHtml"></mat-card>
     </div>
 </div>
 <div class="spinner-container" *ngIf="lawLoading">
