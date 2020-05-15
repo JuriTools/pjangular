@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="toc-tree">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="mat-tree-node">
             <!-- use a disabled button to provide padding for tree leaf -->
@@ -27,7 +27,7 @@
                     <span [innerHTML]="node.titleLabel"></span>
                 </h3>
             </div>
-            <div class="sublist-toc" [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+            <div class="sublist-toc" [class.toc-tree-invisible]="!treeControl.isExpanded(node)">
                 <ng-container matTreeNodeOutlet></ng-container>
             </div>
     </mat-nested-tree-node>

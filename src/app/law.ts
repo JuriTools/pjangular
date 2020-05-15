@@ -142,21 +142,19 @@ export class Law {
             month: 'long',
             day: 'numeric'
         };
+        let title = this.title;
         if (language === 'fr') {
             // todo check French
             if (this.title.includes('relatif à') || this.title.includes('relative')) {
-                return this.title.replace(/relatif à|relative/, 'du ' + this.date.toLocaleDateString('fr-BE', options) + ' sur');
-            } else {
-                return this.title;
+                title = this.title.replace(/relatif à|relative/, 'du ' + this.date.toLocaleDateString('fr-BE', options) + ' sur');
             }
         }
         if (language === 'nl') {
             if (this.title.includes('betreffende')) {
-                return this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
-            } else {
-                return this.title;
+                title = this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
             }
         }
+        return title.match(/.*?(\.|$)/gi)[0].replace(/^[^A-Za-z]+/, '')
     }
 
     getLawTitle(text) {
@@ -280,7 +278,7 @@ export class Law {
         }
     }
 
-    get originalText () {
+    get originalHTML () {
         return this.originalDOM.querySelector('body').innerHTML;
     }
 }

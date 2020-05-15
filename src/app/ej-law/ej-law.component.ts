@@ -49,6 +49,9 @@ export class EjLawComponent implements OnInit {
                     this.lawLoading = false;
                     this.languageLoaded = true;
                     this.switchingLanguage = false;
+                    if (this.law.law.children.length === 0){
+                        this.originalLaw = true;
+                    }
                 },
                 error => {
                     console.error(`Error in getting law: ${error}`);

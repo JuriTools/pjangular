@@ -8,54 +8,72 @@
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
 <div id="main-container" *ngIf="lawLoaded || languageLoaded">
-    <mat-card id="main-toolbar">
-        <mat-card-title> {{ law?.displayTitle }} </mat-card-title>
-        <button menubutton mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
+    <mat-card id="main-toolbar" class="header">
+        <mat-card-title id="main-title"> {{ law?.displayTitle }} </mat-card-title>
+        <button mat-icon-button [matMenuTriggerFor]="infomenu">
+            <mat-icon>info</mat-icon>
         </button>
-        <mat-menu id="menu" #menu>
-            <button mat-menu-item i18n (click)="showOriginalLaw()"> Originele Versie</button>
-            <button mat-menu-item i18n (click)="switchLawLanguage()"> Verander Taal</button>
-            <button mat-menu-item><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
-            </button>
-            <button mat-menu-item><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n>
-                Archiefversies</a>
-            </button>
-            <button mat-menu-item>
-                <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
-                    Uitvoeringsbesluiten
-                </a></button>
+        <mat-menu id="menu" #infomenu>
+            <mat-list>
+            <mat-list-item i18n><span>Datum van Publicatie </span>
+                <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></mat-list-item>
+            <mat-list-item i18n>Datum van
+                Inwerkingtreding {{ law?.dateWorking | date:'mediumDate'}}</mat-list-item>
+            <mat-list-item i18n *ngIf="law?.source">Bron <strong>{{ law?.source | titlecase}}</strong>
+            </mat-list-item>
+            <mat-list-item i18n>Pagina Staatsblad: {{ law?.pageNumber}}</mat-list-item>
+            </mat-list>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="mainmenu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu id="main-menu" #mainmenu>
+            <mat-list>
+                <mat-list-item>
+                    <mat-slide-toggle i18n (change)="showOriginalLaw()"> Originele Versie</mat-slide-toggle>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon>language</mat-icon>
+                    NL
+                    <mat-slide-toggle i18n (change)="switchLawLanguage()"></mat-slide-toggle>
+                    FR
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-button><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
+                    </button>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n>
+                        <mat-icon>archive</mat-icon>
+                        Archief-versie
+                    </a>
+                    </button>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-button>
+                        <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
+                            Uitvoeringsbesluiten
+                        </a></button>
+                </mat-list-item>
+            </mat-list>
         </mat-menu>
     </mat-card>
-    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden. Is de wet opgeheven?</h3>
-    <div class="law-container" *ngIf="!originalLaw">
-        <div id="law-content">
-            <mat-card id="law-metadata">
-                <mat-list>
-                    <mat-list-item i18n><span>Datum van Publicatie </span>
-                        <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></mat-list-item>
-                    <mat-list-item i18n>Datum van
-                        Inwerkingtreding {{ law?.dateWorking | date:'mediumDate'}}</mat-list-item>
-                    <mat-list-item i18n *ngIf="law?.source">Bron <strong>{{ law?.source | titlecase}}</strong>
-                    </mat-list-item>
-                    <mat-list-item i18n>Pagina Staatsblad: {{ law?.pageNumber}}</mat-list-item>
-                </mat-list>
-            </mat-card>
-            <mat-card id="law-toc-top">
-                <app-toc [children]="law.law.children"></app-toc>
-            </mat-card>
-            <app-ej-container [items]="law?.law.children"></app-ej-container>
+    <mat-expansion-panel class="header" id="law-toolbar">
+        <mat-expansion-panel-header>
+            <mat-panel-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-panel-title>
+            <mat-panel-title i18n *ngIf="language==='fr'">Table des Matières</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div id="law-toc-top">
+            <app-toc [children]="law.law.children" [language]="language"></app-toc>
         </div>
-        <mat-card id="law-side">
-            <div id="'law-toc">
-                <mat-card-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-card-title>
-                <mat-card-title i18n *ngIf="language==='fr'">Table des Matières</mat-card-title>
-                <app-toc [children]="law.law.children" [language]="language"></app-toc>
-            </div>
-        </mat-card>
+    </mat-expansion-panel>
+    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden.
+    </h3>
+    <div class="law-content" *ngIf="!originalLaw">
+        <app-ej-container [items]="law?.law.children"></app-ej-container>
     </div>
-    <div class='original-law-container'*ngIf="originalLaw">
-        <mat-card [innerHTML]="law.originalText | safeHtml"></mat-card>
+    <div class='original-law-container' *ngIf="originalLaw">
+        <mat-card [innerHTML]="law.originalHTML | safeHtml"></mat-card>
     </div>
 </div>
 <div class="spinner-container" *ngIf="lawLoading">

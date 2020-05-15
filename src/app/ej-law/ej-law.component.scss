@@ -21,60 +21,46 @@ mat-spinner {
   top: 35%;
 }
 
-#law-content {
-  margin-left: 1%;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow-y: scroll;
-}
-
-#law-side {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-#law-toc {
-  flex-grow: 1;
-}
-
-#law-toc-top {
-  margin-right: 1%;
-}
-
-#law-metadata {
-  margin-bottom: 1%;
-  margin-right: 1%;
-
-}
-
-#main-toolbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 1%;
-}
-
-#law-title {
-  background-color: #b5c4c5;
-}
-
-#menu {
-  align-self: flex-end;
-}
-
 #main-container {
-  display: block;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+}
+
+#main-title{
+
 }
 
 .law-container {
-  display: flex;
-  height: 90%;
+  height:100%;
+}
+
+#law-toolbar{
+  display: inline;
 }
 
 .original-law-container {
-  overflow-y: scroll;
   height: 100%;
+  flex: 1;
+  overflow: scroll;
+}
+
+.law-content {
+  height: 100%;
+  flex: 1;
+  overflow: scroll;
+}
+
+#menu {
+}
+
+#main-menu{
+  display: flex;
+  flex-direction: column;
 }

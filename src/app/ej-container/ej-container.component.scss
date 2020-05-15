@@ -1,5 +1,6 @@
 .container {
   margin-bottom: 1em;
   flex-grow: 1;
-  min-height: 0;
+  min-height: min-content;
 }
+

@@ -24,6 +24,7 @@ import {EjContainerComponent} from './ej-container/ej-container.component';
 import {TocComponent} from './toc/toc.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatListModule} from '@angular/material/list';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {MatListModule} from '@angular/material/list';
         MatExpansionModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
-        MatListModule
+        MatListModule,
+        MatSlideToggleModule
     ],
     providers: [],
     bootstrap: [AppComponent]
