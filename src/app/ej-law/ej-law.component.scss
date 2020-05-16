@@ -16,7 +16,7 @@ mat-spinner {
 .spinner-container {
   width: 100%;
   height: 100%;
-  position:absolute;
+  position: absolute;
   left: 40%;
   top: 35%;
 }
@@ -39,30 +39,26 @@ mat-spinner {
   margin-bottom: 4px;
 }
 
-#main-title{
+#main-title {
 
 }
 
-.slide-button-container{
+.slide-button-container {
   transform: translate(0%, 25%);
 }
 
-#info-list{
-  display:flex;
-  flex-direction: column;
-}
 
-.menu-buttons{
+.menu-buttons {
   display: flex;
   flex-direction: row;
 }
 
 
 .law-container {
-  height:100%;
+  height: 100%;
 }
 
-#law-toolbar{
+#law-toolbar {
   display: inline;
 }
 
@@ -78,10 +74,15 @@ mat-spinner {
   overflow-y: scroll;
 }
 
-#menu {
+#info-menu {
+
 }
 
-#main-menu{
-  display: flex;
-  flex-direction: column;
+#info-list {
 }
+
+
+#main-menu {
+
+}
+

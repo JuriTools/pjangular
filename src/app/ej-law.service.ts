@@ -220,12 +220,10 @@ export class EjLawService {
         tempBody = tempBody.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
         tempBody = tempBody.replace(regexart, '<article id="$2">$1</article>');
         tempBody = tempBody.replace(reghyperlink, '');
+        tempBody = tempBody.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/')
         replaceInnerHTML(doc.body, tempBody);
         return doc;
     }
-
-    // todo parse Table of Content
-    // tagTOC () {}
 
 
     restructureAsDiv(doc): Document {
@@ -395,7 +393,7 @@ export class EjLawService {
                         // console.log('No font for: ' + line);
                     }
                 }
-                line = line.replace(/a href="(.*?)"/gi, `a href=\"${hostname}$1\"`); // create full urls
+                // line = line.replace(/a href="(.*?)"/gi, `a href=\"${hostname}$1\"`); // create full urls
                 lines[index] = `<line class=${lineclass}>${lid}${sup}${line}</line>`;
             });
 

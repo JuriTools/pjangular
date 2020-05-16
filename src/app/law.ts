@@ -154,7 +154,7 @@ export class Law {
                 title = this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
             }
         }
-        return title.match(/.*?(\.|$)/gi)[0].replace(/^[^A-Za-z]+/, '')
+        return title.match(/(.*?)(\.|\(|$)/gi)[0].replace(/^[^A-Za-z]+/, '')
     }
 
     getLawTitle(text) {
@@ -260,7 +260,7 @@ export class Law {
         const div = DOM.getElementById(archiveId);
         if (div) {
             const urlHref = div.children[0].href.replace(
-                /(https?|moz):\/\/.*?:.*?\//,
+                /((https?|moz|unsafe:moz-extension):\/\/.*?\/|^\/)/,
                 'https://www.ejustice.just.fgov.be/');
             return new URL(urlHref);
         }
@@ -272,13 +272,15 @@ export class Law {
         const div = DOM.getElementById(implementingDocId);
         if (div) {
             const urlHref = div.children[0].href.replace(
-                /(https?|moz|unsafe:moz-extension):\/\/.*?\//,
+                /((https?|moz|unsafe:moz-extension):\/\/.*?\/|^\/)/,
                 'https://www.ejustice.just.fgov.be/');
             return new URL(urlHref);
         }
     }
 
     get originalHTML () {
-        return this.originalDOM.querySelector('body').innerHTML;
+        let doc = this.originalDOM.querySelector('body').innerHTML;
+        doc = doc.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/')
+        return doc
     }
 }

@@ -24,24 +24,30 @@
             <button mat-icon-button [matMenuTriggerFor]="infomenu">
                 <mat-icon matTooltip="Wetsinformatie">info</mat-icon>
             </button>
-            <mat-menu id="menu" #infomenu>
+            <mat-menu id="info-menu" #infomenu>
                 <mat-list id="info-list">
                     <mat-list-item *ngIf="law.datePublished" i18n>
                         <button mat-icon-button>
                             <mat-icon matTooltip="Datum van Publicatie">public</mat-icon>
-                            {{ law?.datePublished | date:'mediumDate'}}
                         </button>
+                        <span>{{ law?.datePublished | date:'mediumDate'}}</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="law.dateWorking" i18n>
-                        <mat-icon matTooltip="Datum van Inwerkingtreding">sports</mat-icon>
+                        <button mat-icon-button>
+                            <mat-icon matTooltip="Datum van Inwerkingtreding">sports</mat-icon>
+                        </button>
                         <span>{{ law?.dateWorking | date:'mediumDate'}}</span>
                     </mat-list-item>
                     <mat-list-item i18n *ngIf="law.source">
-                        <mat-icon matTooltip="Bron">account_balance</mat-icon>
+                        <button mat-icon-button>
+                            <mat-icon matTooltip="Bron">account_balance</mat-icon>
+                        </button>
                         <span>{{ law?.source | titlecase}}</span>
                     </mat-list-item>
                     <mat-list-item *ngIf="law.pageNumber" i18n>
-                        <mat-icon matTooltip="Staatblad">find_in_page</mat-icon>
+                        <button mat-icon-button>
+                            <mat-icon matTooltip="Staatblad">find_in_page</mat-icon>
+                        </button>
                         <span><i>BS</i> p. {{ law?.pageNumber}}</span>
                     </mat-list-item>
                 </mat-list>
@@ -51,15 +57,10 @@
             </button>
             <mat-menu id="main-menu" #mainmenu>
                 <mat-list>
-                    <mat-list-item *ngIf="law?.cosUrl">
-                        <a href="{{law?.cosUrl}}"  i18n> Raad van State</a>
-                    </mat-list-item>
-                    <mat-list-item *ngIf="law?.archivesUrl">
-                        <a href="{{law?.archivesUrl}}"  i18n> Archief-versie</a>
-                    </mat-list-item>
-                    <mat-list-item *ngIf="law?.implementingDocumentsUrl">
-                        <a href="{{law?.implementingDocumentsUrl}}" i18n>Uitvoeringsbesluiten</a>
-                    </mat-list-item>
+                    <a mat-list-item *ngIf="law?.cosUrl" href="{{law?.cosUrl}}" i18n>Raad van State</a>
+                    <a mat-list-item *ngIf="law?.archivesUrl" href="{{law?.archivesUrl}}" i18n>Archief-versie</a>
+                    <a mat-list-item *ngIf="law?.implementingDocumentsUrl" href="{{law?.implementingDocumentsUrl}}"
+                       i18n>Uitvoeringsbesluiten</a>
                 </mat-list>
             </mat-menu>
         </div>
