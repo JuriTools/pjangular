@@ -31,11 +31,32 @@ mat-spinner {
   position: sticky;
   top: 0;
   display: flex;
+  justify-content: space-between;
+  border-bottom: ridge rgba(181, 196, 197, 0.8) 2px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 1px;
+  margin-bottom: 4px;
 }
 
 #main-title{
 
 }
+
+.slide-button-container{
+  transform: translate(0%, 25%);
+}
+
+#info-list{
+  display:flex;
+  flex-direction: column;
+}
+
+.menu-buttons{
+  display: flex;
+  flex-direction: row;
+}
+
 
 .law-container {
   height:100%;

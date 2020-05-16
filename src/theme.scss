@@ -85,7 +85,7 @@ $mat-dark-theme-foreground: (
 
 // Background config
 // Light bg
-$light-background: rgba(190, 212, 255, 0.58);
+$light-background: rgb(205, 220, 252);
 $light-bg-darker-5: darken($light-background, 5%);
 $light-bg-darker-10: darken($light-background, 10%);
 $light-bg-darker-20: darken($light-background, 20%);
@@ -171,7 +171,6 @@ $theme-primary: mat-palette($mat-primary, main, lighter, darker);
 
 h2 {
   background-color: rgba(181, 196, 197, 0.8);
-  margin-right: 1%;
   padding-left: 1%;
 }
 body {

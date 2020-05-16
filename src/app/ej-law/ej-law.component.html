@@ -10,65 +10,82 @@
 <div id="main-container" *ngIf="lawLoaded || languageLoaded">
     <mat-card id="main-toolbar" class="header">
         <mat-card-title id="main-title"> {{ law?.displayTitle }} </mat-card-title>
-        <button mat-icon-button [matMenuTriggerFor]="infomenu">
-            <mat-icon>info</mat-icon>
-        </button>
-        <mat-menu id="menu" #infomenu>
-            <mat-list>
-            <mat-list-item i18n><span>Datum van Publicatie </span>
-                <strong>{{ law?.datePublished | date:'mediumDate'}}</strong></mat-list-item>
-            <mat-list-item i18n>Datum van
-                Inwerkingtreding {{ law?.dateWorking | date:'mediumDate'}}</mat-list-item>
-            <mat-list-item i18n *ngIf="law?.source">Bron <strong>{{ law?.source | titlecase}}</strong>
-            </mat-list-item>
-            <mat-list-item i18n>Pagina Staatsblad: {{ law?.pageNumber}}</mat-list-item>
-            </mat-list>
-        </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="mainmenu">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <mat-menu id="main-menu" #mainmenu>
-            <mat-list>
-                <mat-list-item>
-                    <mat-slide-toggle i18n (change)="showOriginalLaw()"> Originele Versie</mat-slide-toggle>
-                </mat-list-item>
-                <mat-list-item>
-                    <mat-icon>language</mat-icon>
-                    NL
-                    <mat-slide-toggle i18n (change)="switchLawLanguage()"></mat-slide-toggle>
-                    FR
-                </mat-list-item>
-                <mat-list-item>
-                    <button mat-button><a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
-                    </button>
-                </mat-list-item>
-                <mat-list-item>
-                    <button mat-icon-button><a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n>
-                        <mat-icon>archive</mat-icon>
-                        Archief-versie
-                    </a>
-                    </button>
-                </mat-list-item>
-                <mat-list-item>
-                    <button mat-button>
-                        <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>
-                            Uitvoeringsbesluiten
-                        </a></button>
-                </mat-list-item>
-            </mat-list>
-        </mat-menu>
+        <div class="menu-buttons">
+            <button mat-icon-button i18n (click)="showOriginalLaw()">
+                <mat-icon *ngIf="originalLaw" matTooltip="PrettyJustice">format_paint</mat-icon>
+                <mat-icon *ngIf="!originalLaw" matTooltip="Ejustice">gavel</mat-icon>
+            </button>
+            <button mat-icon-button i18n (click)="switchLawLanguage()">
+                <mat-icon>language</mat-icon>
+                <span *ngIf="language=='nl'" matTooltip="Naar Frans">FR</span>
+                <span *ngIf="language=='fr'" matTooltip="Naar Nederlands">NL</span>
+                <mat-progress-bar *ngIf="lawLoading" mode="buffer"></mat-progress-bar>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="infomenu">
+                <mat-icon matTooltip="Wetsinformatie">info</mat-icon>
+            </button>
+            <mat-menu id="menu" #infomenu>
+                <mat-list id="info-list">
+                    <mat-list-item i18n>
+                        <button mat-icon-button>
+                        <mat-icon matTooltip="Datum van Publicatie">public</mat-icon>
+                            {{ law?.datePublished | date:'mediumDate'}}
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item i18n>
+                        <mat-icon matTooltip="Datum van Inwerkingtreding">sports</mat-icon>
+                        <span>{{ law?.dateWorking | date:'mediumDate'}}</span>
+                    </mat-list-item>
+                    <mat-list-item i18n *ngIf="law?.source">
+                        <mat-icon matTooltip="Bron">account_balance</mat-icon>
+                        <span>{{ law?.source | titlecase}}</span>
+                    </mat-list-item>
+                    <mat-list-item i18n>
+                        <mat-icon matTooltip="Staatblaad">find_in_page</mat-icon>
+                        <span>p. {{ law?.pageNumber}}</span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="mainmenu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu id="main-menu" #mainmenu>
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-button>
+                            <a href="{{law?.cosUrl}}" *ngIf="law?.cosUrl" i18n> Raad van State</a>
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-button>
+                            <a href="{{law?.archivesUrl}}" *ngIf="law?.archivesUrl" i18n> Archief-versie</a>
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-button>
+                            <a href="{{law?.implementingDocumentsUrl}}" *ngIf="law?.implementingDocumentsUrl" i18n>Uitvoeringsbesluiten</a>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </mat-menu>
+        </div>
     </mat-card>
     <mat-expansion-panel class="header" id="law-toolbar">
         <mat-expansion-panel-header>
             <mat-panel-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-panel-title>
             <mat-panel-title i18n *ngIf="language==='fr'">Table des Matières</mat-panel-title>
+            <mat-panel-description>
+                Insert current toc position here
+            </mat-panel-description>
         </mat-expansion-panel-header>
+
         <div id="law-toc-top">
             <app-toc [children]="law.law.children" [language]="language"></app-toc>
         </div>
     </mat-expansion-panel>
     <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden.
     </h3>
+    <mat-divider></mat-divider>
     <div class="law-content" *ngIf="!originalLaw">
         <app-ej-container [items]="law?.law.children"></app-ej-container>
     </div>
@@ -76,6 +93,6 @@
         <mat-card [innerHTML]="law.originalHTML | safeHtml"></mat-card>
     </div>
 </div>
-<div class="spinner-container" *ngIf="lawLoading">
+<div class="spinner-container" *ngIf="lawLoading && !languageLoaded">
     <mat-spinner [color]="'primary'"></mat-spinner>
 </div>

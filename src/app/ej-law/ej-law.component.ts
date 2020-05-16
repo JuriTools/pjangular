@@ -49,6 +49,7 @@ export class EjLawComponent implements OnInit {
                     this.lawLoading = false;
                     this.languageLoaded = true;
                     this.switchingLanguage = false;
+                    // Check if there are articles in the law, otherwise show the original content
                     if (this.law.law.children.length === 0){
                         this.originalLaw = true;
                     }

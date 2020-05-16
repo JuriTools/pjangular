@@ -25,6 +25,7 @@ import {TocComponent} from './toc/toc.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatListModule} from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatProgressSpinnerModule,
         MatProgressBarModule,
         MatListModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatTooltipModule
     ],
     providers: [],
     bootstrap: [AppComponent]
