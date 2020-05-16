@@ -32,7 +32,8 @@ export class TocComponent implements OnInit, OnChanges {
     hasChild = (_: number, node: Container) => !!node.children && node.children.length > 0;
 
     scrollToElement(id) {
-        document.getElementById(id).scrollIntoView({behavior:'smooth', block: 'start'});
+        document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'});
     }
+
 
 }

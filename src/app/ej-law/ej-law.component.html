@@ -42,7 +42,7 @@
                     </mat-list-item>
                     <mat-list-item i18n>
                         <mat-icon matTooltip="Staatblad">find_in_page</mat-icon>
-                        <span>p. {{ law?.pageNumber}}</span>
+                        <span><i>BS</i> p. {{ law?.pageNumber}}</span>
                     </mat-list-item>
                 </mat-list>
             </mat-menu>
@@ -74,9 +74,6 @@
         <mat-expansion-panel-header>
             <mat-panel-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-panel-title>
             <mat-panel-title i18n *ngIf="language==='fr'">Table des Matières</mat-panel-title>
-            <mat-panel-description>
-                Insert current toc position here
-            </mat-panel-description>
         </mat-expansion-panel-header>
 
         <div id="law-toc-top">
