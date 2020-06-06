@@ -17,8 +17,8 @@
             </button>
             <button mat-icon-button i18n (click)="switchLawLanguage()">
                 <mat-icon>language</mat-icon>
-                <span *ngIf="language=='nl'" matTooltip="Naar Frans">FR</span>
-                <span *ngIf="language=='fr'" matTooltip="Naar Nederlands">NL</span>
+                <span *ngIf="language=='nl'" matTooltip="Naar Frans">NL</span>
+                <span *ngIf="language=='fr'" matTooltip="Naar Nederlands">FR</span>
                 <mat-progress-bar *ngIf="lawLoading" mode="buffer"></mat-progress-bar>
             </button>
             <button mat-icon-button [matMenuTriggerFor]="infomenu">

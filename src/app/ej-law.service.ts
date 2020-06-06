@@ -205,7 +205,7 @@ export class EjLawService {
 
         const regexbook = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${book}\\s(.{1,16}?)\.<\\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${book}|${appendix})|signature))`, 'gi');
         const regexpart = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${part}\\s(.{1,16}?)\.<\\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${part}|${appendix})|signature))`, 'gi');
-        const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${title}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${title}|${appendix})|signature)|</book>)`, 'gi');
+        const regextitle = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).*?${title}(.{1,25})\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${title}|${appendix})|signature)|</book>)`, 'gi');
         const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${chapter}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${chapter}|${appendix})|signature)|</book>|</lawtitle>)`, 'gi');
         const regexafd = new RegExp(`(<A NAME=.{17}LNKR(\\d*).{1,5}>${section}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{5,25}(LNKR.{5}>(${section}|${appendix})|signature)|</book>|</lawtitle>|</chapter>)`, 'gi');
         const regexonderafd = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${subSection}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{5,25}(LNKR.{5,15}(${subSection}|${appendix})|signature)|</book>|</lawtitle>|</chapter>|</section>)`, 'gi');

@@ -154,7 +154,9 @@ export class Law {
                 title = this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
             }
         }
-        return title.match(/(.*?)(\.|\(|$)/gi)[0].replace(/^[^A-Za-z]+/, '')
+        return title.match(/(.*?)(\.|\(|$)/gi)[0]
+            .replace(/^[^A-Za-z]+/, '')
+            .replace(/(\(|\.)$/, '')
     }
 
     getLawTitle(text) {
