@@ -1,7 +1,8 @@
-.article{
+.article {
   min-height: 0;
   flex-grow: 1;
 }
+
 .dotlist {
   text-indent: -1em;
   padding-left: 1em;
@@ -18,19 +19,23 @@
 }
 
 
-.lid{
-//    background: mat-color($pj-background, 100);
+.lid {
+  //    background: mat-color($pj-background, 100);
   max-width: 200px;
 }
 
 .line {
   padding-bottom: 0.5%;
 }
+
 .artworkingdate {
- // color: mat-color($pallete-triadic, 400);
+  opacity: 0.8;
+  font-size: small;
 }
+
 .artworkingdate:hover {
   color: black;
+  opacity: 1;
 }
 
 mat-card {

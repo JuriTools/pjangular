@@ -386,7 +386,7 @@ export class EjLawService {
                     counter++;
                     lineclass = 'artlid';
                     lid = `<lid id="${counter}"></lid> `;
-                } else if (line.match(/^\(.*&gt;.{0,10}$/gmi)) {
+                } else if (line.match(/^\(.*&gt;.*$/gmi)) {
                     lineclass = 'artworkingdate';
                 } else {
                     if (!line.startsWith('<font')) {
