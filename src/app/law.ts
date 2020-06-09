@@ -156,7 +156,7 @@ export class Law {
         }
         return title // .match(/(.*?)(\.|\(|$)/gi)[0]
             .replace(/\s<.*?>/, '')
-            .replace(/\(NOTA.*?\)$/, '')
+            .replace(/\(NOT.*?\)$/, '')
             .replace(/^[^A-Za-z]+/, '')
 
 
