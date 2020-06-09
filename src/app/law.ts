@@ -107,7 +107,7 @@ export class Law {
     }
 
     createContainerStructure(DOM) {
-        this.law = new Container('law',  0, '', DOM, this.language);
+        this.law = new Container('law', 0, '', DOM, this.language);
         for (const element of DOM.querySelectorAll(this.getHighestLevel(DOM))) {
             const c = new Container(element.nodeName.toLowerCase(), element.id, element.title, element, this.language);
             this.addChildren(c);
@@ -142,22 +142,20 @@ export class Law {
             month: 'long',
             day: 'numeric'
         };
-        let title = this.title;
-        if (language === 'fr') {
-            // todo check French
-            if (this.title.includes('relatif à') || this.title.includes('relative')) {
-                title = this.title.replace(/relatif à|relative/, 'du ' + this.date.toLocaleDateString('fr-BE', options) + ' sur');
-            }
-        }
-        if (language === 'nl') {
-            if (this.title.includes('betreffende')) {
-                title = this.title.replace('betreffende', 'van ' + this.date.toLocaleDateString('nl-BE', options) + ' betreffende');
-            }
-        }
-        return title // .match(/(.*?)(\.|\(|$)/gi)[0]
+        let title = this.title
             .replace(/\s<.*?>/, '')
             .replace(/\(NOT.*?\)$/, '')
-            .replace(/^[^A-Za-z]+/, '')
+            .replace(/^[^A-Za-z]+/, '');
+        if (language === 'fr') {
+            title = title.replace(/^(Loi|Arrêté royal|Decreet)/,
+                `$1 du ${this.date.toLocaleDateString('nl-BE', options)} sur`);
+        }
+        if (language === 'nl') {
+            title = title.replace(/^(Wet|Koninklijk Besluit|Decreet)/i,
+                `$1 van ${this.date.toLocaleDateString('nl-BE', options)}`);
+
+        }
+        return title.trim().replace(/\.$/, '');
 
 
     }
@@ -283,9 +281,9 @@ export class Law {
         }
     }
 
-    get originalHTML () {
+    get originalHTML() {
         let doc = this.originalDOM.querySelector('body').innerHTML;
-        doc = doc.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/')
-        return doc
+        doc = doc.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/');
+        return doc;
     }
 }

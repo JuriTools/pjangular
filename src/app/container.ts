@@ -4,7 +4,7 @@ function createTitleLable(title: string): string {
     const splitFirstLetter = title.match(/(^[^[a-zA-Z]*)(.*)/);
     title = splitFirstLetter[1] + splitFirstLetter[2].charAt(0) + splitFirstLetter[2].slice(1).toLowerCase();
     title = title.replace(/belgi(.)/, `Belgi$1`);
-    return title;
+    return title.trim().replace(/\.$/, '');
 }
 
 export class Container {
