@@ -209,7 +209,7 @@ export class EjLawService {
         const regexchapter = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${chapter}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{1,25}(LNKR.{5,15}(${chapter}|${appendix})|signature)|</book>|</lawtitle>)`, 'gi');
         const regexafd = new RegExp(`(<A NAME=.{17}LNKR(\\d*).{1,5}>${section}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{5,25}(LNKR.{5}>(${section}|${appendix})|signature)|</book>|</lawtitle>|</chapter>)`, 'gi');
         const regexonderafd = new RegExp(`(<A NAME=.{5,25}LNKR(\\d*).{2,15}${subSection}\\s(.{1,16}?)\.<\/A>[\\s\\S]*?)(?=<A NAME=.{5,25}(LNKR.{5,15}(${subSection}|${appendix})|signature)|</book>|</lawtitle>|</chapter>|</section>)`, 'gi');
-        const regexart = new RegExp(`(<a name=.{1,5}${article}.([IVX\\d]{1,4}.*?)('|")[\\s\\S]*?(<BR><BR>|signature))`, 'gi');
+        const regexart = new RegExp(`(<a name=.{1,5}${article}.([IVX\\d]{1,4}.*?)('|")[\\s\\S]*?(<BR><BR>|signature|<br>&nbsp;&nbsp;(<BR>|Gegeven te Brussel)))`, 'gi');
         const reghyperlink = new RegExp(`((\sname='LNKR.*?')|(\shref='#LNKR.*?'))`, 'gi');
 
         let tempBody = doc.body.innerHTML.replace(regexbook, '<book id="$2" title="$3">$1</book>');
