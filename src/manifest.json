@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.5.3",
+  "version": "0.5.4",
   "name": "PrettyJustice",
   "description": "Past de layout aan voor wetten, koninklijke besluiten, etc. op ejustice.fgov.be",
   "icons": {
@@ -27,7 +27,9 @@
         "*://*.ejustice.just.fgov.be/*/*pl?la*",
         "*://*.ejustice.just.fgov.be/*/*pl?table_name=wet*",
         "*://*.ejustice.just.fgov.be/*/*pl?table_name=loi*",
+        "*://*.ejustice.just.fgov.be/*staatsblad/",
         "*://*.ejustice.just.fgov.be/*staatsblad",
+        "*://*.ejustice.just.fgov.be/*justel/",
         "*://*.ejustice.just.fgov.be/*justel"
       ],
       "exclude_matches": [

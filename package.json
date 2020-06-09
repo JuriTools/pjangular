@@ -1,6 +1,6 @@
 {
   "name": "pj-angular",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "scripts": {
     "ng": "ng",
     "clean": "rimraf ./dist",
@@ -43,7 +43,7 @@
     "@types/chrome": "0.0.106",
     "@types/jasmine": "~3.5.10",
     "@types/jasminewd2": "^2.0.8",
-    "@types/node": "^13.13.10",
+    "@types/node": "^13.13.11",
     "codelyzer": "^5.2.2",
     "gulp": "^4.0.2",
     "jasmine-core": "~3.5.0",
