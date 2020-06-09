@@ -470,7 +470,7 @@ export class EjLawService {
         if (!wt) {
             return doc;
         }
-        replaceInnerHTML(wt, wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)(")/gi, `<definition>$1<defname>$2</defname>$3</definition>`));
+        replaceInnerHTML(wt, wt.innerHTML.replace(/(\d{1,3}°\s*")(.*?)("|<)/gi, `<definition>$1<defname>$2</defname>$3</definition>`));
         return doc;
     }
 }
