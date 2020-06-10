@@ -176,7 +176,7 @@ export class Law {
         const date = /Dossier.*?(\d{4}-\d{2}-\d{2})/i.exec(text);
         if (date) {
             const dateSplit = date[1].split('-');
-            return new Date(parseInt(dateSplit[0], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[2], 10));
+            return new Date(parseInt(dateSplit[0], 10), parseInt(dateSplit[1], 10) -1, parseInt(dateSplit[2], 10));
         } else {
             return new Date(0, 0, 0); // todo handle unknown date
         }
@@ -185,7 +185,7 @@ export class Law {
     text2date(text) {
         if (text) {
             const dateSplit = text[1].split('-');
-            return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[1], 10));
+            return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10)-1, parseInt(dateSplit[1], 10));
         } else {
             return new Date(0, 0, 0); // todo handle unknown date
         }
