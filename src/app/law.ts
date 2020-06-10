@@ -161,8 +161,6 @@ export class Law {
     }
 
     getLawTitle(text) {
-        // todo add support for notes in title
-        // todo fix ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&la=N&table_name=wet&cn=2017071306
         const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
         if (title?.length >= 2) {
             return title[2].replace(/\s*?[\s\.?]$/, '');
@@ -176,18 +174,19 @@ export class Law {
         const date = /Dossier.*?(\d{4}-\d{2}-\d{2})/i.exec(text);
         if (date) {
             const dateSplit = date[1].split('-');
-            return new Date(parseInt(dateSplit[0], 10), parseInt(dateSplit[1], 10) -1, parseInt(dateSplit[2], 10));
+            // For this specific case the month starts counting from 0
+            return new Date(parseInt(dateSplit[0], 10), parseInt(dateSplit[1], 10) - 1, parseInt(dateSplit[2], 10));
         } else {
-            return new Date(0, 0, 0); // todo handle unknown date
+            return null;
         }
     }
 
     text2date(text) {
         if (text) {
             const dateSplit = text[1].split('-');
-            return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10)-1, parseInt(dateSplit[1], 10));
+            return new Date(parseInt(dateSplit[2], 10), parseInt(dateSplit[1], 10), parseInt(dateSplit[0], 10));
         } else {
-            return new Date(0, 0, 0); // todo handle unknown date
+            return null;
         }
     }
 
