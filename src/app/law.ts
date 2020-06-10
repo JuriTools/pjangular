@@ -147,11 +147,11 @@ export class Law {
             .replace(/\(NOT.*?\)$/, '')
             .replace(/^[^A-Za-z]+/, '');
         if (language === 'fr') {
-            title = title.replace(/^(Loi|Arrêté royal|Decreet)/,
+            title = title.replace(/^(Loi|Arrêté royal|Décret|Décret spécial)/,
                 `$1 du ${this.date.toLocaleDateString('nl-BE', options)} sur`);
         }
         if (language === 'nl') {
-            title = title.replace(/^(Wet|Koninklijk Besluit|Decreet)/i,
+            title = title.replace(/^(Wet|Koninklijk Besluit|Decreet|Bijzonder decreet)/i,
                 `$1 van ${this.date.toLocaleDateString('nl-BE', options)}`);
 
         }
