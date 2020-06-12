@@ -50,11 +50,24 @@ export class EjLawService {
             this.lawObs$ = this.http.get(this.urls[language].href, {responseType: 'text'})
                 .pipe(
                     switchMap(res => {
-                        return this.createLaw(res);
+                        const DOM = new DOMParser().parseFromString(res, 'text/html');
+                        if (DOM.getElementsByTagName('frame')[0]) {
+                            const frameURL = DOM.getElementsByTagName('frame')[0].src.split('&&')
+                                .slice(0, 2)
+                                .join('&&')
+                                .replace(`http://localhost:4200/`, 'https://www.ejustice.just.fgov.be/');
+                            return this.getLaw(new URL(frameURL), language);
+                        } else {
+                            return this.createLaw(res);
+                        }
                     })
                 );
         }
         return this.lawObs$;
+    }
+
+    getFrameURL(DOM) {
+
     }
 
     getOriginalLaw(url, language?: Language): Observable<string> {
@@ -220,7 +233,7 @@ export class EjLawService {
         tempBody = tempBody.replace(regexonderafd, '<subsection id="$2" title="$3">$1</subsection>');
         tempBody = tempBody.replace(regexart, '<article id="$2">$1</article>');
         tempBody = tempBody.replace(reghyperlink, '');
-        tempBody = tempBody.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/')
+        tempBody = tempBody.replace(/href="?\//gi, 'href="https://www.ejustice.just.fgov.be/');
         replaceInnerHTML(doc.body, tempBody);
         return doc;
     }
