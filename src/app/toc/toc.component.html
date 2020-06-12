@@ -23,7 +23,7 @@
                     <a class="toc-tree-link"
                        [innerHTML]="node.typeLabel + ' ' + node.title">
                     </a>
-                    -
+                    <span *ngIf="node.titleLabel.length > 0">-</span>
                     <span [innerHTML]="node.titleLabel"></span>
                 </h3>
             </div>
