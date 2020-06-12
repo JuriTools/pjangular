@@ -15,3 +15,8 @@ h3:hover {
 .sublist-toc {
     margin-left: 1em;
 }
+
+.mat-tree-node {
+    min-height: 2em !important;
+    height: 3em;
+}
