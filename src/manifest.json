@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
   "version": "0.5.4",
+  "default_locale": "nl",
   "name": "PrettyJustice",
   "description": "Past de layout aan voor wetten, koninklijke besluiten, etc. op ejustice.fgov.be",
   "icons": {
