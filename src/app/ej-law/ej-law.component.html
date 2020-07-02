@@ -21,6 +21,9 @@
                 <span *ngIf="language=='fr'" matTooltip="Naar Nederlands">FR</span>
                 <mat-progress-bar *ngIf="lawLoading" mode="buffer"></mat-progress-bar>
             </button>
+            <button mat-icon-button>
+                <mat-icon matTooltip="Download pdf">picture_as_pdf</mat-icon>
+            </button>
             <button mat-icon-button [matMenuTriggerFor]="infomenu">
                 <mat-icon matTooltip="Wetsinformatie">info</mat-icon>
             </button>
