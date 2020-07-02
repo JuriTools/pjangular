@@ -30,7 +30,6 @@ export class Law {
     chapters: Container[];
     sections: Container[];
     subSections: Container[];
-    articles: Article[];
     language: Language;
     law: Container;
     cosUrl: URL;
@@ -77,7 +76,6 @@ export class Law {
             this.cosUrl = this.getCouncilOfState(this.DOM);
             this.implementingDocumentsUrl = this.getImplementingDocuments(this.DOM);
             this.archivesUrl = this.getArchives(this.DOM);
-            this.articles = this.parseArticles(this.DOM);
             this.createContainerStructure(this.DOM);
         });
     }
@@ -165,7 +163,7 @@ export class Law {
     getLawTitle(text) {
         const title = /^(\d+\s[A-Z]*?\s\d{4})\.\s-\s(.*)/mi.exec(text);
         if (title?.length >= 2) {
-            return title[2].replace(/\s*?[\s\.?]$/, '');
+            return title[2].replace(/\s*?[\s.?]$/, '');
         } else {
             console.warn('Failure to get law title');
             return '';
@@ -240,16 +238,6 @@ export class Law {
         } else {
             return '';
         }
-    }
-
-    // search for highest first, add if exists, then go depth first
-    parseArticles(DOM: Document) {
-        const articles: Article[] = [];
-        const articlesDom = DOM.querySelectorAll('article');
-        for (let articleIndex = 0; articleIndex < articlesDom.length; articleIndex++) {
-            articles[articleIndex] = new Article(articlesDom[articleIndex], this.language);
-        }
-        return articles;
     }
 
     getCouncilOfState(DOM): URL {
