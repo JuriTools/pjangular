@@ -26,6 +26,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatListModule} from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatProgressBarModule,
         MatListModule,
         MatSlideToggleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatTableModule
     ],
     providers: [],
     bootstrap: [AppComponent]
