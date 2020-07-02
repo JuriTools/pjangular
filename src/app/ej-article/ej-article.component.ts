@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Article} from '../article';
-import {Line} from '../line';
+import {Article} from 'ejustice-lib';
+import {Line} from 'ejustice-lib';
 import {DataSource} from '@angular/cdk/collections';
 
 
@@ -24,10 +24,11 @@ export class EjArticleComponent implements OnInit {
     }
 
     getTableColumns(table: DataSource<object>) {
-        if (table === undefined){
-            return [];
+        // @ts-ignore
+        if (table !== undefined && table.length > 0){
+            return Object.keys(table[0]);
         }
-        return Object.keys(table[0]);
+        return [];
     }
 
 }

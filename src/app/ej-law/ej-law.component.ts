@@ -1,13 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {EjLawService} from '../ej-law.service';
-import {Law} from '../law';
-import {Language} from '../container';
+// import {EjLawService} from '../ej-law.service';
+import { EjusticeLibService } from 'ejustice-lib';
+import {Law} from 'ejustice-lib';
+import {Language} from 'ejustice-lib';
 
 
 @Component({
     selector: 'app-ej-law',
     templateUrl: './ej-law.component.html',
-    styleUrls: ['./ej-law.component.scss']
+    styleUrls: ['./ej-law.component.scss'],
+    providers: [
+        EjusticeLibService
+    ]
 })
 export class EjLawComponent implements OnInit {
     url: URL;
@@ -19,7 +23,7 @@ export class EjLawComponent implements OnInit {
     language: Language;
     originalLaw: boolean;
 
-    constructor(private ejLawService: EjLawService) {
+    constructor(private ejLawService: EjusticeLibService) {
         // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;

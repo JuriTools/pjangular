@@ -14,7 +14,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTreeModule} from '@angular/material/tree';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {EjLawComponent} from './ej-law/ej-law.component';
@@ -27,7 +26,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTableModule} from '@angular/material/table';
-
+import {EjusticeLibModule} from 'ejustice-lib';
 
 @NgModule({
     declarations: [
@@ -41,7 +40,7 @@ import {MatTableModule} from '@angular/material/table';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
+        EjusticeLibModule,
         MatButtonModule,
         MatCheckboxModule,
         MatCardModule,
