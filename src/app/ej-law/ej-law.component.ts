@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 // import {EjLawService} from '../ej-law.service';
-import { EjusticeLibService } from '../../ejustice-lib/projects/ejustice-lib/src/lib/ejustice-lib.service';
-import {Law} from '../../ejustice-lib/projects/ejustice-lib/src/lib/law';
-import {Language} from '../../ejustice-lib/projects/ejustice-lib/src/lib/container';
+import {EjusticeLibService, Law, Language} from 'ejustice-lib';
 
 
 @Component({
@@ -54,7 +52,7 @@ export class EjLawComponent implements OnInit {
                     this.languageLoaded = true;
                     this.switchingLanguage = false;
                     // Check if there are articles in the law, otherwise show the original content
-                    if (this.law.law.children.length === 0){
+                    if (this.law.law.children.length === 0) {
                         this.originalLaw = true;
                     }
                 },

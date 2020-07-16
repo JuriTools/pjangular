@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Article} from '../../ejustice-lib/projects/ejustice-lib/src/lib/article';
-import {Line} from '../../ejustice-lib/projects/ejustice-lib/src/lib/line';
+import {Article, Line} from 'ejustice-lib';
 import {DataSource} from '@angular/cdk/collections';
 
 
