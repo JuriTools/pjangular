@@ -3,7 +3,7 @@
   <div class="line {{ line.type }}" *ngFor="let line of article.lines">
     <span class="lid" *ngIf="line.lidId"><u>Lid {{line.lidId}}</u></span>
     <span *ngIf="line.type !== 'table'" [innerHTML]="line.text | safeHtml"></span>
-    <table mat-table *ngIf="line.type === 'table'" [dataSource]="line.table">
+    <table mat-table *ngIf="line.type === 'table' && getTableColumns(line.table).length > 0" [dataSource]="line.table">
       <ng-container matColumnDef="{{column}}" *ngFor="let column of getTableColumns(line.table)">
         <th mat-header-cell *matHeaderCellDef> {{column}} </th>
         <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
