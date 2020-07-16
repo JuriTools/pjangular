@@ -26,8 +26,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTableModule} from '@angular/material/table';
-import {EjusticeLibModule} from '../ejustice-lib/projects/ejustice-lib/src/lib/ejustice-lib.module';
-
+import {EjusticeLibModule} from 'ejustice-lib';
 @NgModule({
     declarations: [
         AppComponent,
