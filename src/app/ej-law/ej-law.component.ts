@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 // import {EjLawService} from '../ej-law.service';
 import {EjusticeLibService, Law, Language} from 'ejustice-lib';
+import {EjPdfService} from '../ej-pdf.service';
+import {of} from 'rxjs';
 
 
 @Component({
@@ -20,13 +22,16 @@ export class EjLawComponent implements OnInit {
     switchingLanguage: boolean;
     language: Language;
     originalLaw: boolean;
+    pdfGenerating: boolean;
 
-    constructor(private ejLawService: EjusticeLibService) {
+    constructor(private ejLawService: EjusticeLibService,
+                private ejPdfService: EjPdfService) {
         // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;
         this.switchingLanguage = false;
         this.originalLaw = false;
+        this.pdfGenerating = false;
     }
 
     ngOnInit() {
@@ -65,6 +70,25 @@ export class EjLawComponent implements OnInit {
                 });
     }
 
+    getPdf() {
+        // todo generate json from law
+        const bundle = {
+            lawName: this.law.displayTitle,
+            lawDate: this.law.datePublished,
+            lawAbbreviation: '',
+            lawURL: this.ejLawService.urls.nl,
+            lawArticles: '*'
+        };
+        this.pdfGenerating = true;
+        this.ejPdfService.postJson(bundle)
+            .subscribe(data => {
+                    const pdfBlob = new Blob([data], {type: 'application/pdf'});
+                    const url = window.URL.createObjectURL(pdfBlob);
+                    window.open(url);
+                    this.pdfGenerating = false;
+                }
+            );
+    }
 
     switchLawLanguage() {
         const urls = this.ejLawService.getURLs();
