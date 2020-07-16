@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import {Container, Language} from 'ejustice-lib';
+import {Container, Language} from '../../ejustice-lib/projects/ejustice-lib/src/lib/container';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 
 

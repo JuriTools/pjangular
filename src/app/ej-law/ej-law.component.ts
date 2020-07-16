@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 // import {EjLawService} from '../ej-law.service';
-import { EjusticeLibService } from 'ejustice-lib';
-import {Law} from 'ejustice-lib';
-import {Language} from 'ejustice-lib';
+import { EjusticeLibService } from '../../ejustice-lib/projects/ejustice-lib/src/lib/ejustice-lib.service';
+import {Law} from '../../ejustice-lib/projects/ejustice-lib/src/lib/law';
+import {Language} from '../../ejustice-lib/projects/ejustice-lib/src/lib/container';
 
 
 @Component({

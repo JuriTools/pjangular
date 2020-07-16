@@ -5,7 +5,7 @@
     "types": ["chrome"],
     "paths": {
       "ejustice-lib": [
-        "/home/mathijs/IdeaProjects/ejustice-lib/dist/ejustice-lib/"
+        "dist/ejustice-lib/"
       ]
     }
   },
