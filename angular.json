@@ -3,6 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ejustice-lib": {
+      "projectType": "library",
+      "root": "ejustice-lib/projects/ejustice-lib",
+      "sourceRoot": "ejustice-lib/projects/ejustice-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "ejustice-lib/projects/ejustice-lib/tsconfig.lib.json",
+            "project": "ejustice-lib/projects/ejustice-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "ejustice-lib/projects/ejustice-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "ejustice-lib/projects/ejustice-lib/src/test.ts",
+            "tsConfig": "ejustice-lib/projects/ejustice-lib/tsconfig.spec.json",
+            "karmaConfig": "ejustice-lib/projects/ejustice-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "ejustice-lib/projects/ejustice-lib/tsconfig.lib.json",
+              "ejustice-lib/projects/ejustice-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "pj-angular": {
       "root": "",
       "sourceRoot": "src",
@@ -17,6 +57,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "preserveSymlinks": true,
             "customWebpackConfig": {
               "path": "./custom-webpack.config.js"
             },

@@ -16,6 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        with:
+          submodules: true
+          token: e2d0604a3e1d94b14ab4efa192de4565f52421b0
 
       - name: Cache node modules
         uses: actions/cache@v1

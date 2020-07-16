@@ -242,8 +242,59 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 .material-icons {
   font-size: 24px;
-  font-family: 'Material Icons', 'Material Icons';
+  font-family: 'Material Icons', 'Material Icons', serif;
   .mat-badge-content {
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
   }
+}
+
+table, th, td {
+  border: none;
+}
+table {
+  width:100%;
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  &.striped {
+    tr {
+      border-bottom: none;
+    }
+
+    > tbody {
+      > tr:nth-child(odd) {
+        background-color: $light-bg-alpha-12;
+      }
+
+      > tr > td {
+        border-radius: 0;
+      }
+    }
+  }
+
+  &.highlight > tbody > tr {
+    transition: background-color .25s ease;
+    &:hover {
+      background-color: $light-bg-darker-10;
+    }
+  }
+
+  &.centered {
+    thead tr th, tbody tr td {
+      text-align: center;
+    }
+  }
+}
+
+tr {
+  border-bottom: 1px solid mat-color($mat-accent);
+}
+
+td, th{
+  padding: 15px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px;
 }

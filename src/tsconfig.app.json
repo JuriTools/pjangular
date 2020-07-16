@@ -1,8 +1,15 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": ["chrome"]
+    "types": ["chrome"],
+    "paths": {
+      "@angular/*": ["./node_modules/@angular/*"],
+      "ejustice-lib": [
+        "ejustice-lib/projects/ejustice-lib/src",
+        "ejustice-lib/dist/ejustice-lib"
+      ]
+    }
   },
   "exclude": [
     "test.ts",

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Article} from '../article';
-import {Container} from '../container';
+import {Article, Container} from 'ejustice-lib';
 
 @Component({
     selector: 'app-ej-container',
