@@ -71,7 +71,6 @@ export class EjLawComponent implements OnInit {
     }
 
     getPdf() {
-        // todo generate json from law
         const bundle = {
             lawName: this.law.displayTitle,
             lawDate: this.law.datePublished,

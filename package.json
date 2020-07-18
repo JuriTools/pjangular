@@ -13,8 +13,8 @@
     "test:watch": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:ci": "npm run clean && npm run build:prod",
-    "pack:prod": "npm run clean && ng build --prod --sourceMap=false && web-ext build -s 'dist/pj-angular/'",
+    "build:ci": "npm run clean && ng build ejustice-lib && npm run build:prod",
+    "pack:prod": "npm run clean && ng build ejustice-lib --prod && ng build --prod --sourceMap=false && web-ext build -s 'dist/pj-angular/'",
     "pack:dev": "ng build && web-ext build -s 'dist/pj-angular/'",
     "postinstall": "ngcc"
   },
