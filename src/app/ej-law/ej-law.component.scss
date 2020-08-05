@@ -61,7 +61,11 @@ mat-spinner {
 #law-toolbar {
   display: inline;
   max-height: 40%;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+#law-toolbar:not(.mat-expanded) {
+  overflow-y: hidden;
 }
 
 .original-law-container {
