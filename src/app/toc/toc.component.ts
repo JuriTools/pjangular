@@ -7,7 +7,7 @@ import {MatTreeNestedDataSource} from '@angular/material/tree';
 @Component({
     selector: 'app-toc',
     templateUrl: './toc.component.html',
-    styleUrls: ['./toc.component.css']
+    styleUrls: ['./toc.component.scss']
 })
 export class TocComponent implements OnInit, OnChanges {
     treeControl = new NestedTreeControl<Container>(node => node.children);

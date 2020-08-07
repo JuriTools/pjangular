@@ -27,6 +27,12 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTableModule} from '@angular/material/table';
 import {EjusticeLibModule} from 'ejustice-lib';
+import {PdfDialogComponent} from './ej-law/pdf-dialog/pdf-dialog.component';
+import {FormsModule} from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -34,7 +40,8 @@ import {EjusticeLibModule} from 'ejustice-lib';
         SafeHtmlPipe,
         EjArticleComponent,
         EjContainerComponent,
-        TocComponent
+        TocComponent,
+        PdfDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -57,7 +64,11 @@ import {EjusticeLibModule} from 'ejustice-lib';
         MatListModule,
         MatSlideToggleModule,
         MatTooltipModule,
-        MatTableModule
+        MatTableModule,
+        FormsModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatRadioModule
     ],
     providers: [],
     bootstrap: [AppComponent]

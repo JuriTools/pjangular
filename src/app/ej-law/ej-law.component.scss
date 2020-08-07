@@ -1,3 +1,6 @@
+#main-container {
+}
+
 .article {
   //   background-color: mat-color($pj-background, 100);
   margin-bottom: 1em;
@@ -7,7 +10,7 @@
   width: 100%;
 }
 
-mat-spinner {
+.mat-spinner {
   position: fixed;
   margin: 5%;
   padding: 45px;
@@ -27,16 +30,13 @@ mat-spinner {
   flex-direction: column;
 }
 
-.header {
+.toc {
   position: sticky;
   top: 0;
   display: flex;
   justify-content: space-between;
   border-bottom: ridge rgba(181, 196, 197, 0.8) 2px;
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-top: 1px;
-  margin-bottom: 4px;
+  margin: 8px 8px 1px 4px;
 }
 
 #main-title {
@@ -92,3 +92,10 @@ mat-spinner {
 
 }
 
+.toc-title {
+  overflow-y: hidden;
+}
+
+#law-toc-top {
+
+}

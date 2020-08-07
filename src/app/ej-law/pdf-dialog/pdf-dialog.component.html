@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Download opties</h1>
+<div mat-dialog-content>
+    <mat-list>
+        <mat-list-item class="dialog-item">
+            Inhoudsopgave
+            <mat-slide-toggle [(ngModel)]="data.toc"></mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item class="dialog-item">
+            <mat-radio-group [(ngModel)]="data.format">
+                Bestandsformaat
+                <mat-radio-button value="pdf">pdf</mat-radio-button>
+                <mat-radio-button value="docx">word</mat-radio-button>
+            </mat-radio-group>
+        </mat-list-item>
+    </mat-list>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Genereer</button>
+</div>

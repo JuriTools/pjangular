@@ -8,7 +8,7 @@
     <button (click)='getLaw(urlInput.value)'>Go!</button>
 </mat-form-field>
 <div id="main-container" *ngIf="lawLoaded || languageLoaded">
-    <mat-card id="main-toolbar" class="header">
+    <mat-card id="main-toolbar" class="toc">
         <mat-card-title id="main-title"> {{ law?.displayTitle }} </mat-card-title>
         <div class="menu-buttons">
             <button mat-icon-button i18n (click)="showOriginalLaw()">
@@ -21,7 +21,7 @@
                 <span *ngIf="language=='fr'" matTooltip="Naar Nederlands">FR</span>
                 <mat-progress-bar *ngIf="lawLoading" mode="buffer"></mat-progress-bar>
             </button>
-            <button mat-icon-button (click)="getPdf()">
+            <button mat-icon-button (click)="showPdfDialog()">
                 <mat-icon matTooltip="Download pdf">picture_as_pdf</mat-icon>
                 <mat-progress-bar *ngIf="pdfGenerating" mode="buffer"></mat-progress-bar>
             </button>
@@ -69,8 +69,8 @@
             </mat-menu>
         </div>
     </mat-card>
-    <mat-expansion-panel class="header" id="law-toolbar">
-        <mat-expansion-panel-header>
+    <mat-expansion-panel class="toc" id="law-toolbar">
+        <mat-expansion-panel-header class="toc-title">
             <mat-panel-title i18n *ngIf="language==='nl'">Inhoudsopgave</mat-panel-title>
             <mat-panel-title i18n *ngIf="language==='fr'">Table des Matières</mat-panel-title>
         </mat-expansion-panel-header>

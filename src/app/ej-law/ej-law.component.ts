@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 // import {EjLawService} from '../ej-law.service';
 import {EjusticeLibService, Law, Language} from 'ejustice-lib';
-import {EjPdfService} from '../ej-pdf.service';
-import {of} from 'rxjs';
+import {EjPdfService, FileFormat} from '../ej-pdf.service';
+import {MatDialog} from '@angular/material/dialog';
+import {PdfDialogComponent, PdfDialogData} from './pdf-dialog/pdf-dialog.component';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class EjLawComponent implements OnInit {
     pdfGenerating: boolean;
 
     constructor(private ejLawService: EjusticeLibService,
-                private ejPdfService: EjPdfService) {
+                private ejPdfService: EjPdfService,
+                public dialog: MatDialog) {
         // this.language = 'nl';
         this.lawLoaded = false;
         this.languageLoaded = false;
@@ -70,7 +72,20 @@ export class EjLawComponent implements OnInit {
                 });
     }
 
-    getPdf() {
+    showPdfDialog() {
+        const pdfDialogRef = this.dialog.open(PdfDialogComponent, {
+            width: '350px',
+            data: {toc: false, format: ['pdf', 'docx']}
+        });
+        pdfDialogRef.afterClosed().subscribe(result => {
+            result = result as PdfDialogData;
+            if (result) {
+                this.getPdf(result.toc, result.format);
+            }
+        });
+    }
+
+    getPdf(toc: boolean, format: FileFormat) {
         const bundle = {
             lawName: this.law.displayTitle,
             lawDate: this.law.datePublished,
@@ -79,7 +94,7 @@ export class EjLawComponent implements OnInit {
             lawArticles: '*'
         };
         this.pdfGenerating = true;
-        this.ejPdfService.postJson(bundle)
+        this.ejPdfService.postJson(bundle, toc, format)
             .subscribe(data => {
                     const pdfBlob = new Blob([data], {type: 'application/pdf'});
                     const url = window.URL.createObjectURL(pdfBlob);
