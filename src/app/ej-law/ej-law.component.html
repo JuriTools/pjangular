@@ -30,25 +30,25 @@
             </button>
             <mat-menu id="info-menu" #infomenu>
                 <mat-list id="info-list">
-                    <mat-list-item *ngIf="law.datePublished" i18n>
+                    <mat-list-item class="info-item" *ngIf="law.datePublished" i18n>
                         <button mat-icon-button>
                             <mat-icon matTooltip="Datum van Publicatie">public</mat-icon>
                         </button>
                         <span>{{ law?.datePublished | date:'mediumDate'}}</span>
                     </mat-list-item>
-                    <mat-list-item *ngIf="law.dateWorking" i18n>
+                    <mat-list-item class="info-item" *ngIf="law.dateWorking" i18n>
                         <button mat-icon-button>
                             <mat-icon matTooltip="Datum van Inwerkingtreding">sports</mat-icon>
                         </button>
                         <span>{{ law?.dateWorking | date:'mediumDate'}}</span>
                     </mat-list-item>
-                    <mat-list-item i18n *ngIf="law.source">
+                    <mat-list-item class="info-item" *ngIf="law.source" i18n>
                         <button mat-icon-button>
                             <mat-icon matTooltip="Bron">account_balance</mat-icon>
                         </button>
-                        <span>{{ law?.source | titlecase}}</span>
+                        <span class="info-item-text">{{ law?.source | titlecase}}</span>
                     </mat-list-item>
-                    <mat-list-item *ngIf="law.pageNumber" i18n>
+                    <mat-list-item class="info-item" *ngIf="law.pageNumber" i18n>
                         <button mat-icon-button>
                             <mat-icon matTooltip="Staatblad">find_in_page</mat-icon>
                         </button>
