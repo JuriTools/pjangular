@@ -4,7 +4,7 @@ import {EjusticeLibService, Law, Language} from 'ejustice-lib';
 import {EjPdfService, FileFormat} from '../ej-pdf.service';
 import {MatDialog} from '@angular/material/dialog';
 import {PdfDialogComponent, PdfDialogData} from './pdf-dialog/pdf-dialog.component';
-
+import * as fileSaver from 'file-saver';
 
 @Component({
     selector: 'app-ej-law',
@@ -23,7 +23,7 @@ export class EjLawComponent implements OnInit {
     switchingLanguage: boolean;
     language: Language;
     originalLaw: boolean;
-    pdfGenerating: boolean;
+    docGenerating: boolean;
 
     constructor(private ejLawService: EjusticeLibService,
                 private ejPdfService: EjPdfService,
@@ -33,7 +33,7 @@ export class EjLawComponent implements OnInit {
         this.languageLoaded = false;
         this.switchingLanguage = false;
         this.originalLaw = false;
-        this.pdfGenerating = false;
+        this.docGenerating = false;
     }
 
     ngOnInit() {
@@ -75,6 +75,7 @@ export class EjLawComponent implements OnInit {
     showPdfDialog() {
         const pdfDialogRef = this.dialog.open(PdfDialogComponent, {
             width: '350px',
+            minHeight: '250px',
             data: {toc: false, format: ['pdf', 'docx']}
         });
         pdfDialogRef.afterClosed().subscribe(result => {
@@ -91,15 +92,20 @@ export class EjLawComponent implements OnInit {
             lawDate: this.law.datePublished,
             lawAbbreviation: '',
             lawURL: this.ejLawService.urls.nl,
+            lawContent: JSON.stringify(this.law.law),
             lawArticles: '*'
         };
-        this.pdfGenerating = true;
+        this.docGenerating = true;
         this.ejPdfService.postJson(bundle, toc, format)
             .subscribe(data => {
-                    const pdfBlob = new Blob([data], {type: 'application/pdf'});
-                    const url = window.URL.createObjectURL(pdfBlob);
-                    window.open(url);
-                    this.pdfGenerating = false;
+                    let type = 'application/pdf';
+                    if (format === 'docx') {
+                        type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                    }
+                    const docBlob = new Blob([data], {type});
+                    fileSaver.saveAs(docBlob, `${bundle.lawName}.${format}`);
+                    this.docGenerating = false;
+
                 }
             );
     }

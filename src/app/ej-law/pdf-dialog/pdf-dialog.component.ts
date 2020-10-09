@@ -22,6 +22,7 @@ export class PdfDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.data.format = 'pdf';
     }
 
     onCancel(): void {

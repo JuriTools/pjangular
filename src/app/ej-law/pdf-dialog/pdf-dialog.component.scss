@@ -2,3 +2,18 @@
   display: flex !important;
   flex-direction: column !important;
 }
+
+
+.pdf-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.pdf-radio-button {
+  margin: 5px;
+}
+
+.mat-list-item {
+  height: auto;
+}

@@ -85,6 +85,8 @@
   height: 100%;
   flex: 1;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 #info-menu {
@@ -106,3 +108,4 @@
 #law-toc-top {
 
 }
+

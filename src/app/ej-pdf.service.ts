@@ -32,8 +32,8 @@ export class EjPdfService {
         return this.http.post<Blob>(FLASK_SERVER_ADDRESS + 'law/',
             {
                 law: lawJSON,
-                format,
-                toc
+                toc,
+                format
             },
             httpOptions);
     }
