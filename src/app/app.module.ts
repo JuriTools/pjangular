@@ -32,6 +32,7 @@ import {FormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     declarations: [
@@ -68,7 +69,8 @@ import {MatRadioModule} from '@angular/material/radio';
         FormsModule,
         MatDialogModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatChipsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
