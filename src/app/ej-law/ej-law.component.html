@@ -67,6 +67,7 @@
                        i18n>Uitvoeringsbesluiten</a>
                 </mat-list>
             </mat-menu>
+
         </div>
     </mat-card>
     <mat-expansion-panel class="toc" id="law-toolbar">
@@ -91,4 +92,7 @@
 </div>
 <div class="spinner-container" *ngIf="lawLoading && !languageLoaded">
     <mat-spinner [color]="'primary'"></mat-spinner>
+</div>
+<div class="version-container" *ngIf="lawLoading && !languageLoaded">
+    <mat-chip-avatar i18n>Versie 0.6.1</mat-chip-avatar>
 </div>
