@@ -1,8 +1,12 @@
 .dialog-item {
-  display: flex !important;
-  flex-direction: column !important;
+  align-self: center;
+
 }
 
+.dialog-list {
+  display: flex !important;
+  flex-direction: row !important;
+}
 
 .pdf-radio-group {
   display: flex;

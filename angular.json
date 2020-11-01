@@ -76,8 +76,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "es5BrowserSupport": false
+            "scripts": []
           },
           "configurations": {
             "production": {

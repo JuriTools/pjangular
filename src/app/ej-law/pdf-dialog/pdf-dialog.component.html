@@ -1,22 +1,30 @@
-<h1 mat-dialog-title>Download opties</h1>
 <div mat-dialog-content>
-    <mat-list>
+    <mat-list class="dialog-list">
         <mat-list-item class="dialog-item">
-            <mat-slide-toggle [(ngModel)]="data.toc">Inhoudsopgave</mat-slide-toggle>
-        </mat-list-item>
-        <mat-list-item class="dialog-item">
-
             <mat-radio-group
                     class="pdf-radio-group"
                     [(ngModel)]="data.format"
                     aria-labelledby="file-format">
-                <mat-radio-button class="pdf-radio-button" value="pdf">pdf</mat-radio-button>
-                <mat-radio-button class="pdf-radio-button" value="docx">word</mat-radio-button>
+                <mat-radio-button class="pdf-radio-button" value="pdf" matTooltip="Genereer PDF">
+                    <img src="assets/icons/file-pdf-box.svg"
+                         alt="A PDF icon"
+                         style="width:48px;height:48px"/>
+                </mat-radio-button>
+                <mat-radio-button class="pdf-radio-button" value="docx" matTooltip="Genereer docx">
+                    <img src="assets/icons/file-word-box.svg"
+                         alt="A WORD icon"
+                         style="width:48px;height:48px"/>
+                </mat-radio-button>
             </mat-radio-group>
+        </mat-list-item>
+        <mat-list-item class="dialog-item">
+            <mat-checkbox [(ngModel)]="data.toc" matTooltip="Genereer met inhoudsopgave">
+                <mat-icon>toc</mat-icon>
+            </mat-checkbox>
         </mat-list-item>
     </mat-list>
 </div>
 <div mat-dialog-actions>
-    <button mat-button type="submit" [mat-dialog-close]="data" cdkFocusInitial>Verstuur</button>
-    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button type="submit" [mat-dialog-close]="data" cdkFocusInitial>Genereer document</button>
+    <button mat-button (click)="onCancel()">Annuleer</button>
 </div>
