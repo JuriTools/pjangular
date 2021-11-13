@@ -80,8 +80,8 @@
             <app-toc [children]="law.law.children" [language]="language"></app-toc>
         </div>
     </mat-expansion-panel>
-    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0 && language==='nl'">Geen artikelen voor dit document gevonden.</h3>
-    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0&& language==='fr'">Aucun article trouvé pour ce document.</h3>
+    <h3 style="color: #ff0000" *ngIf="law?.law.children.length === 0">Geen artikelen voor dit document gevonden.
+    </h3>
     <mat-divider></mat-divider>
     <div class="law-content" *ngIf="!originalLaw">
         <app-ej-container [items]="law?.law.children"></app-ej-container>
@@ -94,5 +94,5 @@
     <mat-spinner [color]="'primary'"></mat-spinner>
 </div>
 <div class="version-container" *ngIf="lawLoading && !languageLoaded">
-    <mat-chip-avatar i18n>Version {{version}}</mat-chip-avatar>
+    <mat-chip-avatar i18n>Versie 0.6.1</mat-chip-avatar>
 </div>

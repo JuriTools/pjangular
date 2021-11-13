@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 // import {EjLawService} from '../ej-law.service';
-import {EjusticeLibService, Language, Law} from 'ejustice-lib';
+import {EjusticeLibService, Law, Language} from 'ejustice-lib';
 import {EjPdfService, FileFormat} from '../ej-pdf.service';
 import {MatDialog} from '@angular/material/dialog';
 import {PdfDialogComponent, PdfDialogData} from './pdf-dialog/pdf-dialog.component';
 import * as fileSaver from 'file-saver';
-// @ts-ignore
-import {version} from 'package.json';
-
 
 @Component({
     selector: 'app-ej-law',
@@ -27,7 +24,6 @@ export class EjLawComponent implements OnInit {
     language: Language;
     originalLaw: boolean;
     docGenerating: boolean;
-    public version: string = version;
 
     constructor(private ejLawService: EjusticeLibService,
                 private ejPdfService: EjPdfService,
