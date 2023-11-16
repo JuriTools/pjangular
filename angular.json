@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "ejustice-lib/projects/ejustice-lib/tsconfig.lib.json",
             "project": "ejustice-lib/projects/ejustice-lib/ng-package.json"
