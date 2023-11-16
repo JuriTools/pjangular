@@ -4,7 +4,7 @@ import {EjusticeLibService, Law, Language} from 'ejustice-lib';
 import {EjPdfService, FileFormat} from '../ej-pdf.service';
 import {MatDialog} from '@angular/material/dialog';
 import {PdfDialogComponent, PdfDialogData} from './pdf-dialog/pdf-dialog.component';
-import * as fileSaver from 'file-saver';
+import { saveAs } from 'file-saver-es';
 
 @Component({
     selector: 'app-ej-law',
@@ -103,7 +103,7 @@ export class EjLawComponent implements OnInit {
                         type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                     }
                     const docBlob = new Blob([data], {type});
-                    fileSaver.saveAs(docBlob, `${bundle.lawName}.${format}`);
+                    saveAs(docBlob, `${bundle.lawName}.${format}`);
                     this.docGenerating = false;
 
                 }
