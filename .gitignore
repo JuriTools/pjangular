@@ -3,3 +3,4 @@ node*
 /coverage/
 /images/
 /.idea/
+package-lock.json
