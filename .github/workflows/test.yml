@@ -32,6 +32,7 @@ jobs:
 
       - name: npm ci and npm run build
         run: |
+          npm install --package-lock-only
           npm ci
           npm run build:ci
       - name: npm test and npm e2e

@@ -35,6 +35,7 @@ jobs:
 
       - name: npm ci and npm run build
         run: |
+          npm install --package-lock-only
           npm ci
           npm run build:ci
       - name: Create extension zip
