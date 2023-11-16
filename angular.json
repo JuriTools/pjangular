@@ -108,18 +108,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pj-angular:build"
+            "buildTarget": "pj-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "pj-angular:build:production"
+              "buildTarget": "pj-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pj-angular:build"
+            "buildTarget": "pj-angular:build"
           }
         },
         "test": {
