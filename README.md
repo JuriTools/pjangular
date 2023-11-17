@@ -16,7 +16,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 In firefox load using page `about:debugging`
 ## Build extension package
 
-Run `ng build --prod --sourceMap=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'` to build the packed extension for production in the `web-ext-artifacts` directory. 
+Run `ng build --configuration production --source-map=false --output-hashing=none && web-ext build -s 'dist/pj-angular/'` to build the packed extension for production in the `web-ext-artifacts` directory. 
 
 ## Running unit tests
 
