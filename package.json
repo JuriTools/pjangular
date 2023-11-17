@@ -14,7 +14,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ci": "npm run clean && ng build ejustice-lib && npm run build:prod",
-    "pack:prod": "npm run clean && ng build ejustice-lib --configuration production && ng build --configuration production --sourceMap=false && web-ext build -s 'dist/pj-angular/'",
+    "pack:prod": "npm run clean && ng build ejustice-lib --configuration production && ng build --configuration production --source-map=false && web-ext build -s 'dist/pj-angular/'",
     "pack:dev": "ng build && web-ext build -s 'dist/pj-angular/'"
   },
   "private": true,
