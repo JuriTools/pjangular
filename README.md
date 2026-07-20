@@ -1,3 +1,5 @@
+!!Due to the update of the ejustice website this project has been archived.!!
+
 # PjAngular
 ![Build](https://github.com/mvwestendorp/pjangular/workflows/Build/badge.svg?branch=master)
 ![Test](https://github.com/mvwestendorp/pjangular/workflows/Test/badge.svg?branch=master)
